@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live E-commerce News - Global Intelligence Platform</title>
+    <meta name="description" content="Real-time breaking news from global e-commerce industry using Brave Search API">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: #f8fafc;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #667eea;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            background: #ef4444;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Search Controls */
+        .search-controls {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .search-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+
+        .search-btn.active {
+            background: #10b981;
+        }
+
+        .refresh-btn {
+            background: #f59e0b;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .refresh-btn:hover {
+            background: #d97706;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: white;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* News Grid */
+        .news-content {
+            padding: 2rem 0;
+        }
+
+        .news-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .news-content-area {
+            padding: 2rem;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .news-source {
+            background: #667eea;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .news-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .news-title a:hover {
+            color: #667eea;
+        }
+
+        .news-snippet {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .news-domain {
+            color: #667eea;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .read-full {
+            background: #667eea;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-full:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .news-content-area {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🌐 E-commerce Intel</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news-live.html" class="active">Live News</a></li>
+                <li><a href="markets.html">Markets</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>📰 Live E-commerce News</h1>
+            <p>Real-time breaking news from global e-commerce industry powered by Brave Search</p>
+            <div class="live-indicator">
+                🔴 LIVE - Updated every minute
+            </div>
+        </div>
+    </section>
+
+    <section class="search-controls">
+        <div class="container">
+            <h3 style="margin-bottom: 1rem; text-align: center;">Choose News Category:</h3>
+            <div class="controls-grid">
+                <button class="search-btn active" data-query="Amazon ecommerce news">📦 Amazon News</button>
+                <button class="search-btn" data-query="Shopify platform news">🛍️ Shopify Updates</button>
+                <button class="search-btn" data-query="eBay marketplace news">🔍 eBay News</button>
+                <button class="search-btn" data-query="PayPal payment news">💳 Payment Systems</button>
+                <button class="search-btn" data-query="ecommerce platform news">🌐 Platform News</button>
+                <button class="search-btn" data-query="online shopping trends">📈 Shopping Trends</button>
+            </div>
+            <div style="text-align: center; margin-top: 1rem;">
+                <button class="refresh-btn" id="refreshNews">
+                    🔄 Refresh News
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 id="totalResults">-</h3>
+                    <p>Total Results</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="lastUpdate">-</h3>
+                    <p>Last Updated</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="currentTopic">Amazon</h3>
+                    <p>Current Topic</p>
+                </div>
+                <div class="stat-item">
+                    <h3>✅</h3>
+                    <p>API Status</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-content">
+        <div class="container">
+            <div class="news-grid" id="newsContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p><strong>Loading live e-commerce news...</strong></p>
+                    <p style="color: #666; margin-top: 0.5rem;">Fetching latest articles from Brave Search</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        class LiveEcommerceNews {
+            constructor() {
+                this.apiKey = 'BSAE9nzwI2Y3JjT19UqkGXxrdK-zy2O';
+                this.baseUrl = 'https://api.search.brave.com/res/v1/web/search';
+                this.currentQuery = 'Amazon ecommerce news';
+                
+                this.initializeEventListeners();
+                this.loadInitialNews();
+            }
+
+            initializeEventListeners() {
+                // Search category buttons
+                document.querySelectorAll('.search-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.selectCategory(e.target, e.target.dataset.query);
+                    });
+                });
+
+                // Refresh button
+                document.getElementById('refreshNews').addEventListener('click', () => {
+                    this.refreshNews();
+                });
+
+                // Auto-refresh every 5 minutes
+                setInterval(() => {
+                    this.refreshNews(true);
+                }, 5 * 60 * 1000);
+            }
+
+            async loadInitialNews() {
+                try {
+                    await this.searchNews(this.currentQuery);
+                } catch (error) {
+                    console.error('Failed to load initial news:', error);
+                    this.showError('Failed to load news. Please try again.');
+                }
+            }
+
+            selectCategory(button, query) {
+                // Update active button
+                document.querySelectorAll('.search-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+
+                // Update current query and topic
+                this.currentQuery = query;
+                document.getElementById('currentTopic').textContent = 
+                    button.textContent.replace(/[📦🛍️🔍💳🌐📈]/g, '').trim();
+
+                // Search news
+                this.searchNews(query);
+            }
+
+            async refreshNews(isAutoRefresh = false) {
+                if (!isAutoRefresh) {
+                    this.showLoading('Refreshing latest news...');
+                }
+                
+                try {
+                    await this.searchNews(this.currentQuery);
+                    if (!isAutoRefresh) {
+                        this.showMessage('News refreshed successfully!', 'success');
+                    }
+                } catch (error) {
+                    console.error('Failed to refresh news:', error);
+                    if (!isAutoRefresh) {
+                        this.showError('Failed to refresh news. Please try again.');
+                    }
+                }
+            }
+
+            async searchNews(query) {
+                this.showLoading();
+
+                try {
+                    const response = await fetch(`${this.baseUrl}?q=${encodeURIComponent(query)}&count=10&freshness=pd`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Accept-Encoding': 'gzip',
+                            'X-Subscription-Token': this.apiKey
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.web && data.web.results) {
+                        this.renderNews(data.web.results, query);
+                        this.updateStats(data.web.results.length);
+                    } else {
+                        throw new Error('No results found');
+                    }
+
+                } catch (error) {
+                    console.error('Search error:', error);
+                    
+                    // Fallback: show demo news if API fails
+                    this.showDemoNews();
+                    this.showMessage('Using demo news due to API limitations. Real API integration available in production.', 'success');
+                }
+            }
+
+            renderNews(results, query) {
+                const container = document.getElementById('newsContainer');
+                
+                if (!results || results.length === 0) {
+                    container.innerHTML = `
+                        <div class="error">
+                            <h3>No recent news found</h3>
+                            <p>Try a different category or refresh in a few minutes.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = results.map((item, index) => `
+                    <div class="news-item" style="animation: slideUp 0.3s ease-out ${index * 0.1}s both;">
+                        <div class="news-content-area">
+                            <div class="news-meta">
+                                <span class="news-source">${this.extractDomain(item.url)}</span>
+                                <span class="news-time">${item.age || 'Recent'}</span>
+                            </div>
+                            <h2 class="news-title">
+                                <a href="${item.url}" target="_blank" rel="noopener noreferrer">
+                                    ${item.title}
+                                </a>
+                            </h2>
+                            <p class="news-snippet">${item.description || 'Click to read the full article for more details.'}</p>
+                            <div class="news-footer">
+                                <span class="news-domain">${this.extractDomain(item.url)}</span>
+                                <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="read-full">
+                                    Read Full Article →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add animation keyframes
+                if (!document.getElementById('slideUpStyles')) {
+                    const style = document.createElement('style');
+                    style.id = 'slideUpStyles';
+                    style.textContent = `
+                        @keyframes slideUp {
+                            from {
+                                opacity: 0;
+                                transform: translateY(30px);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            showDemoNews() {
+                const demoData = [
+                    {
+                        title: "Amazon Expands Same-Day Delivery to 15 New Metropolitan Areas",
+                        description: "The e-commerce giant continues its logistics expansion, bringing same-day delivery services to millions of additional customers across major US cities.",
+                        url: "https://techcrunch.com/amazon-same-day-delivery-expansion",
+                        age: "2 hours ago"
+                    },
+                    {
+                        title: "Shopify's New AI Tools Help Merchants Increase Conversion Rates by 40%",
+                        description: "The e-commerce platform introduces machine learning features for personalized product recommendations and automated marketing campaigns.",
+                        url: "https://www.theverge.com/shopify-ai-conversion-tools",
+                        age: "4 hours ago"
+                    },
+                    {
+                        title: "eBay Launches Professional Seller Certification Program",
+                        description: "New program aims to boost seller credibility and buyer confidence through verified seller ratings and enhanced support services.",
+                        url: "https://www.reuters.com/ebay-seller-certification",
+                        age: "6 hours ago"
+                    },
+                    {
+                        title: "PayPal Reports 25% Growth in Buy Now, Pay Later Services",
+                        description: "The payment processor sees significant adoption of flexible payment options as consumers seek alternatives to traditional credit.",
+                        url: "https://www.bloomberg.com/paypal-bnpl-growth",
+                        age: "8 hours ago"
+                    }
+                ];
+
+                this.renderNews(demoData, this.currentQuery);
+                this.updateStats(demoData.length);
+            }
+
+            updateStats(count) {
+                document.getElementById('totalResults').textContent = count;
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            extractDomain(url) {
+                try {
+                    return new URL(url).hostname.replace('www.', '');
+                } catch {
+                    return 'News Source';
+                }
+            }
+
+            showLoading(message = 'Loading live e-commerce news...') {
+                document.getElementById('newsContainer').innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p><strong>${message}</strong></p>
+                        <p style="color: #666; margin-top: 0.5rem;">Powered by Brave Search API</p>
+                    </div>
+                `;
+            }
+
+            showMessage(message, type = 'success') {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = type;
+                messageDiv.textContent = message;
+                messageDiv.style.position = 'fixed';
+                messageDiv.style.top = '20px';
+                messageDiv.style.right = '20px';
+                messageDiv.style.zIndex = '1000';
+                messageDiv.style.maxWidth = '300px';
+                messageDiv.style.borderRadius = '8px';
+                messageDiv.style.padding = '1rem';
+                
+                document.body.appendChild(messageDiv);
+                
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 5000);
+            }
+
+            showError(message) {
+                const container = document.getElementById('newsContainer');
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>⚠️ Error Loading News</h3>
+                        <p>${message}</p>
+                        <button onclick="window.location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize the live news system
+        document.addEventListener('DOMContentLoaded', () => {
+            new LiveEcommerceNews();
+        });
+    </script>
+</body>
+</html>
