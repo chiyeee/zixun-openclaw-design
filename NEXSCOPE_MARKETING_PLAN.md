@@ -1,625 +1,767 @@
-# Nexscope 营销获客方案
-## 基于OpenClaw生态的系统化营销策略
+# Nexscope 营销获客方案 v2
+## 面向欧美亚马逊卖家的系统化获客与自动化营销策略
 
-> **项目**: Nexscope — 全球电商智能Agent
-> **版本**: v1.0 | 2026-03-05
-> **目标**: 利用OpenClaw生态热度 + 多渠道自动化营销，实现Nexscope从0到1的冷启动获客
-
----
-
-## 一、核心定位
-
-**Nexscope** 是一个基于OpenClaw生态构建的电商智能Agent，面向跨境电商卖家和海外营销从业者，提供市场情报、竞品分析、SEO优化、营销自动化等一站式服务。
-
-**借势逻辑**: OpenClaw是2026年最火的开源AI助手网关项目（GitHub高星，Discord社区"Friends of the Crustacean 🦞🤝"活跃），覆盖WhatsApp/Telegram/Discord/Slack/Signal/iMessage等22+个聊天平台。Nexscope作为其生态中的电商垂直应用，天然具备话题性和分发渠道。
+> **项目**: Nexscope — Amazon卖家智能数据平台
+> **目标客户**: Base在海外（特别是欧美）的亚马逊卖家（非中国跨境出海卖家）
+> **核心服务**: 关键词调研 · 竞品分析 · 选品分析 · Listing优化
+> **数据优势**: 接入各大电商SaaS + Amazon前台数据，数据整合统一且精准
+> **当前阶段**: 无产品官网，有一个monitor开源项目可用于前期引流
+> **版本**: v2.0 | 2026-03-05
 
 ---
 
-## 二、10+营销/引流策略（含具体步骤）
+## 一、现状与策略框架
+
+### 我们有什么
+- ✅ 一个monitor开源项目（可部署、可演示）
+- ✅ 后端已接入各大电商SaaS和Amazon前台数据
+- ✅ 核心能力：关键词调研、竞品分析、选品分析、Listing优化
+- ✅ OpenClaw生态的技术能力和skills工具链
+
+### 我们缺什么
+- ❌ 产品官网和Landing Page
+- ❌ 品牌知名度和用户基础
+- ❌ 获客渠道和流量入口
+
+### 策略核心思路
+```
+Phase 1: 用monitor开源项目引流 → 积累开发者和卖家社区
+Phase 2: 社区中导流到Nexscope核心服务 → 建立付费用户池
+Phase 3: 自动化营销漏斗 → 规模化增长
+```
 
 ---
 
-### 策略1：🦞 OpenClaw Skills生态上架（核心渠道）
+## 二、Monitor开源引流方案（Phase 1核心）
 
-**原理**: OpenClaw的Skills生态（skills.sh）是一个公开的技能市场，头部skill安装量超过400K（如vercel-labs/skills的find-skills达407.9K）。把Nexscope包装成一个可安装的skill，直接触达所有OpenClaw用户。
+> ⚠️ 待补充：monitor项目截图/功能描述获取后，此部分将更新具体细节
 
-**信息源**:
-- skills.sh 排行榜: <https://skills.sh> — 84,880个skills，头部安装量达400K+
-- ClawHub文档: <https://docs.openclaw.ai/tools/clawhub> — 公开注册、发布、搜索
-- Skills格式文档: <https://docs.openclaw.ai/tools/skills> — AgentSkills兼容格式
+### 2.1 开源定位
+
+**核心逻辑**: 把monitor作为一个独立的、有价值的开源工具推出，吸引Amazon卖家和电商开发者群体。开源本身不直接赚钱，但它是获取信任、积累用户、建立品牌的最高效方式。
+
+**命名建议**:
+- `amazon-market-monitor` — 直接、搜索友好
+- `nexscope-monitor` — 带品牌名，为后续导流做铺垫
+- 推荐后者：每次被搜到、被Star，都是品牌曝光
+
+### 2.2 GitHub仓库运营
+
+**仓库结构**:
+```
+nexscope/nexscope-monitor
+├── README.md              # 核心：效果截图、一键部署、功能列表
+├── docker-compose.yml     # 一键启动
+├── docs/
+│   ├── SETUP.md           # 详细部署文档
+│   ├── FEATURES.md        # 功能说明
+│   └── ROADMAP.md         # 路线图（暗示Nexscope完整版）
+├── src/
+├── LICENSE                # MIT — 最大化传播
+└── .github/
+    ├── ISSUE_TEMPLATE/
+    └── FUNDING.yml        # GitHub Sponsors链接
+```
+
+**README.md 必须包含**:
+1. **一张高质量截图/GIF** — 第一眼决定Star还是关掉
+2. **一行描述** — "Real-time Amazon market monitoring. Track competitors, prices, and trends."
+3. **一键部署** — `docker-compose up -d` 或 `npx nexscope-monitor`
+4. **为什么做这个** — 简短的背景故事，建立共鸣
+5. **Nexscope品牌露出** — "Built by the Nexscope team. Full analytics suite coming soon → [Join Waitlist]"
+
+**Star增长策略**:
+
+| 渠道 | 操作 | 预期效果 |
+|------|------|---------|
+| Hacker News | "Show HN: Open-source Amazon market monitor" | 首日100-500 stars |
+| Reddit r/FulfillmentByAmazon | 发帖分享工具 | 精准卖家用户 |
+| Reddit r/selfhosted | "Self-hosted Amazon monitoring" | 开发者社区 |
+| Reddit r/ecommerce | "Free tool for Amazon sellers" | 电商社区 |
+| Product Hunt | 正式Launch | 首日1000+ visits |
+| Twitter/X | @相关KOL、电商博主 | 社交传播 |
+| Dev.to / Hashnode | 技术博客介绍架构 | 开发者引流 |
+
+### 2.3 从Monitor到Nexscope的导流设计
+
+**关键**: 用户用了免费的monitor → 发现数据有价值 → 想要更深入的分析 → 自然转到Nexscope付费服务
+
+**导流触点**:
+1. **README底部**: "Want deeper insights? Nexscope offers keyword research, competitor analysis, and listing optimization. [Early access →]"
+2. **仪表盘内嵌**: monitor的UI中放一个"Powered by Nexscope | Get Full Analytics"的入口
+3. **数据限制**: monitor展示基础数据，深度分析（关键词排名、Listing评分、竞品利润估算）标注"Available in Nexscope Pro"
+4. **邮件收集**: monitor的设置页面或部署完成页面加一个"Get notified when Nexscope launches"的邮箱收集
+
+### 2.4 开源社区运营
+
+**持续维护才有价值**:
+- 每周至少merge 1-2个PR或发布1个minor update
+- 积极回复Issues（24小时内首次回复）
+- 每月发布Release Notes
+- 建立Contributors社区（CONTRIBUTING.md）
+
+**社区→用户转化**:
+- Issues中频繁被问到的功能需求 → 引导到Nexscope："We're building this as part of Nexscope. Sign up for early access."
+- 活跃的Contributors → 邀请成为Beta测试者
+
+---
+
+## 三、多渠道获客策略（12个具体渠道）
+
+### 渠道1：🔍 Reddit精准社区渗透
+
+**为什么是第一优先**: Reddit是欧美Amazon卖家最集中的社区，r/FulfillmentByAmazon 有 200K+ 成员，全是你的目标客户。
+
+**目标subreddits**:
+| Subreddit | 成员 | 适合内容 |
+|-----------|------|---------|
+| r/FulfillmentByAmazon | 200K+ | 选品、竞品、运营技巧 |
+| r/AmazonSeller | 50K+ | 卖家工具推荐、经验分享 |
+| r/ecommerce | 100K+ | 电商行业趋势 |
+| r/Entrepreneur | 2M+ | 创业故事、工具分享 |
+| r/SideProject | 50K+ | 产品发布 |
+| r/selfhosted | 300K+ | monitor开源项目 |
+
+**操作步骤**:
+
+1. **先养号（第1-2周）**
+   - 在以上subreddit中回答问题，分享有价值的见解
+   - 不推任何产品，纯粹帮忙
+   - 积累karma和社区信任
+
+2. **软推广（第3-4周）**
+   - 在r/FulfillmentByAmazon发帖："I built a free tool to monitor Amazon market trends — here's what I found about [specific niche]"
+   - 帖子90%是有价值的市场洞察，10%提到工具
+   - 附上monitor的GitHub链接
+
+3. **持续输出（长期）**
+   - 每周在相关subreddit发1-2个有价值的帖子
+   - 用Nexscope的数据做独家分析，如"Q1 2026 Amazon electronics trends"
+   - 在评论中自然提到工具
+
+**自动化可能性**: ⚠️ Reddit反感自动化发帖，不建议。但可以自动化**内容生产**：
+```
+Cron（每天早8点）→ Nexscope分析今日Amazon热门品类变化
+→ 自动生成Reddit帖子草稿
+→ 人工审核后手动发布
+```
+
+---
+
+### 渠道2：📺 YouTube SEO内容矩阵
+
+**为什么有效**: Amazon卖家群体非常依赖YouTube教程，"amazon fba tutorial"类视频播放量动辄百万。Nexscope的数据分析能力天然适合做"数据驱动的选品分析"类视频。
+
+**内容矩阵**:
+```
+系列A: "Amazon Niche Analysis" (选品分析)
+  - "Is [niche] still profitable in 2026? Data says..."
+  - "Top 5 untapped Amazon niches — data breakdown"
+  - "How I found a $50K/month niche using data"
+
+系列B: "Competitor Teardown" (竞品拆解)
+  - "Deconstructing a $1M Amazon listing — what they do right"
+  - "Your competitor's keyword strategy exposed"
+
+系列C: "Tool Tutorials" (工具教程)
+  - "How to set up Amazon market monitoring (free & open-source)"
+  - "Nexscope vs Jungle Scout vs Helium 10 — honest comparison"
+
+系列D: "Weekly Market Report" (周报)
+  - "This week in Amazon: trends, new niches, price movements"
+```
 
 **具体步骤**:
 
-1. **打包Nexscope为AgentSkill格式**
-   - 创建 `SKILL.md`（YAML frontmatter + 使用说明）
-   - 包含电商分析、竞品监控、SEO审计等核心功能模块
-   - 每个功能拆分成独立skill（如 `nexscope-competitor-watch`、`nexscope-seo-audit`、`nexscope-market-intel`）
+1. **频道设置**
+   - 频道名: "Nexscope — Amazon Seller Intelligence"
+   - 封面和头像保持品牌一致
+   - About中放monitor GitHub链接和waitlist链接
 
-2. **发布到skills.sh和ClawHub**
-   ```bash
-   # 创建GitHub仓库
-   github.com/nexscope/nexscope-skills
+2. **视频制作流程（可半自动化）**
+   ```
+   Step 1: Nexscope自动生成本周数据报告（Cron触发）
+   Step 2: 用数据报告生成视频脚本（copywriting skill）
+   Step 3: 录屏Nexscope/monitor的操作过程
+   Step 4: AI配音（可选）+ 简单剪辑
+   Step 5: 发布，标题和description用SEO优化（seo-audit skill）
+   ```
+
+3. **YouTube SEO优化**
+   - 标题格式: "[数字] + [结果] + [时间] " — "5 Amazon Niches Making $10K/Month in 2026"
+   - 描述前3行包含核心关键词
+   - Tags: amazon fba, product research, amazon seller tools, etc.
+   - 每个视频描述中放GitHub链接和waitlist链接
+
+**自动化实现**:
+```bash
+# 每周一自动生成视频脚本
+openclaw cron add \
+  --name "YouTube Script Generator" \
+  --cron "0 6 * * 1" \
+  --tz "America/New_York" \
+  --session isolated \
+  --message "分析本周Amazon市场数据变化，生成YouTube视频脚本，包含：标题（SEO优化）、开场hook、3个数据亮点、CTA。保存到workspace/youtube-scripts/" \
+  --announce \
+  --channel discord
+```
+
+---
+
+### 渠道3：📧 冷邮件自动化触达
+
+**目标受众**: 已经在用Jungle Scout、Helium 10等工具的Amazon卖家，他们有付费意愿，且对数据工具有认知。
+
+**线索来源**:
+- Amazon卖家论坛签名中的联系方式
+- LinkedIn上标注"Amazon Seller"/"FBA"的Profile
+- Shopify App Store中Amazon相关App的评论者
+- YouTube Amazon教程评论区活跃用户
+
+**邮件序列设计**:
+
+```
+--- Email 1 (Day 0): 价值先行 ---
+Subject: Your Amazon listing for {product} is leaving money on the table
+
+Hi {name},
+
+I ran a quick keyword analysis on your listing for {product_name} on Amazon {marketplace}:
+
+• You're missing 12 high-volume keywords your top 3 competitors all rank for
+• Your main image CTR is estimated at 3.2% — category average is 5.8%  
+• There's a pricing sweet spot at ${price} that could increase your conversion by ~15%
+
+I put together a 1-page report. Want me to send it over?
+
+Best,
+{sender}
+Nexscope Team
+
+--- Email 2 (Day 3): 发送报告 ---
+Subject: Your {product} analysis — as promised
+
+[附上简化版分析报告PDF]
+
+Key takeaways:
+1. Add these 5 keywords to your backend: {kw1}, {kw2}...
+2. Your price is 8% above the buy-box sweet spot
+3. Competitor X launched 3 new variants last month
+
+We built a free monitoring tool that tracks this data in real-time:
+→ github.com/nexscope/nexscope-monitor
+
+--- Email 3 (Day 7): 案例 ---
+Subject: How {similar_seller} increased sales 23% with better keyword data
+
+[展示一个成功案例，真实数据]
+
+--- Email 4 (Day 14): 邀请 ---
+Subject: Early access to our full analytics platform
+
+We're opening Nexscope to a small group of Amazon sellers for beta testing.
+
+What you get:
+✓ Real-time competitor tracking across all your ASINs
+✓ Keyword gap analysis updated daily
+✓ Listing optimization scoring with specific fix suggestions
+✓ All your data from JungleScout/Helium10/Keepa unified in one dashboard
+
+Interested? Reply "yes" and I'll set up your account.
+```
+
+**自动化实现**:
+```
+线索收集（手动 + LinkedIn scraping）
+→ 存入CRM/Spreadsheet
+→ Nexscope自动分析该卖家的Amazon listing
+→ 生成个性化报告（自动化）
+→ 邮件序列自动发送（SendGrid/Resend）
+→ 回复检测 → 人工跟进
+
+自动化率: ~70%（报告生成+邮件发送自动，线索收集和最终跟进人工）
+```
+
+**合规要点**:
+- 遵守CAN-SPAM Act（美国）和GDPR（欧洲）
+- 每封邮件有退订链接
+- 不用购买的邮件列表，只用公开信息
+- 发送频率控制：同一收件人最多5封/月
+
+---
+
+### 渠道4：💼 LinkedIn B2B精准获客
+
+**为什么**: 欧美Amazon卖家中有大量是正规企业和品牌，决策者活跃在LinkedIn上。
+
+**操作步骤**:
+
+1. **Profile优化**
+   - 标题: "Helping Amazon Sellers Make Data-Driven Decisions | Nexscope"
+   - Banner: Nexscope品牌banner + 价值主张
+   - Featured: 放monitor的GitHub链接和最新分析文章
+
+2. **内容发布（每周3-5条）**
+   ```
+   类型A: 数据洞察帖（最高互动）
+     "Just analyzed 10,000 Amazon listings in Home & Kitchen.
+      Here's what the top 1% do differently:
+      1. [数据点]
+      2. [数据点]
+      3. [数据点]
+      Full analysis → [link]"
    
-   # 通过npx skills发布
-   npx skills publish nexscope/nexscope-skills@competitor-watch
-   npx skills publish nexscope/nexscope-skills@market-intel
-   npx skills publish nexscope/nexscope-skills@seo-audit
+   类型B: 行业观点帖
+     "Everyone says Amazon PPC costs are rising.
+      But our data shows a different story for [category]..."
    
-   # 同步到ClawHub
-   clawhub sync --all
+   类型C: 工具分享帖
+     "We open-sourced our Amazon market monitor.
+      Free. Self-hosted. No data limits.
+      Here's how to set it up in 5 minutes → [GitHub link]"
    ```
 
-3. **优化搜索排名**
-   - skill命名包含高频搜索词：`ecommerce`、`competitor`、`amazon`、`shopify`
-   - 写清晰的description和tags，确保被 `npx skills find` 检索到
-   - 初期通过自有渠道推广提高安装量，形成排名正循环
+3. **LinkedIn自动化（合规范围内）**
+   - 用Sales Navigator筛选目标：Title含"Amazon"/"FBA"/"E-commerce"，Location=US/EU
+   - 每天发送20-30个连接请求（附个性化消息）
+   - 连接后不立即推销，先互动2-3次
+   - 第3次互动后分享相关分析报告
 
-4. **预期效果**: 进入skills.sh营销类Top10（当前seo-audit以33.3K领先），每月被动获取数千次安装
+**自动化实现**:
+```
+每日内容生成（自动）:
+  Cron → Nexscope分析当日Amazon热点 → 生成LinkedIn帖子草稿 → 人工微调发布
+
+连接消息模板:
+  "Hi {name}, I noticed you're selling {category} on Amazon. 
+   We just published some interesting data about {category} trends — 
+   thought you might find it useful. Happy to share!"
+```
 
 ---
 
-### 策略2：📢 OpenClaw Discord社区渗透
+### 渠道5：🎯 Amazon卖家Facebook Groups
 
-**原理**: OpenClaw官方Discord社区（"Friends of the Crustacean 🦞🤝"）是最活跃的用户聚集地，设有#showcase频道用于展示社区项目。
+**目标群组**:
+- Amazon FBA Competitive Edge (200K+ members)
+- Amazon FBA High Rollers (100K+ members)  
+- Amazon Seller Central - Tips & Strategies (80K+ members)
+- Private Label Masters (50K+ members)
 
-**信息源**:
-- Discord邀请: <https://discord.gg/clawd>
-- Showcase页面: <https://docs.openclaw.ai/start/showcase> — 社区项目展示，包含PR Review、Wine Cellar、Tesco Shop等案例
-- X/Twitter: <https://x.com/openclaw> — 官方推特
+**操作策略**:
+1. 加入群组，先观察1周了解规则和氛围
+2. 回答其他卖家的问题（用Nexscope数据做佐证）
+3. 每周发1-2个"免费分析"帖子："Drop your ASIN and I'll run a quick competitor analysis"
+4. 收集到的ASIN → 用Nexscope分析 → 回复结果 → 卖家看到价值 → 导流到waitlist
+
+**自动化实现**:
+```
+卖家提交ASIN
+→ Webhook触发Nexscope分析
+→ 自动生成分析报告（关键词差距、价格对比、竞品动态）
+→ 自动回复到Facebook/Discord（格式化）
+
+技术实现:
+POST /hooks/agent
+{
+  "message": "分析ASIN B0XXXXXXXX: 关键词差距、前5竞品、价格区间、Listing评分",
+  "agentId": "nexscope",
+  "deliver": true,
+  "channel": "discord"
+}
+```
+
+---
+
+### 渠道6：📝 SEO内容营销（长期流量）
+
+**关键词策略**: 瞄准Amazon卖家搜索的长尾词
+
+**关键词分层**:
+```
+Tier 1 — 高意向工具词（竞争激烈但转化高）:
+  "amazon keyword research tool"
+  "amazon competitor analysis free"
+  "amazon listing optimization tool"
+  "best amazon seller software 2026"
+
+Tier 2 — 信息型长尾词（竞争低、流量稳定）:
+  "how to find profitable amazon niches"
+  "amazon competitor keyword research tutorial"
+  "amazon listing optimization checklist"
+  "how to analyze amazon competitors"
+
+Tier 3 — 对比词（高购买意向）:
+  "jungle scout vs helium 10 vs nexscope"
+  "best alternative to jungle scout"
+  "free amazon product research tool"
+```
+
+**内容生产流程**:
+```
+1. 用 programmatic-seo skill 批量生成页面模板
+2. 用 Nexscope数据填充每个页面的实际分析
+3. 用 seo-audit skill 检查技术SEO
+4. 用 backlink-analyzer skill 规划外链策略
+5. 部署到 nexscope.ai/blog/{slug}
+
+目标: 6个月内200+篇文章，覆盖3000+长尾关键词
+```
+
+**自动化实现**:
+```bash
+# 每周自动生成5篇SEO文章草稿
+openclaw cron add \
+  --name "SEO Content Generator" \
+  --cron "0 5 * * 1" \
+  --session isolated \
+  --message "从关键词库中选取5个未覆盖的长尾词，分别生成2000字的深度分析文章，包含Nexscope数据截图位置标注，保存到workspace/blog-drafts/" \
+  --announce
+```
+
+---
+
+### 渠道7：🤝 Amazon卖家工具生态合作
+
+**策略**: 不和Jungle Scout/Helium 10直接竞争，而是做互补集成
+
+**合作对象**:
+| 工具类型 | 代表产品 | 合作方式 |
+|---------|---------|---------|
+| PPC管理 | Perpetua, Pacvue | 数据互通，联合功能 |
+| 库存管理 | RestockPro, SoStocked | 选品数据驱动补货决策 |
+| 利润计算 | Sellerboard, ManageByStats | 竞品利润估算数据提供 |
+| Review管理 | FeedbackWhiz | 竞品Review分析 |
+| 物流 | ShipBob, Deliverr | 根据选品推荐物流方案 |
 
 **具体步骤**:
+1. 找到这些工具的API文档或集成marketplace
+2. 开发Nexscope的数据接口（API）
+3. 向这些工具的BD/Partnership团队pitch合作
+4. 在对方的marketplace/app store上架Nexscope集成
+5. 每个集成都是一个获客入口
 
-1. **加入Discord社区，建立存在感**
-   - 在 #general 和 #help 频道积极回答OpenClaw使用问题（尤其是电商相关）
-   - 分享Nexscope的使用案例和截图
-
-2. **在#showcase发布Nexscope**
-   - 制作一个30秒演示视频：展示通过WhatsApp消息触发Nexscope分析竞品
-   - 提交到showcase，格式参考社区案例（如"Tesco Shop Autopilot"的浏览器自动化风格）
-   - 同时在X/Twitter @openclaw 发布
-
-3. **创建Nexscope专属频道/线程**
-   - 如果项目足够成熟，申请在Discord创建 #nexscope 频道
-   - 定期发布电商行业洞察和Nexscope新功能
-
-4. **预期效果**: 直接触达OpenClaw核心用户群，获取早期种子用户和反馈
+**导流路径**:
+```
+用户在Perpetua管理PPC广告
+→ 发现"Nexscope Keyword Insights"集成
+→ 一键授权连接
+→ 在Perpetua内看到Nexscope提供的竞品关键词数据
+→ 想要更多分析 → 跳转Nexscope
+```
 
 ---
 
-### 策略3：🤖 多平台Agent自动营销（WhatsApp/Telegram/Discord Bot）
+### 渠道8：🎤 Amazon卖家Podcast & Webinar
 
-**原理**: OpenClaw原生支持22+个聊天平台，可以让Nexscope以Bot形式在多个平台同时提供服务，用户通过发消息即可获得电商分析。
+**为什么**: 欧美Amazon卖家社区有大量高质量Podcast，上节目是最快建立权威的方式。
 
-**信息源**:
-- 多渠道文档: <https://docs.openclaw.ai/channels/index.md> — WhatsApp/Telegram/Discord/Slack/Signal等全部渠道
-- Discord Bot设置: <https://docs.openclaw.ai/channels/discord.md> — Discord Bot API详细配置
-- Broadcast Groups: <https://docs.openclaw.ai/channels/broadcast-groups.md> — 多Agent并行处理
+**目标Podcast**:
+- AM/PM Podcast (Amazon卖家头部播客)
+- Serious Sellers Podcast by Helium 10
+- The Amazing Seller
+- Ecommerce Fuel (高端卖家)
+- My Wife Quit Her Job
 
 **具体步骤**:
+1. **准备独家数据洞察** — 用Nexscope数据做一份"2026 Amazon Market Report"
+2. **联系Podcast主持人** — "I have exclusive data on Amazon market trends that your audience would love. Here's a preview..."
+3. **录制内容** — 全程用数据说话，自然提到Nexscope
+4. **Webinar系列** — "Amazon Niche Selection Masterclass — Data-Driven Approach"
+   - 免费参加，注册需要邮箱
+   - 直播中演示Nexscope/monitor
+   - 回放放到YouTube（渠道2复用）
 
-1. **搭建Nexscope公开服务Bot**
-   ```json
-   // openclaw.json 配置
-   {
-     "agents": {
-       "list": [{
-         "id": "nexscope",
-         "name": "Nexscope",
-         "workspace": "/path/to/nexscope-workspace"
-       }]
-     },
-     "channels": {
-       "discord": { "dmPolicy": "open" },
-       "telegram": { "dmPolicy": "open" }
-     }
-   }
-   ```
+**自动化实现**:
+```
+Webinar注册 → 自动发送确认邮件
+→ 直播提醒（前1天、前1小时）
+→ 直播后自动发送回放链接 + 分析报告
+→ 3天后自动发送Nexscope试用邀请
+→ 7天后跟进邮件
 
-2. **在Telegram创建@NexscopeBot**
-   - 通过BotFather创建Bot
-   - 连接到OpenClaw Gateway
-   - 提供免费基础功能（每日限额查询）吸引用户
-
-3. **在Discord创建公开服务器**
-   - 设置 #free-analysis 频道（免费电商分析）
-   - 设置 #premium 频道（付费高级功能）
-   - 用户通过 `/analyze amazon.com/dp/xxx` 命令获取竞品分析
-
-4. **利用Broadcast Groups做多Agent协同**
-   ```json
-   {
-     "broadcast": {
-       "strategy": "parallel",
-       "nexscope-group-id": ["nexscope-seo", "nexscope-competitor", "nexscope-market"]
-     }
-   }
-   ```
-   一条消息同时触发SEO分析+竞品监控+市场情报，展示Nexscope的全方位能力
-
-5. **预期效果**: 通过免费服务积累用户，形成口碑传播，Telegram群10K+成员目标
+全部通过email-sequence自动化
+```
 
 ---
 
-### 策略4：⏰ Cron自动化内容生产与分发
+### 渠道9：🏆 Amazon卖家社区免费工具
 
-**原理**: OpenClaw内置Cron调度器，可以定时执行任务并将结果自动推送到指定渠道。利用这个能力，Nexscope可以每日自动生成电商行业报告并分发。
+**策略**: 做几个免费的小工具，每个工具都是一个获客入口
 
-**信息源**:
-- Cron文档: <https://docs.openclaw.ai/automation/cron-jobs.md> — Gateway内置调度器，支持一次性和周期性任务
-- Webhook文档: <https://docs.openclaw.ai/automation/webhook.md> — 外部触发和结果投递
+**工具列表**:
+```
+1. ASIN Lookup — 输入ASIN，返回基础竞品数据
+   → 深度分析需注册Nexscope
 
-**具体步骤**:
+2. Keyword Checker — 输入关键词，返回搜索量和竞争度
+   → 完整关键词报告需注册
 
-1. **设置每日自动行业简报**
-   ```bash
-   openclaw cron add \
-     --name "Nexscope Daily Brief" \
-     --cron "0 8 * * *" \
-     --tz "Asia/Shanghai" \
-     --session isolated \
-     --message "生成今日全球电商行业简报：Top5新闻+市场数据+竞品动态" \
-     --announce \
-     --channel discord \
-     --to "channel:nexscope-daily"
-   ```
+3. Listing Score — 输入listing URL，打分并给优化建议
+   → 详细优化方案需注册
 
-2. **设置竞品价格监控告警**
-   ```bash
-   openclaw cron add \
-     --name "Price Alert" \
-     --cron "*/30 * * * *" \
-     --session isolated \
-     --message "检查监控列表中的竞品价格变化，超过5%波动立即告警" \
-     --announce \
-     --channel telegram \
-     --to "group:nexscope-alerts"
-   ```
+4. Price Tracker — 追踪任意ASIN价格变化
+   → 批量追踪和告警需注册
 
-3. **每周生成SEO分析报告**
-   ```bash
-   openclaw cron add \
-     --name "Weekly SEO Report" \
-     --cron "0 9 * * 1" \
-     --session isolated \
-     --message "对订阅用户的网站执行SEO审计，生成周报并发送" \
-     --announce \
-     --channel discord
-   ```
+5. Review Analyzer — 分析竞品Review中的正负面关键词
+   → 完整情感分析需注册
+```
 
-4. **预期效果**: 自动化内容产出，用户无需操作就能持续收到有价值的信息，提高留存率
+**技术实现**: 每个小工具都是一个简单的Web页面，后端调用Nexscope的API，前端展示基础结果 + "Unlock Full Report" CTA。
+
+**自动化实现**:
+```
+用户使用免费工具
+→ 看到"Unlock Full Report"
+→ 输入邮箱注册
+→ Webhook触发 → Nexscope自动生成完整报告
+→ 邮件自动发送报告
+→ 进入邮件序列
+
+POST /hooks/agent
+{
+  "message": "用户{email}请求ASIN {asin}的完整分析报告，生成PDF格式",
+  "agentId": "nexscope",
+  "deliver": true
+}
+```
 
 ---
 
-### 策略5：🔗 Webhook集成生态（Shopify/Amazon/Stripe触发）
+### 渠道10：📊 数据驱动的PR & 行业报告
 
-**原理**: OpenClaw的Webhook系统允许外部服务触发Agent动作。将Shopify订单、Amazon销售数据、Stripe支付事件等接入Nexscope，实现实时电商智能响应。
+**策略**: 利用Nexscope的数据优势，发布独家行业报告，被媒体引用获取高权重外链和品牌曝光。
 
-**信息源**:
-- Webhook文档: <https://docs.openclaw.ai/automation/webhook.md> — `POST /hooks/agent` 和 `POST /hooks/wake` 接口
-- Hooks文档: <https://docs.openclaw.ai/automation/hooks.md> — 事件驱动自动化系统
+**报告选题**:
+```
+季度报告:
+  "Q1 2026 Amazon Marketplace Report: Trends, Winners, and Opportunities"
 
-**具体步骤**:
+专题报告:
+  "The Real Cost of Selling on Amazon in 2026 — Data from 50,000 Listings"
+  "Amazon's Most Competitive Categories — And Where the Gaps Are"
+  "How Amazon Pricing Wars Affect Small Sellers — A Data Analysis"
+```
 
-1. **开启Webhook接收**
-   ```json
-   {
-     "hooks": {
-       "enabled": true,
-       "token": "${NEXSCOPE_HOOKS_TOKEN}",
-       "path": "/hooks",
-       "allowedAgentIds": ["nexscope"]
-     }
-   }
-   ```
+**分发渠道**:
+1. 发布到自有Blog/Landing Page
+2. 提交到 eCommerceFuel、Marketplace Pulse 等行业媒体
+3. 在LinkedIn和Twitter上做Thread形式的摘要
+4. 联系电商媒体记者提供数据引用
 
-2. **Shopify订单触发分析**
-   ```bash
-   # Shopify Webhook → Nexscope
-   curl -X POST https://your-server/hooks/agent \
-     -H "Authorization: Bearer ${TOKEN}" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "message": "新订单来自美国加州，产品SKU-123，分析该区域竞品定价和市场趋势",
-       "name": "Shopify",
-       "agentId": "nexscope",
-       "deliver": true,
-       "channel": "discord"
-     }'
-   ```
-
-3. **Amazon销售数据日报**
-   - 通过Amazon SP-API获取销售数据
-   - 定时通过Webhook推送给Nexscope分析
-   - Agent自动生成销售趋势报告并推送到指定渠道
-
-4. **制作"一键接入"教程**
-   - 图文教程：如何在5分钟内将Shopify店铺连接到Nexscope
-   - 视频教程：发布到YouTube和B站
-
-5. **预期效果**: 降低用户接入门槛，通过电商平台事件驱动实现自动化，让用户感受到"接上就有用"
+**自动化实现**:
+```bash
+# 每季度自动生成行业报告草稿
+openclaw cron add \
+  --name "Quarterly Report" \
+  --cron "0 8 1 1,4,7,10 *" \
+  --session isolated \
+  --message "生成本季度Amazon市场报告：Top品类变化、价格趋势、新入场品牌、竞争度变化、卖家机会点。格式：标题+摘要+5个核心数据图表描述+结论" \
+  --announce
+```
 
 ---
 
-### 策略6：📝 Programmatic SEO内容矩阵
+### 渠道11：🔗 OpenClaw Skills生态上架
 
-**原理**: 利用已安装的 `programmatic-seo` skill，批量生成针对长尾关键词的SEO页面，覆盖电商相关搜索流量。
+**操作步骤**:
+1. 把Nexscope的核心分析能力打包为AgentSkill
+2. 发布到skills.sh：`nexscope/nexscope-skills@amazon-analyzer`
+3. 在OpenClaw社区Discord的#showcase频道展示
+4. 提交到showcase页面
 
-**信息源**:
-- Skill: `coreyhaines31/marketingskills@programmatic-seo` (17.2K installs)
-- Skill: `coreyhaines31/marketingskills@ai-seo` (5.3K installs)
-- Skill: `resciencelab/opc-skills@seo-geo` (6.6K installs)
+**Skill设计**:
+```
+nexscope-skills/
+├── amazon-keyword-research/SKILL.md   # 关键词调研
+├── amazon-competitor-watch/SKILL.md   # 竞品监控
+├── amazon-listing-audit/SKILL.md      # Listing审计
+└── amazon-niche-finder/SKILL.md       # 选品分析
+```
 
-**具体步骤**:
-
-1. **关键词矩阵设计**
-   ```
-   模板: "{平台} + {品类} + {分析类型}"
-   
-   示例:
-   - "Amazon electronics competitor analysis 2026"
-   - "Shopify dropshipping market trends"
-   - "eBay vintage clothing pricing strategy"
-   - "TikTok Shop beauty products analytics"
-   - "Alibaba supplier comparison tool"
-   ```
-
-2. **批量生成Landing Pages**
-   - 使用 `programmatic-seo` skill生成500+个长尾页面
-   - 每个页面包含：关键词分析、市场数据、Nexscope工具演示
-   - 部署到 `nexscope.ai/insights/{keyword-slug}`
-
-3. **SEO优化**
-   - 使用 `seo-audit` skill审计每个页面的技术SEO
-   - 使用 `backlink-analyzer` skill分析竞品外链策略
-   - 使用 `seo-geo` skill针对不同地区优化
-
-4. **内容更新自动化**
-   - 配合Cron定时更新数据（策略4）
-   - 确保页面数据不过时，提升Google收录排名
-
-5. **预期效果**: 6个月内获取10K+自然搜索流量/月，长尾关键词覆盖率>80%
+**导流路径**: OpenClaw用户安装skill → 使用过程中调用Nexscope API → 免费额度用完 → 升级付费
 
 ---
 
-### 策略7：📧 冷邮件+邮件序列自动化获客
+### 渠道12：💬 Discord/Telegram卖家社区
 
-**原理**: 利用已安装的 `cold-email` 和 `email-sequence` skill，系统化地触达潜在客户（跨境电商卖家、DTC品牌、Shopify店主）。
-
-**信息源**:
-- Skill: `coreyhaines31/marketingskills@cold-email` (5.2K installs)
-- Skill: `coreyhaines31/marketingskills@email-sequence` (12.5K installs)
-- Skill: `zaddy6/agent-email-skill@agent-email-cli` (19.9K installs)
-
-**具体步骤**:
-
-1. **目标客户画像**
+**操作步骤**:
+1. 创建"Nexscope — Amazon Seller Intelligence"Discord服务器
+2. 频道设置:
    ```
-   Tier 1: Shopify店铺月销>$10K的卖家
-   Tier 2: Amazon FBA卖家（3星+评价）
-   Tier 3: 独立站DTC品牌创始人
-   Tier 4: 跨境电商服务商（物流、支付、ERP）
+   #announcements    — 产品更新和行业报告
+   #free-analysis    — 免费ASIN分析（每人每天1次）
+   #market-trends    — 每日市场趋势自动推送
+   #general          — 卖家讨论
+   #feature-requests — 功能需求
    ```
+3. 在r/FulfillmentByAmazon等渠道推广Discord链接
+4. Telegram群组同步运营（覆盖不用Discord的卖家）
 
-2. **冷邮件模板（cold-email skill生成）**
-   ```
-   Subject: Your {store_name} could rank 3x higher — here's the data
-   
-   Hi {first_name},
-   
-   I ran a quick analysis on {store_url} using Nexscope:
-   - Your top competitor {competitor} is outranking you on {n} keywords
-   - There's an untapped market in {region} worth ${value}/month
-   - Your pricing on {product} is {x}% above market average
-   
-   Want the full report? It's free for the first 30 days.
-   
-   → [Get Your Free Report](https://nexscope.ai/free?ref={store_id})
-   ```
+**自动化实现**:
+```bash
+# 每日自动推送市场趋势到Discord
+openclaw cron add \
+  --name "Daily Market Trends" \
+  --cron "0 8 * * *" \
+  --tz "America/New_York" \
+  --session isolated \
+  --message "生成今日Amazon美国站Top5品类变化摘要，格式简洁，包含数据和一句话分析" \
+  --announce \
+  --channel discord \
+  --to "channel:market-trends"
 
-3. **邮件序列设计（email-sequence skill）**
-   ```
-   Day 0: 冷邮件 — 免费分析报告钩子
-   Day 3: 跟进 — 发送简化版报告预览
-   Day 7: 案例 — 展示同行业用户成功案例
-   Day 14: 限时 — 14天Pro试用（不需信用卡）
-   Day 21: 最后 — 社交证明 + 紧迫感
-   ```
-
-4. **合规注意**
-   - 遵守CAN-SPAM和GDPR
-   - 每封邮件包含退订链接
-   - 控制发送频率，避免被标记为垃圾邮件
-
-5. **预期效果**: 冷邮件回复率3-5%，转化率1-2%，每月获取100+注册用户
+# 自动响应#free-analysis中的ASIN分析请求
+# 通过OpenClaw的dmPolicy="open"配置，Bot自动分析用户发来的ASIN
+```
 
 ---
 
-### 策略8：📱 社交媒体内容营销矩阵
+## 四、自动化营销体系设计
 
-**原理**: 利用 `social-content` 和 `brand-guidelines` skill，在多个社交平台持续输出高质量电商内容，建立Nexscope品牌影响力。
+### 4.1 哪些环节可以自动化
 
-**信息源**:
-- Skill: `coreyhaines31/marketingskills@social-content` (15K installs)
-- Skill: `anthropics/skills@brand-guidelines` (10.3K installs)
-- Skill: `coreyhaines31/marketingskills@marketing-psychology` (19.2K installs)
+| 环节 | 自动化程度 | 实现方式 |
+|------|-----------|---------|
+| 内容生产（文章/帖子草稿） | 90% | Cron + copywriting/social-content skill |
+| 邮件序列发送 | 95% | SendGrid + email-sequence skill |
+| ASIN分析报告生成 | 100% | Webhook + Nexscope API |
+| 社交媒体发布 | 50% | 自动生成草稿 → 人工审核发布 |
+| 市场趋势推送 | 100% | Cron + Discord/Telegram |
+| LinkedIn连接请求 | 60% | Sales Navigator + 模板 → 人工微调 |
+| YouTube脚本生成 | 80% | Cron + 数据分析 → 人工录制 |
+| SEO页面生成 | 85% | programmatic-seo + 自动部署 |
+| 用户注册后onboarding | 95% | Webhook → 自动分析 → 自动邮件 |
+| 行业报告生成 | 70% | 自动数据收集 → 自动草稿 → 人工编辑 |
 
-**具体步骤**:
+### 4.2 自动化技术架构
 
-1. **内容日历（每周）**
-   ```
-   周一: 行业数据图表 (Twitter/X + LinkedIn)
-   周二: "Did You Know" 电商冷知识 (Instagram + TikTok)
-   周三: 工具对比 / 深度分析 (Blog + Medium)
-   周四: 用户案例 / 成功故事 (所有平台)
-   周五: 行业新闻速递 (Twitter/X + Telegram)
-   周末: 幕后故事 / 团队文化 (Instagram Stories)
-   ```
+```
+                    ┌─────────────────────┐
+                    │   用户触点层         │
+                    │ Reddit/LinkedIn/YT   │
+                    │ Email/Discord/TG     │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │   OpenClaw Gateway   │
+                    │   Webhook + Cron     │
+                    └──────────┬──────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+    ┌─────────▼─────┐  ┌──────▼──────┐  ┌──────▼──────┐
+    │ Nexscope Agent │  │ Content Gen │  │ Email Agent │
+    │ 数据分析核心    │  │ 内容生产    │  │ 邮件序列    │
+    └─────────┬─────┘  └──────┬──────┘  └──────┬──────┘
+              │                │                │
+    ┌─────────▼────────────────▼────────────────▼─────────┐
+    │              Nexscope Data Layer                      │
+    │  Amazon API + SaaS数据 + 前台数据                     │
+    └─────────────────────────────────────────────────────┘
+```
 
-2. **平台策略**
-   | 平台 | 内容类型 | 发布频率 | 目标 |
-   |------|---------|---------|------|
-   | Twitter/X | 数据图表、行业速评 | 每天2-3条 | 建立权威 |
-   | LinkedIn | 深度分析、案例研究 | 每周3条 | B2B获客 |
-   | YouTube | 教程视频、产品演示 | 每周1条 | SEO+品牌 |
-   | TikTok | 电商冷知识、快速技巧 | 每天1条 | 年轻用户 |
-   | Reddit | r/ecommerce r/shopify 参与讨论 | 每周5条 | 社区信任 |
+### 4.3 关键自动化流程
 
-3. **内容生产自动化**
-   - 用Cron每天自动收集电商热点
-   - 用 `social-content` skill生成平台适配文案
-   - 用 `copywriting` skill优化标题和CTA
-   - 用 `marketing-psychology` skill设计心理触发点
+**流程A: 新用户注册 → 自动Onboarding**
+```
+用户在Landing Page/GitHub/免费工具注册
+→ Webhook触发
+→ Nexscope自动分析用户的Amazon店铺（如果提供了店铺信息）
+→ 生成个性化Welcome报告
+→ 自动邮件发送报告
+→ 进入7天nurture序列
+→ 第7天邀请升级Pro
+```
 
-4. **预期效果**: 3个月内Twitter 5K followers，LinkedIn 2K connections，YouTube 1K subscribers
+**流程B: 每日内容产出**
+```
+06:00 ET — Cron触发 → 分析Amazon当日数据变化
+07:00 ET — 自动生成:
+  - 1条LinkedIn帖子草稿
+  - 1条Twitter帖子草稿  
+  - 1条Discord市场趋势推送（直接发布）
+  - 1篇Blog文章大纲
+08:00 ET — 人工审核LinkedIn/Twitter草稿 → 发布
+09:00 ET — Discord/Telegram自动推送完成
+```
 
----
-
-### 策略9：🏗️ 开源Skill发布引流（开发者社区）
-
-**原理**: 把Nexscope的核心分析能力开源为独立skill，在GitHub和skills.sh上发布，通过开发者社区的传播获取用户。开源用户是最高质量的早期采纳者。
-
-**信息源**:
-- Skills Leaderboard: <https://skills.sh> — 排行榜机制驱动曝光
-- GitHub OpenClaw: <https://github.com/openclaw/openclaw> — 开源社区
-- AgentSkills标准: <https://agentskills.io> — 通用Agent技能格式
-
-**具体步骤**:
-
-1. **开源策略：核心免费，高级付费**
-   ```
-   开源（免费）:
-   ├── nexscope-market-scanner     # 基础市场扫描
-   ├── nexscope-price-tracker      # 价格追踪
-   └── nexscope-seo-quick-check    # 快速SEO检查
-   
-   付费（Pro）:
-   ├── nexscope-competitor-deep    # 深度竞品分析
-   ├── nexscope-trend-predictor    # 趋势预测
-   └── nexscope-full-suite         # 全功能套件
-   ```
-
-2. **在GitHub创建高质量仓库**
-   ```
-   nexscope/nexscope-skills
-   ├── README.md          # 详细文档 + 效果截图 + GIF演示
-   ├── market-scanner/
-   │   └── SKILL.md
-   ├── price-tracker/
-   │   └── SKILL.md
-   ├── seo-quick-check/
-   │   └── SKILL.md
-   └── CONTRIBUTING.md    # 鼓励社区贡献
-   ```
-
-3. **GitHub推广**
-   - 在 `openclaw/openclaw` 仓库的Discussions中分享
-   - 在 `r/selfhosted`、`r/artificial` 等subreddit发帖
-   - 在Hacker News发布 "Show HN: Nexscope — E-commerce Intelligence Agent for OpenClaw"
-
-4. **预期效果**: GitHub 500+ stars（3个月），转化率5%→付费用户
+**流程C: 竞品告警 → 用户通知**
+```
+每30分钟 — Nexscope扫描监控列表中的ASIN变化
+→ 检测到价格变化 > 5% / 新竞品入场 / 关键词排名大幅变动
+→ 自动生成告警摘要
+→ 通过用户选择的渠道推送（Discord/Telegram/Email）
+→ 告警中包含"查看完整分析 →"链接
+```
 
 ---
 
-### 策略10：🎯 品牌+心理学驱动的Landing Page
-
-**原理**: 利用 `brand-guidelines` 和 `marketing-psychology` skill，设计高转化率的产品官网。
-
-**信息源**:
-- Skill: `anthropics/skills@brand-guidelines` (10.3K installs)
-- Skill: `coreyhaines31/marketingskills@marketing-psychology` (19.2K installs)
-- Skill: `coreyhaines31/marketingskills@product-marketing-context` (15.8K installs)
-
-**具体步骤**:
-
-1. **品牌定义（brand-guidelines skill）**
-   ```
-   品牌名: Nexscope
-   Tagline: "See the market before your competitors do"
-   色调: Deep Navy (#0A1628) + Electric Cyan (#00D4FF) + Signal Green (#00FF88)
-   语气: 专业但不枯燥，数据驱动，略带科技感
-   ```
-
-2. **Landing Page结构（心理学驱动）**
-   ```
-   Hero: 痛点共鸣 → "Tired of guessing what your competitors are doing?"
-   ↓
-   Social Proof: "Trusted by 500+ e-commerce sellers across 30 countries"
-   ↓
-   Feature Demo: 动态GIF展示3个核心功能
-   ↓
-   Fear of Missing Out: "Your competitors are already using AI analytics"
-   ↓
-   Risk Reversal: "Free 14-day trial. No credit card required."
-   ↓
-   CTA: "Start Your Free Analysis →"
-   ```
-
-3. **A/B测试计划**
-   - 版本A: 数据驱动（展示具体数字和图表）
-   - 版本B: 故事驱动（展示用户成功案例）
-   - 用 `analytics-tracking` skill追踪转化数据
-
-4. **预期效果**: Landing Page转化率8-12%（行业平均3-5%）
-
----
-
-### 策略11：🔄 Webhook + Zapier/n8n 自动化营销漏斗
-
-**原理**: 通过OpenClaw Webhook与第三方自动化工具（Zapier、n8n、Make）集成，构建完整的自动化营销漏斗。
-
-**信息源**:
-- Webhook文档: <https://docs.openclaw.ai/automation/webhook.md>
-- Hooks文档: <https://docs.openclaw.ai/automation/hooks.md>
-
-**具体步骤**:
-
-1. **营销漏斗自动化**
-   ```
-   用户注册（Landing Page）
-   → Webhook触发 → Nexscope生成个性化分析报告
-   → 报告通过邮件自动发送
-   → 3天后自动发送进阶功能介绍
-   → 7天后自动发送限时优惠
-   → 14天后自动发送续费提醒
-   ```
-
-2. **n8n工作流配置**
-   ```
-   Trigger: 新用户注册 (Webhook)
-   → HTTP Request: POST /hooks/agent (Nexscope分析)
-   → Wait: 收到分析结果
-   → Email: 发送报告
-   → Delay: 3天
-   → Email: 发送功能介绍
-   → IF: 用户已激活? → 发送升级邀请
-   → ELSE: → 发送重新激活邮件
-   ```
-
-3. **Zapier集成模板**
-   - 发布"Nexscope + Shopify"集成模板到Zapier市场
-   - 发布"Nexscope + Stripe"集成模板
-   - 每个模板都是一个获客入口
-
-4. **预期效果**: 漏斗自动化后，人力成本降低80%，转化效率提高3倍
-
----
-
-### 策略12：🌍 多语言本地化获客
-
-**原理**: OpenClaw天然支持多语言（覆盖22+平台，包括LINE日本、Zalo越南、Feishu飞书中国等），Nexscope可以针对不同市场做本地化。
-
-**信息源**:
-- 渠道列表: <https://docs.openclaw.ai/channels/index.md>
-- LINE渠道: <https://docs.openclaw.ai/channels/line.md> — 日本/台湾市场
-- Zalo渠道: <https://docs.openclaw.ai/channels/zalo.md> — 越南市场
-- Feishu渠道: <https://docs.openclaw.ai/channels/feishu.md> — 中国企业市场
-
-**具体步骤**:
-
-1. **优先市场**
-   | 市场 | 平台 | 语言 | 重点品类 |
-   |------|------|------|---------|
-   | 北美 | Discord/WhatsApp | English | Amazon FBA, Shopify |
-   | 东南亚 | Telegram/Zalo | EN/VN/TH | Shopee, Lazada |
-   | 日韩 | LINE/Telegram | JP/KR | Rakuten, Coupang |
-   | 中国 | 飞书/Telegram | CN | 跨境电商、1688 |
-   | 欧洲 | WhatsApp/Signal | DE/FR/ES | Amazon EU, Zalando |
-
-2. **本地化执行**
-   - 每个市场创建独立的Agent配置和workspace
-   - 利用Broadcast Groups让多语言Agent并行响应
-   - 内容和报告自动翻译为目标语言
-
-3. **本地KOL合作**
-   - 在各市场找电商领域的KOL/博主合作推广
-   - 提供免费Pro账户换取测评和推荐
-
-4. **预期效果**: 覆盖5个主要市场，每个市场1K+用户
-
----
-
-## 三、执行优先级与时间表
+## 五、执行路线图
 
 ### Phase 1: 冷启动（第1-4周）
-| 优先级 | 策略 | 投入 | 预期产出 |
-|--------|------|------|---------|
-| P0 | 策略1: Skills上架 | 3天 | 被动安装量增长 |
-| P0 | 策略2: Discord社区 | 持续 | 种子用户50+ |
-| P0 | 策略10: Landing Page | 5天 | 转化率基础设施 |
-| P1 | 策略3: 多平台Bot | 1周 | Telegram/Discord服务上线 |
+| 周 | 任务 | 产出 |
+|----|------|------|
+| W1 | Monitor开源项目上架GitHub + README优化 | GitHub仓库上线 |
+| W1 | 创建Nexscope Discord服务器 | 社区基础设施 |
+| W2 | Hacker News + Reddit发布monitor | 首批200+ stars |
+| W2 | 开始Reddit养号和内容输出 | 社区存在感 |
+| W3 | 搭建简易Landing Page（可以是GitHub Pages） | waitlist收集 |
+| W3 | 开始LinkedIn内容发布 | B2B渠道启动 |
+| W4 | 设置Cron自动化内容生产 | 每日内容产出 |
+| W4 | 冷邮件第一批（50封） | 首批回复和注册 |
 
 ### Phase 2: 增长（第5-12周）
-| 优先级 | 策略 | 投入 | 预期产出 |
-|--------|------|------|---------|
-| P0 | 策略6: SEO内容矩阵 | 2周启动 | 月搜索流量10K+ |
-| P1 | 策略7: 邮件获客 | 1周 | 月注册100+ |
-| P1 | 策略8: 社交媒体 | 持续 | 多平台粉丝增长 |
-| P2 | 策略4: Cron自动化 | 3天 | 内容自动产出 |
+| 周 | 任务 | 产出 |
+|----|------|------|
+| W5-6 | 发布3个免费小工具 | 新获客入口 |
+| W5-6 | YouTube首批5个视频 | 长尾流量启动 |
+| W7-8 | SEO内容矩阵启动（50篇） | 搜索流量增长 |
+| W7-8 | 联系3个Podcast主持人 | 行业权威建立 |
+| W9-10 | OpenClaw Skills上架 | 开发者渠道 |
+| W9-10 | 第一份行业报告发布 | PR和外链 |
+| W11-12 | 工具生态合作洽谈 | 渠道拓展 |
+| W11-12 | 邮件自动化漏斗完善 | 转化率优化 |
 
 ### Phase 3: 规模化（第13-24周）
-| 优先级 | 策略 | 投入 | 预期产出 |
-|--------|------|------|---------|
-| P0 | 策略9: 开源引流 | 2周 | GitHub 500+ stars |
-| P1 | 策略11: 自动化漏斗 | 1周 | 转化效率3x |
-| P1 | 策略5: Webhook集成 | 2周 | 电商平台直连 |
-| P2 | 策略12: 多语言 | 持续 | 5个市场覆盖 |
+- 多语言扩展（德语、日语市场）
+- 付费广告测试（Google Ads + Facebook Ads）
+- Affiliate Program启动
+- 行业大会参展/演讲
 
 ---
 
-## 四、关键指标（KPIs）
+## 六、关键指标（KPIs）
 
-| 指标 | 月度目标（Phase 1） | 月度目标（Phase 3） |
-|------|---------------------|---------------------|
-| Skills安装量 | 500 | 5,000 |
-| 网站UV | 1,000 | 20,000 |
-| 注册用户 | 100 | 2,000 |
-| 付费用户 | 10 | 200 |
-| Discord成员 | 200 | 3,000 |
-| Telegram成员 | 300 | 5,000 |
-| GitHub Stars | 50 | 500 |
-
----
-
-## 五、所需工具与资源
-
-### 已安装的OpenClaw Skills（14个营销工具）
-- `seo-audit` — SEO技术审计
-- `copywriting` — 营销文案
-- `marketing-psychology` — 消费心理学
-- `programmatic-seo` — 程序化SEO
-- `content-strategy` — 内容策略
-- `product-marketing-context` — 产品营销
-- `social-content` — 社交内容
-- `analytics-tracking` — 分析追踪
-- `email-sequence` — 邮件序列
-- `brand-guidelines` — 品牌指南
-- `seo-geo` — 地理SEO
-- `ai-seo` — AI驱动SEO
-- `cold-email` — 冷邮件
-- `backlink-analyzer` — 反链分析
-
-### 外部工具
-- **域名**: nexscope.ai（待注册）
-- **邮件服务**: Resend / SendGrid
-- **自动化**: n8n（自托管）或 Zapier
-- **分析**: PostHog / Plausible
-- **支付**: Stripe
-- **代码托管**: GitHub
+| 指标 | Phase 1目标 | Phase 2目标 | Phase 3目标 |
+|------|-------------|-------------|-------------|
+| GitHub Stars | 500 | 2,000 | 5,000 |
+| Waitlist邮箱 | 200 | 1,000 | 5,000 |
+| Discord成员 | 100 | 500 | 2,000 |
+| 网站月UV | 500 | 5,000 | 30,000 |
+| 注册用户 | 50 | 500 | 3,000 |
+| 付费用户 | — | 50 | 500 |
+| MRR | — | $2,500 | $25,000 |
 
 ---
 
-## 六、风险与应对
+## 七、竞品定位
 
-| 风险 | 概率 | 影响 | 应对措施 |
-|------|------|------|---------|
-| OpenClaw热度下降 | 低 | 高 | 多渠道分散，不过度依赖单一生态 |
-| Skills审核被拒 | 中 | 中 | 提前研究发布规范，保证代码质量 |
-| 冷邮件被封 | 中 | 中 | 使用多域名轮换，控制发送量 |
-| 竞品模仿 | 高 | 中 | 先发优势+持续迭代+品牌建设 |
-| API限制/成本 | 中 | 高 | 缓存策略+分层定价覆盖成本 |
+Nexscope不是要取代Jungle Scout或Helium 10，而是提供**差异化价值**:
+
+| | Jungle Scout | Helium 10 | Nexscope |
+|--|-------------|-----------|----------|
+| 定位 | 选品+关键词 | 全功能工具箱 | 数据整合+智能分析 |
+| 数据源 | 自有爬虫 | 自有爬虫 | 多SaaS整合+前台数据 |
+| 差异点 | 品牌成熟 | 功能最全 | **数据统一、AI分析、实时** |
+| 价格 | $49-129/mo | $39-279/mo | TBD（建议$29-99/mo） |
+| 免费层 | 有限试用 | 有限试用 | **开源monitor + 免费工具** |
+
+**核心卖点**: "You already use 5 tools. We make them talk to each other."
 
 ---
 
-> **文档维护者**: 阿霞 (Nexscope AI Assistant)
+> **文档维护者**: 阿霞
 > **最后更新**: 2026-03-05
-> **状态**: v1.0 — 待执行
+> **状态**: v2.0 — 待monitor项目信息补充后完善Section 2
+> **存储**: github.com/chiyeee/zixun-openclaw-design/NEXSCOPE_MARKETING_PLAN.md
