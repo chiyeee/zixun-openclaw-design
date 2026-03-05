@@ -22,7 +22,79 @@
 
 ---
 
-## 2. 渠道总表
+## 2. Phase 0：预热期（无产品无官网阶段）
+
+> 目标：在产品上线前建好渠道资产、积累种子用户、预热品牌认知。产品上线时不从零开始。
+
+### 已有资产
+
+| 资产 | 状态 | 价值 |
+|------|------|------|
+| SellerPic 4万+注册邮箱 | 可用 | 最大杠杆——零成本触达已验证电商用户 |
+| nexscope-monitor开源项目 | 可用，需整理 | GitHub引流主力+技术信任 |
+| Linkfox Agent核心引擎 | 内部可用 | 产品基础 |
+| OpenClaw skills开发能力 | 可用 | 生态入口 |
+
+### 落地页替代方案（不需要官网）
+
+| 替代方案 | 做法 | 用途 |
+|---------|------|------|
+| GitHub README | monitor仓库README底部嵌入waitlist表单(Formspree/Tally) | Star→顺手填邮箱 |
+| Carrd单页 | $0做一页：一句话+waitlist表单+Discord链接，5分钟搞定 | 各渠道bio统一指向 |
+| Discord服务器 | 创建Nexscope服务器，设好频道结构 | 沉淀用户关系 |
+| Medium/Dev.to | 发SEO文章，不需要自己域名 | 免费+自带权重 |
+
+### 第1周动作
+
+| 动作 | 依赖 | 产出 |
+|------|------|------|
+| 整理nexscope-monitor仓库（README+截图+Docker+topics） | 已有项目 | Stars开始积累，Google开始索引 |
+| 创建nexscope GitHub org + Profile README | 零成本 | 品牌主页 |
+| 创建awesome-amazon-seller-tools仓库 | 零成本 | SEO长期资产 |
+| Reddit注册+养号（每天2-3条回答） | 新账号 | 2周后可发帖 |
+| LinkedIn开始发数据洞察帖 | 个人号 | 关注者积累 |
+| X品牌号启动，参与OpenClaw/电商话题 | 新账号 | 圈子存在感 |
+| 创建Nexscope Discord服务器 | 零成本 | 各渠道导流终点 |
+| 做一个Carrd/Tally单页当临时落地页 | 零成本 | 统一waitlist入口 |
+
+### 第2-3周动作
+
+| 动作 | 依赖 | 产出 |
+|------|------|------|
+| **SellerPic 4万邮箱发预告邮件** | SendGrid/Resend | 预估3%转化=1200 waitlist用户 |
+| 开发5个OpenClaw Amazon skills | GitHub仓库 | skills.sh存在感+OpenClaw社区认知 |
+| HN "Show HN" 发monitor | monitor整理完成 | 第一波流量+Stars |
+| Product Hunt发布monitor | 同上 | 第二波流量 |
+| 在Medium/Dev.to发3-5篇SEO文章 | 零成本 | 搜索排名种子 |
+| 开始联系KOL（建数据库+发邀请） | 冷邮件/DM | 建关系，产品出来直接合作 |
+| 加入4个Facebook FBA群组开始回答问题 | 零成本 | 社群信任 |
+| 在OpenClaw Discord #showcase发帖 | skills/monitor | 开发者社区曝光 |
+
+### 第4周动作
+
+| 动作 | 依赖 | 产出 |
+|------|------|------|
+| Reddit首次发帖（karma已够） | 养号2周 | 精准卖家流量 |
+| SEO关键词库建立+批量内容启动 | Medium/自有博客 | 长尾覆盖开始 |
+| 付费广告小规模测试（$500/月） | Carrd落地页 | 验证CPA |
+| 引流型仓库陆续创建 | GitHub org | 更多SEO入口 |
+
+### Phase 0 预期产出（产品上线前）
+
+| 指标 | 4周目标 |
+|------|--------|
+| Waitlist邮箱 | 1,500+（SellerPic转化+其他渠道） |
+| GitHub Stars (monitor) | 500+ |
+| Discord成员 | 100+ |
+| Reddit karma | 500+ |
+| LinkedIn关注者 | 200+ |
+| KOL已建联 | 10+ |
+| SEO文章 | 10+ |
+| OpenClaw Skills上架 | 5 |
+
+---
+
+## 3. 渠道总表
 
 | # | 渠道 | 目标 | 启动周 | 周投入 |
 |---|------|------|--------|--------|
@@ -45,7 +117,7 @@
 
 ---
 
-## 3. 渠道详细
+## 4. 渠道详细
 
 ### A. OpenClaw生态 + Nexscope Agent
 
@@ -204,7 +276,7 @@
 
 ---
 
-## 4. 线索→培育→转化
+## 5. 线索→培育→转化
 
 | 阶段 | 动作 |
 |------|------|
@@ -216,7 +288,7 @@
 
 ---
 
-## 5. 自动化Cron
+## 6. 自动化Cron
 
 | 任务 | Cron | 输出 |
 |------|------|------|
@@ -228,7 +300,7 @@
 
 ---
 
-## 6. 14周执行日历
+## 7. 14周执行日历
 
 | 周 | 关键动作 |
 |----|---------|
@@ -243,7 +315,7 @@
 
 ---
 
-## 7. KPI
+## 8. KPI
 
 | 指标 | W4 | W8 | W14 |
 |------|-----|-----|------|
@@ -258,7 +330,7 @@
 
 ---
 
-## 8. 预算
+## 9. 预算
 
 | 项目 | 月成本 |
 |------|--------|
