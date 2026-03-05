@@ -1,0 +1,135 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "name": "internal",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js"
+    ]
+  },
+  "_api.js": {
+    "file": "chunks/api.js",
+    "name": "api",
+    "imports": [
+      "_config.js"
+    ]
+  },
+  "_config.js": {
+    "file": "chunks/config.js",
+    "name": "config"
+  },
+  "_markets.js": {
+    "file": "chunks/markets.js",
+    "name": "markets",
+    "imports": [
+      "_svelte-vendor.js"
+    ]
+  },
+  "_news.js": {
+    "file": "chunks/news.js",
+    "name": "news",
+    "imports": [
+      "_svelte-vendor.js",
+      "_config.js"
+    ]
+  },
+  "_svelte-vendor.js": {
+    "file": "chunks/svelte-vendor.js",
+    "name": "svelte-vendor",
+    "imports": [
+      "_vendor.js"
+    ]
+  },
+  "_vendor.js": {
+    "file": "chunks/vendor.js",
+    "name": "vendor"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/app/server/remote/index.js": {
+    "file": "remote-entry.js",
+    "name": "remote-entry",
+    "src": "node_modules/@sveltejs/kit/src/runtime/app/server/remote/index.js",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "name": "entries/fallbacks/error.svelte",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "name": "index",
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js"
+    ]
+  },
+  "src/routes/+layout.js": {
+    "file": "entries/pages/_layout.js",
+    "name": "entries/pages/_layout",
+    "src": "src/routes/+layout.js",
+    "isEntry": true
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "name": "entries/pages/_layout.svelte",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js",
+      "_news.js",
+      "_markets.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.ReeL6EB8.css"
+    ]
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "name": "entries/pages/_page.svelte",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js",
+      "_news.js",
+      "_markets.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.B7y9_5DZ.css"
+    ]
+  },
+  "src/routes/markets/+page.svelte": {
+    "file": "entries/pages/markets/_page.svelte.js",
+    "name": "entries/pages/markets/_page.svelte",
+    "src": "src/routes/markets/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js",
+      "_markets.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.CEqJK_cK.css"
+    ]
+  },
+  "src/routes/news/+page.svelte": {
+    "file": "entries/pages/news/_page.svelte.js",
+    "name": "entries/pages/news/_page.svelte",
+    "src": "src/routes/news/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_svelte-vendor.js",
+      "_news.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.CXOGdDX5.css"
+    ]
+  }
+}

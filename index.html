@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>全球电商智能情报平台</title>
+		<meta name="description" content="Global E-commerce Intelligence Platform - Real-time market analysis, news tracking, and competitive intelligence for e-commerce businesses" />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://chiyeee.github.io/ecommerce-intel-platform/" />
+		<meta property="og:title" content="全球电商智能情报平台" />
+		<meta property="og:description" content="Real-time market analysis and competitive intelligence" />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:title" content="全球电商智能情报平台" />
+		<meta property="twitter:description" content="Real-time market analysis and competitive intelligence" />
+		
+		<!-- Preload critical resources -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		
+		<style>
+			/* Critical CSS to prevent FOUC */
+			html {
+				font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+				background: #0a0a0a;
+				color: #ffffff;
+			}
+			
+			body {
+				margin: 0;
+				background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+				min-height: 100vh;
+			}
+			
+			/* Loading animation */
+			.loading-container {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #0a0a0a;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 9999;
+			}
+			
+			.loading-spinner {
+				width: 40px;
+				height: 40px;
+				border: 3px solid #333;
+				border-top: 3px solid #00d4ff;
+				border-radius: 50%;
+				animation: spin 1s linear infinite;
+			}
+			
+			@keyframes spin {
+				0% { transform: rotate(0deg); }
+				100% { transform: rotate(360deg); }
+			}
+			
+			/* Hide scrollbar but keep functionality */
+			::-webkit-scrollbar {
+				width: 6px;
+			}
+			
+			::-webkit-scrollbar-track {
+				background: #1a1a1a;
+			}
+			
+			::-webkit-scrollbar-thumb {
+				background: #444;
+				border-radius: 3px;
+			}
+			
+			::-webkit-scrollbar-thumb:hover {
+				background: #666;
+			}
+		</style>
+		
+		<link href="./_app/immutable/entry/start.CTRgst0e.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/J2AQlyW8.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/rsSWfq8L.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.DNjVAh3m.js" rel="modulepreload">
+		
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div id="loading-screen" class="loading-container">
+			<div>
+				<div class="loading-spinner"></div>
+				<div style="margin-top: 20px; text-align: center; color: #888;">
+					Loading Intelligence Platform...
+				</div>
+			</div>
+		</div>
+		
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_12oxsxo = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/ecommerce-intel-platform"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("./_app/immutable/entry/start.CTRgst0e.js"),
+						import("./_app/immutable/entry/app.DNjVAh3m.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+		
+		<script>
+			// Hide loading screen when app is ready
+			window.addEventListener('load', () => {
+				const loadingScreen = document.getElementById('loading-screen');
+				if (loadingScreen) {
+					loadingScreen.style.opacity = '0';
+					loadingScreen.style.transition = 'opacity 0.3s ease';
+					setTimeout(() => {
+						loadingScreen.remove();
+					}, 300);
+				}
+			});
+			
+			// Global error handler
+			window.addEventListener('error', (e) => {
+				console.error('Global error:', e.error);
+			});
+			
+			// Service worker for caching (optional)
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('/sw.js').catch(() => {
+					// Service worker not available, that's ok
+				});
+			}
+		</script>
+	</body>
+</html>
