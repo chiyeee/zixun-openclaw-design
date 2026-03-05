@@ -34,16 +34,34 @@ Phase 3: 自动化营销漏斗 → 规模化增长
 
 ## 二、Monitor开源引流方案（Phase 1核心）
 
-> ⚠️ 待补充：monitor项目截图/功能描述获取后，此部分将更新具体细节
+### 2.0 项目现状分析
+
+**仓库**: <https://github.com/hhw19970223/nexscope-monitor>
+**技术栈**: Next.js 16 + React 19 + TypeScript + Tailwind CSS 4 + shadcn/ui + react-simple-maps + SWR
+**标题**: "Global E-Commerce Intelligence Dashboard"
+
+**已实现的5大模块**:
+| 模块 | 功能 | 数据源 |
+|------|------|--------|
+| **MarketOverview** | 全球电商概览：GMV $5.8T、180+市场、65M日包裹、2.8B购物者、73%移动电商 | Statista / eMarketer |
+| **WorldMap** | 交互式世界地图：LPI物流热力图 + 平台份额视图，支持点击国家查看详情 | World Bank LPI 2023 |
+| **NewsPanel** | 电商情报Feed：6个分类(logistics/platform/policy/market/technology/general)，Live RSS 5分钟自动刷新 | TechCrunch / Retail Dive / FreightWaves |
+| **LogisticsPanel** | 物流绩效排名：160国LPI评分、海关/基础设施/追踪/时效等细项、趋势走向 | World Bank LPI 2023 |
+| **PlatformsPanel** | 平台市场情报：12国电商平台份额(Amazon/Alibaba/Shopee/JD等)、GMV、活跃购物者、市场成熟度 | 行业数据 |
+
+**亮点**: 深色专业仪表盘风格(#4C88F1蓝色调)、交互式地图、实时RSS、响应式设计
+**短板**: README还是默认的Next.js模板（这是最大的改善空间——README是GitHub流量转化的第一关卡）
 
 ### 2.1 开源定位
 
-**核心逻辑**: 把monitor作为一个独立的、有价值的开源工具推出，吸引Amazon卖家和电商开发者群体。开源本身不直接赚钱，但它是获取信任、积累用户、建立品牌的最高效方式。
+**核心逻辑**: monitor已经是一个完成度很高的产品了——交互式世界地图、实时新闻、物流指数、平台份额对比，这些对Amazon卖家来说都是有价值的信息。关键是怎么让人看到它、用起来、然后导到Nexscope。
 
-**命名建议**:
-- `amazon-market-monitor` — 直接、搜索友好
-- `nexscope-monitor` — 带品牌名，为后续导流做铺垫
-- 推荐后者：每次被搜到、被Star，都是品牌曝光
+**命名**: 已经叫 `nexscope-monitor`，很好。品牌绑定+搜索友好，不需要改。
+
+**定位包装建议**: 不要叫自己"电商新闻Dashboard"（太泛），而是：
+> **"The open-source intelligence dashboard for Amazon sellers — track logistics, platforms, and market trends across 180+ countries"**
+
+这句话做了三件事：说清了是给谁的（Amazon sellers）、做什么（track logistics/platforms/trends）、规模感（180+ countries）。
 
 ### 2.2 GitHub仓库运营
 
@@ -63,12 +81,36 @@ nexscope/nexscope-monitor
     └── FUNDING.yml        # GitHub Sponsors链接
 ```
 
-**README.md 必须包含**:
-1. **一张高质量截图/GIF** — 第一眼决定Star还是关掉
-2. **一行描述** — "Real-time Amazon market monitoring. Track competitors, prices, and trends."
-3. **一键部署** — `docker-compose up -d` 或 `npx nexscope-monitor`
-4. **为什么做这个** — 简短的背景故事，建立共鸣
-5. **Nexscope品牌露出** — "Built by the Nexscope team. Full analytics suite coming soon → [Join Waitlist]"
+**README.md 必须重写（当前是默认Next.js模板，这是最大的优化点）**:
+
+```markdown
+# 🌍 NexScope Monitor
+
+**The open-source intelligence dashboard for e-commerce sellers.**
+Track logistics performance, platform market share, and industry news across 180+ countries — in real time.
+
+[截图/GIF放这里 — 必须是产品最震撼的画面，建议用WorldMap交互的GIF]
+
+## ✨ Features
+- 🗺️ **Interactive World Map** — LPI logistics heatmap + platform market share by country
+- 📰 **Live Intelligence Feed** — Real-time RSS from TechCrunch, Retail Dive, FreightWaves
+- 📦 **Logistics Performance Index** — 160 countries ranked with detailed breakdown
+- 📊 **Platform Market Intelligence** — Amazon, Shopee, Alibaba market share across 12+ markets
+- 📱 **Responsive** — Works on desktop, tablet, and mobile
+
+## 🚀 Quick Start
+git clone https://github.com/hhw19970223/nexscope-monitor.git
+cd nexscope-monitor
+npm install && npm run dev
+
+## 🔮 Coming Soon
+Full seller analytics suite: keyword research, competitor tracking, listing optimization.
+→ [Join the waitlist](链接)
+
+Built by the [Nexscope](链接) team.
+```
+
+**关键**: 截图比什么文字都重要。GitHub上第一眼看到的图决定了80%的Star转化率。建议截一张完整的仪表盘图（包含WorldMap + NewsPanel + 底部面板），再做一个3-5秒的GIF展示地图交互。
 
 **Star增长策略**:
 
@@ -86,11 +128,19 @@ nexscope/nexscope-monitor
 
 **关键**: 用户用了免费的monitor → 发现数据有价值 → 想要更深入的分析 → 自然转到Nexscope付费服务
 
-**导流触点**:
-1. **README底部**: "Want deeper insights? Nexscope offers keyword research, competitor analysis, and listing optimization. [Early access →]"
-2. **仪表盘内嵌**: monitor的UI中放一个"Powered by Nexscope | Get Full Analytics"的入口
-3. **数据限制**: monitor展示基础数据，深度分析（关键词排名、Listing评分、竞品利润估算）标注"Available in Nexscope Pro"
-4. **邮件收集**: monitor的设置页面或部署完成页面加一个"Get notified when Nexscope launches"的邮箱收集
+**导流触点（利用monitor现有模块）**:
+
+1. **README底部CTA**: "Want deeper insights? Nexscope offers keyword research, competitor analysis, and listing optimization. [Early access →]"
+
+2. **WorldMap交互扩展**: 用户点击某个国家（比如US）→ 看到基础的平台份额和LPI数据 → 底部出现一个卡片："Want to see keyword trends, top-selling products, and competitor analysis for Amazon US? → Unlock with Nexscope"
+
+3. **NewsPanel升级引导**: 当前NewsPanel已经有6个分类。可以加一个第7个Tab叫"Seller Alerts"，点击后显示："Personalized price change alerts, new competitor detection, and keyword ranking drops — coming in Nexscope Pro. [Get Early Access]"
+
+4. **PlatformsPanel深度数据**: 当前展示的是市场份额百分比。在每个国家详情面板底部加一行："See top-selling categories, avg. seller revenue, and entry barriers → [Nexscope Pro]"
+
+5. **Footer邮箱收集**: 在现有footer（"NexScope Monitor © 2026"）旁边加一个简单的邮箱输入框："Get notified when full analytics launches → [your@email.com] [Notify Me]"
+
+6. **Docker一键部署后的Welcome页**: 用户本地跑起来后，第一次打开看到一个Welcome Modal："Welcome to NexScope Monitor! Want personalized alerts for your Amazon store? [Connect Your Store →]" — 这里收集邮箱
 
 ### 2.4 开源社区运营
 
