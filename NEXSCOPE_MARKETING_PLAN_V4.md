@@ -12,7 +12,7 @@
 ```
 BEFORE （让人知道）        →  DURING （让人试用）    →  AFTER （让人留下+推荐）
                               
-OpenClaw生态 + Nexscope Agent       Waitlist邮箱收集         交付体验标准
+OpenClaw生态 + Agent         Waitlist邮箱收集         交付体验标准
 GitHub开源运营               邮件培育序列             竞品告警推送
 Reddit社区                   冷邮件直接获客           增购触发机制
 YouTube KOL + 自制           免费→付费转化            转介绍奖励系统
@@ -24,6 +24,8 @@ Facebook Groups
 免费小工具                  
 行业报告/PR                 
 Discord/TG社区              
+付费广告                    
+红人/KOL合作（跨平台）      
 Podcast/Webinar (低优先级)   
 ```
 
@@ -436,7 +438,88 @@ GEO的目标不是传统Google排名，而是让ChatGPT/Gemini/AI Overview在回
 
 ---
 
-### 渠道N：Podcast & Webinar（低优先级）
+### 渠道N：付费广告
+
+**目标**: 精准触达高意向Amazon卖家，加速获客
+
+**N1. Google Ads（搜索广告）**
+- 投放关键词："amazon seller tools"、"amazon keyword research tool"、"amazon competitor analysis tool"、"jungle scout alternative"
+- 这些词CPC较高（$3-$10），但意向极强——搜这些词的人正在找工具
+- 先小预算测试（$20-$30/天），看注册成本，再决定是否放大
+- 落地页直接进Nexscope Agent注册/waitlist
+
+**N2. Reddit Ads**
+- Reddit支持按subreddit精准投放，直接投r/FulfillmentByAmazon、r/AmazonSeller
+- 比Google Ads便宜，CPC通常$1-$3
+- 用"Free ASIN Analysis"作为广告钩子，点击后进分析工具页
+- 注意：Reddit用户反感硬广，广告素材要像自然帖子（数据洞察风格）
+
+**N3. YouTube Ads**
+- 投放到Amazon FBA教程类视频的前贴片（in-stream ads）
+- 素材：15-30秒演示Nexscope Agent分析ASIN的过程
+- 按观看付费（CPV $0.05-$0.15），比较划算
+- 可以和KOL合作内容复用为广告素材
+
+**N4. Facebook/Instagram Ads**
+- 用自定义受众（SellerPic邮箱列表）创建lookalike audience
+- SellerPic 4万+邮箱是极有价值的种子受众——Facebook能据此找到相似人群
+- 投放到Feed和Reels
+- 素材：数据可视化截图 + 短文案
+
+**N5. 预算规划**
+- Phase 1 (W4-W8): $500/月，测试各平台，找到CPA最低的渠道
+- Phase 2 (W9+): 集中预算到表现最好的1-2个平台，$1000-$2000/月
+- 目标CPA: 注册<$5，付费转化<$50
+
+**启动周**: W4（产品可用后） · **持续投入**: 每周2小时优化 + 广告预算
+
+---
+
+### 渠道O：红人/KOL合作（跨平台）
+
+**目标**: 通过红人背书快速建立信任，获取精准卖家流量
+
+**说明**: YouTube KOL在渠道D中已单独写了。这里是跨平台的红人策略总览。
+
+**O1. 红人类型和平台**
+
+Tier 1 · Amazon卖家KOL（核心）：
+- YouTube: 工具测评、FBA教程频道（1万-50万粉）
+- TikTok: Amazon FBA tips类账号
+- Instagram: 电商生活方式类账号
+- Podcast: AM/PM Podcast、Serious Sellers等（作为嘉宾或赞助）
+
+Tier 2 · AI/SaaS类KOL（品牌扩展）：
+- YouTube/X: AI工具测评、SaaS产品评测频道
+- 切入角度："AI agent for Amazon sellers"是新品类，科技KOL有兴趣
+- 适合做Nexscope vs MaxClaw、AI agent工作流之类的内容
+
+Tier 3 · 电商行业媒体（权威背书）：
+- Marketplace Pulse、eCommerce Fuel、Seller Sessions
+- 合作形式：独家数据报告 → 媒体引用 → 品牌曝光
+
+**O2. 合作方式**
+- 免费Pro账号换测评（零成本，适合冷启动）
+- 付费植入（$200-$2000/条，看粉丝量）
+- Affiliate分佣（给红人专属链接，按注册$5/付费15%分佣）
+- 联合内容（共同制作教程或数据分析视频）
+- 赞助播客（$500-$3000/期，看听众量）
+
+**O3. 执行流程**
+- 建一个红人数据库（Google Sheet：名字/平台/粉丝量/互动率/联系方式/合作状态）
+- W3-W4: 筛选50个目标红人
+- W5起: 每周发送10封合作邀请
+- 目标回复率10-15%，每月落地3-5个合作
+
+**O4. 素材支持**
+- 准备一个"KOL合作包"：产品介绍one-pager + demo视频 + 数据截图 + talking points
+- 给每个合作红人创建专属landing page（`nexscope.ai/partner/[name]`）
+
+**启动周**: W3 · **持续投入**: 每周3小时 + 合作预算
+
+---
+
+### 渠道P：Podcast & Webinar（低优先级）
 
 **说明**: 中国团队直接做英文Podcast难度大，暂不作为主线。后期如果有了英文内容负责人或者找到合适的co-host再启动。
 
@@ -524,12 +607,12 @@ openclaw cron add --name "Quarterly Report" \
 
 **W1**: GitHub org创建 · 仓库矩阵搭建 · Monitor README重写 · Reddit养号开始 · Nexscope Agent产品定义
 **W2**: OpenClaw Skills开发 · Discord/TG社区创建 · LinkedIn启动 · X账号启动 · Facebook Groups加入 · SellerPic冷邮件第一批
-**W3**: Nexscope Agent部署 · OpenClaw Discord发帖 · YouTube KOL筛选(20个目标) · Reddit继续养号 · HN "Show HN"发帖
-**W4**: Product Hunt发布 · SEO内容启动+关键词库 · KOL合作邀请发送 · 外部冷邮件第一批 · Cron自动化配置
-**W5-W6**: 免费小工具开发上线 · 首批KOL合作视频 · TikTok开始(复用YouTube内容) · awesome列表发布 · 引流型仓库陆续创建
-**W7-W8**: SEO累计30+篇 · GEO优化启动 · 蹭热点内容批量发布 · 第一份行业报告
-**W9-W10**: KOL合作持续 · 邮件序列优化 · 所有渠道数据复盘
-**W11-W14**: 砍掉低效渠道 · 加码高效渠道 · 探索Podcast机会 · Nexscope Agent产品迭代
+**W3**: Nexscope Agent部署 · OpenClaw Discord发帖 · 红人数据库建立 · 筛选50个目标KOL · Reddit继续养号 · HN "Show HN"发帖
+**W4**: Product Hunt发布 · SEO内容启动+关键词库 · KOL合作邀请发送 · 外部冷邮件第一批 · Cron自动化配置 · **付费广告测试启动**（Google Ads + Reddit Ads，$500/月）
+**W5-W6**: 免费小工具开发上线 · 首批KOL合作视频 · TikTok开始(复用YouTube内容) · awesome列表发布 · 引流型仓库陆续创建 · Facebook lookalike广告测试
+**W7-W8**: SEO累计30+篇 · GEO优化启动 · 蹭热点内容批量发布 · 第一份行业报告 · 广告数据复盘（砍掉低效平台）
+**W9-W10**: KOL合作持续（每月3-5个） · 邮件序列优化 · 所有渠道数据复盘 · 付费广告集中到最优渠道
+**W11-W14**: 砍掉低效渠道 · 加码高效渠道 · 探索Podcast机会 · Nexscope Agent产品迭代 · 红人Affiliate计划扩大
 
 ---
 
@@ -560,7 +643,10 @@ openclaw cron add --name "Quarterly Report" \
 | Formspree (邮箱收集) | Free tier |
 | Plausible (分析) | $9/mo |
 | Reddit Premium | $7/mo |
-| **月总计** | **~$40/mo** |
+| **付费广告 (Phase 1)** | **$500/mo** |
+| **红人合作预算** | **$500-$2000/mo** |
+| **月总计（不含红人）** | **~$540/mo** |
+| **月总计（含红人）** | **~$1,000-$2,500/mo** |
 
 ---
 
