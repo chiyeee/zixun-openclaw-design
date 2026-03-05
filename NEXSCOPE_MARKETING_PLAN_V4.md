@@ -1,7 +1,8 @@
-# Nexscope Marketing Execution Plan v4.2
+# Nexscope Marketing Execution Plan v4.3
 ## 可执行清单 · 渠道×动作×节奏
 
-> Nexscope · Amazon卖家数据智能平台 · 欧美市场
+> Nexscope · AI-Native Agent平台 · 美国Amazon卖家
+> 基于Linkfox Agent出海化 · 结合OpenClaw趋势红利
 > 2026-03-05
 
 ---
@@ -11,7 +12,7 @@
 ```
 BEFORE （让人知道）        →  DURING （让人试用）    →  AFTER （让人留下+推荐）
                               
-OpenClaw生态 + NexClaw       Waitlist邮箱收集         交付体验标准
+OpenClaw生态 + Nexscope Agent       Waitlist邮箱收集         交付体验标准
 GitHub开源运营               邮件培育序列             竞品告警推送
 Reddit社区                   冷邮件直接获客           增购触发机制
 YouTube KOL + 自制           免费→付费转化            转介绍奖励系统
@@ -28,15 +29,38 @@ Podcast/Webinar (低优先级)
 
 ---
 
-## 1. 目标客户
+## 1. 产品定义 & 目标客户
 
-- Base在欧美的Amazon卖家（不含中国出海卖家）
+### 产品本质
+
+Nexscope是Linkfox Agent的出海版本，是一款专为美国电商卖家（以Amazon生态为主）打造的AI-Native Agent平台，覆盖三大能力场景：
+
+- **洞察 (Insights)**: 市场趋势、竞品分析、关键词研究、选品机会
+- **运营 (Operations)**: Listing优化、库存建议、价格策略、Review监控
+- **营销 (Marketing)**: 广告优化、站外引流、社交内容、邮件策略
+
+**核心打法**: 免部署 + 电商Skill + 垂类数据源 + Agent——借OpenClaw趋势红利，用零门槛的Agent体验获客
+
+**市场时机**: 海外卖家正在积极拥抱AI但充满焦虑——传统岗位（运营助理、数据分析师、广告投手）的工作流正在被AI效能工具改写释放。Nexscope切入的是高频、碎片化的日常场景，成为连接卖家需求、网页数据与行动建议的AI能力中枢。
+
+### 目标客户
+
+- Base在美国和欧洲的Amazon卖家（不含中国出海卖家）
 - 月销$5K-$500K的中腰部卖家
 - 已经在用Jungle Scout / Helium 10 / Keepa等工具，有付费习惯
+- 正在经历"AI焦虑"——知道AI能提效但不知道怎么用到自己的电商业务中
 - 主要出没在：Reddit r/FulfillmentByAmazon · Facebook FBA Groups · YouTube · LinkedIn
 - **已有资产**: SellerPic产品积累的4万+海外电商用户注册邮箱
 
-**一句话定位**: "You use 5 tools. We make them talk to each other."
+### 定位
+
+**一句话**: "The AI command center for Amazon sellers — insights, operations, and marketing in one agent."
+
+**电梯说辞**: "Amazon sellers spend hours switching between 5 tools, manually checking competitors, and guessing at keywords. Nexscope is an AI agent that connects your seller data, web intelligence, and action recommendations into one conversation. Ask it anything about your business — it already knows the context."
+
+**vs 竞品卡位**:
+- Jungle Scout / Helium 10 = 传统SaaS工具，人去操作工具
+- Nexscope = AI-Native Agent，Agent主动给你洞察和建议，你和Agent对话完成工作
 
 ---
 
@@ -44,18 +68,19 @@ Podcast/Webinar (低优先级)
 
 ---
 
-### 渠道A：OpenClaw生态 + NexClaw产品（优先级最高）
+### 渠道A：OpenClaw生态 + Nexscope Agent（优先级最高）
 
-**目标**: 借OpenClaw热度，推出"NexClaw"——一个预部署好的、内置电商skills的OpenClaw云服务，类似MiniMax的MaxClaw模式
+**目标**: 借OpenClaw趋势红利，用"免部署+电商Skill+垂类数据源+Agent"组合获客
 
-**参考模型**: MiniMax做了MaxClaw（maxclaw.ai），是OpenClaw的云托管版本，用户10秒部署，零运维。我们做NexClaw，同样基于OpenClaw，但专注电商卖家场景。
+**参考模型**: MiniMax做了MaxClaw（maxclaw.ai），是OpenClaw的通用云托管Agent，10秒部署零运维。Nexscope做的是同一件事，但垂直到电商——底层是Linkfox Agent的能力（洞察/运营/营销三大场景），通过OpenClaw框架免部署交付给用户。
 
-**A1. 产品定义：NexClaw**
-- 基于OpenClaw框架的云托管电商AI Agent
-- 预装全部电商相关skills（关键词调研、竞品分析、选品分析、Listing优化、价格监控）
+**A1. Nexscope Agent产品形态**
+- 基于OpenClaw框架 + Linkfox Agent核心能力的云托管电商AI Agent
+- 预装全部电商skills + 对接垂类数据源（Amazon前台、SP-API、各SaaS API）
 - 用户注册后10秒内可用，通过Discord/Telegram/WhatsApp直接对话
-- 免费版：每天5次ASIN分析；付费版：无限制
-- 和MaxClaw的区别：MaxClaw是通用Agent，NexClaw是电商垂直Agent
+- 免费版：每天5次分析；付费版：无限制
+- 三大场景覆盖：问竞品洞察→Agent回答；问Listing优化→Agent给方案；问广告策略→Agent出建议
+- vs MaxClaw: MaxClaw是通用Agent，Nexscope是电商垂直Agent，自带行业数据和场景理解
 
 **A2. OpenClaw Skills发布**
 - 创建 `nexscope/nexscope-skills` GitHub仓库
@@ -66,14 +91,15 @@ Podcast/Webinar (低优先级)
 
 **A3. OpenClaw Discord社区参与**
 - 加入OpenClaw官方Discord（"Friends of the Crustacean 🦞🤝"）
-- 在#showcase发帖展示NexClaw：做一个30秒演示GIF，WhatsApp输入ASIN → 返回竞品分析
+- 在#showcase发帖展示Nexscope Agent：做一个30秒演示GIF，WhatsApp输入ASIN → 返回竞品分析
 - 在#help回答电商相关问题，建立"电商AI Agent专家"形象
 - 日常互动：对别人的showcase给反馈，参与功能讨论
 
-**A4. NexClaw部署**
-- VPS上部署OpenClaw Gateway + Nexscope Agent
+**A4. Nexscope Agent部署**
+- VPS上部署OpenClaw Gateway + Linkfox Agent核心引擎
 - 配置多渠道Bot（Discord + Telegram + WhatsApp）
-- 预安装全部电商skills + 数据源对接
+- 预安装全部电商skills + 垂类数据源对接（Amazon前台/SP-API/第三方SaaS）
+- 三大场景skill预配置：洞察类skill + 运营类skill + 营销类skill
 - 设置使用配额和付费验证
 
 **A5. Cron自动化内容生产**
@@ -84,6 +110,7 @@ Podcast/Webinar (低优先级)
 **A6. 蹭OpenClaw热度做内容**
 - 写"How to build an Amazon seller agent on OpenClaw"教程文章
 - 录"OpenClaw for e-commerce sellers"教程视频
+- "AI is replacing your Amazon VA — here's what's actually happening"（切中AI焦虑心理）
 - 在Medium/Dev.to发布，吸引OpenClaw+电商交叉用户
 
 **启动周**: W1 · **持续投入**: 每周3小时
@@ -96,7 +123,7 @@ Podcast/Webinar (低优先级)
 
 **B1. 创建官方GitHub Organization**
 - 组织名：`nexscope`
-- 设置Organization Profile README，写清Nexscope是什么、NexClaw是什么、monitor链接、waitlist链接
+- 设置Organization Profile README，写清Nexscope定位、Agent产品形态、monitor链接、waitlist链接
 
 **B2. 仓库矩阵**
 
@@ -177,8 +204,8 @@ Podcast/Webinar (低优先级)
 - 近3个月有更新，互动率>2%
 
 合作方式：
-- 免费产品测评：提供NexClaw免费Pro账号，换一期视频
-- 付费植入：在其教程视频中15-30秒提到Nexscope/NexClaw
+- 免费产品测评：提供Nexscope Agent免费Pro账号，换一期视频
+- 付费植入：在其教程视频中15-30秒提到Nexscope
 - 联合内容：共同制作"用AI分析Amazon竞品"类教程
 - Affiliate分佣：给KOL专属注册链接，按注册/付费分佣
 
@@ -258,7 +285,7 @@ Podcast/Webinar (低优先级)
 - 每月用seo-audit skill检查技术SEO
 
 **G2. 蹭热点内容**
-- OpenClaw生态相关："Best OpenClaw skills for Amazon sellers"、"How to use OpenClaw for e-commerce"、"NexClaw vs MaxClaw for sellers"
+- OpenClaw生态相关："Best OpenClaw skills for Amazon sellers"、"How to use OpenClaw for e-commerce"、"Nexscope vs MaxClaw for Amazon sellers"
 - AI Agent热点："AI agents for Amazon FBA"、"ChatGPT for Amazon sellers"
 - 工具对比蹭流量："Jungle Scout vs Helium 10 vs Nexscope 2026"
 
@@ -279,7 +306,7 @@ GEO的目标不是传统Google排名，而是让ChatGPT/Gemini/AI Overview在回
 - "openclaw amazon skills"
 - "openclaw ecommerce agent"
 - "AI agent for amazon sellers"
-- "NexClaw ecommerce"
+- "nexscope amazon agent"
 - 这些长尾词目前竞争极低，容易排名
 
 **启动周**: W4 · **持续投入**: 每周4小时
@@ -427,7 +454,7 @@ GEO的目标不是传统Google排名，而是让ChatGPT/Gemini/AI Overview在回
 ### 线索获取触点
 - **SellerPic存量邮箱（4万+）** ← 优先级最高，零获取成本
 - Monitor Footer/Welcome Modal邮箱收集
-- NexClaw注册
+- Nexscope Agent注册
 - 免费小工具注册
 - YouTube/Reddit/LinkedIn/TikTok/X引流到waitlist
 - 行业报告下载
@@ -441,7 +468,7 @@ GEO的目标不是传统Google排名，而是让ChatGPT/Gemini/AI Overview在回
 - +30天: Win-back（如未激活）
 
 ### 定价层级
-- Free: Monitor + NexClaw免费版（每天5次分析）
+- Free: Monitor + Nexscope Agent免费版（每天5次分析）
 - Starter $29/mo: 5个ASIN监控 + 基础关键词
 - Pro $79/mo: 50个ASIN + 完整功能
 - Enterprise $199/mo: 无限 + API + 团队
@@ -495,14 +522,14 @@ openclaw cron add --name "Quarterly Report" \
 
 ## 5. 14周执行日历
 
-**W1**: GitHub org创建 · 仓库矩阵搭建 · Monitor README重写 · Reddit养号开始 · NexClaw产品定义
+**W1**: GitHub org创建 · 仓库矩阵搭建 · Monitor README重写 · Reddit养号开始 · Nexscope Agent产品定义
 **W2**: OpenClaw Skills开发 · Discord/TG社区创建 · LinkedIn启动 · X账号启动 · Facebook Groups加入 · SellerPic冷邮件第一批
-**W3**: NexClaw部署 · OpenClaw Discord发帖 · YouTube KOL筛选(20个目标) · Reddit继续养号 · HN "Show HN"发帖
+**W3**: Nexscope Agent部署 · OpenClaw Discord发帖 · YouTube KOL筛选(20个目标) · Reddit继续养号 · HN "Show HN"发帖
 **W4**: Product Hunt发布 · SEO内容启动+关键词库 · KOL合作邀请发送 · 外部冷邮件第一批 · Cron自动化配置
 **W5-W6**: 免费小工具开发上线 · 首批KOL合作视频 · TikTok开始(复用YouTube内容) · awesome列表发布 · 引流型仓库陆续创建
 **W7-W8**: SEO累计30+篇 · GEO优化启动 · 蹭热点内容批量发布 · 第一份行业报告
 **W9-W10**: KOL合作持续 · 邮件序列优化 · 所有渠道数据复盘
-**W11-W14**: 砍掉低效渠道 · 加码高效渠道 · 探索Podcast机会 · NexClaw产品迭代
+**W11-W14**: 砍掉低效渠道 · 加码高效渠道 · 探索Podcast机会 · Nexscope Agent产品迭代
 
 ---
 
@@ -512,7 +539,7 @@ openclaw cron add --name "Quarterly Report" \
 |------|-----|-----|------|
 | GitHub Stars (monitor) | 500 | 1,500 | 3,000 |
 | Waitlist邮箱 | 200 | 800 | 2,000 |
-| NexClaw注册 | 50 | 300 | 1,000 |
+| Nexscope Agent注册 | 50 | 300 | 1,000 |
 | Discord成员 | 100 | 300 | 800 |
 | 网站月UV | — | 3,000 | 10,000 |
 | KOL合作视频 | — | 3 | 10 |
@@ -526,8 +553,8 @@ openclaw cron add --name "Quarterly Report" \
 
 | 资源 | 成本 |
 |------|------|
-| VPS (OpenClaw Gateway + NexClaw) | ~$20/mo |
-| 域名 nexscope.ai / nexclaw.ai | ~$60/yr |
+| VPS (OpenClaw Gateway + Nexscope Agent) | ~$20/mo |
+| 域名 nexscope.ai | ~$30/yr |
 | Vercel (Monitor部署) | Free |
 | SendGrid (邮件) | Free tier |
 | Formspree (邮箱收集) | Free tier |
