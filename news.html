@@ -1,149 +1,583 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="./favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>全球电商智能情报平台</title>
-		<meta name="description" content="Global E-commerce Intelligence Platform - Real-time market analysis, news tracking, and competitive intelligence for e-commerce businesses" />
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://chiyeee.github.io/ecommerce-intel-platform/" />
-		<meta property="og:title" content="全球电商智能情报平台" />
-		<meta property="og:description" content="Real-time market analysis and competitive intelligence" />
-		
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:title" content="全球电商智能情报平台" />
-		<meta property="twitter:description" content="Real-time market analysis and competitive intelligence" />
-		
-		<!-- Preload critical resources -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-		
-		<style>
-			/* Critical CSS to prevent FOUC */
-			html {
-				font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-				background: #0a0a0a;
-				color: #ffffff;
-			}
-			
-			body {
-				margin: 0;
-				background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-				min-height: 100vh;
-			}
-			
-			/* Loading animation */
-			.loading-container {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #0a0a0a;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				z-index: 9999;
-			}
-			
-			.loading-spinner {
-				width: 40px;
-				height: 40px;
-				border: 3px solid #333;
-				border-top: 3px solid #00d4ff;
-				border-radius: 50%;
-				animation: spin 1s linear infinite;
-			}
-			
-			@keyframes spin {
-				0% { transform: rotate(0deg); }
-				100% { transform: rotate(360deg); }
-			}
-			
-			/* Hide scrollbar but keep functionality */
-			::-webkit-scrollbar {
-				width: 6px;
-			}
-			
-			::-webkit-scrollbar-track {
-				background: #1a1a1a;
-			}
-			
-			::-webkit-scrollbar-thumb {
-				background: #444;
-				border-radius: 3px;
-			}
-			
-			::-webkit-scrollbar-thumb:hover {
-				background: #666;
-			}
-		</style>
-		
-		<link href="./_app/immutable/entry/start.CTRgst0e.js" rel="modulepreload">
-		<link href="./_app/immutable/chunks/J2AQlyW8.js" rel="modulepreload">
-		<link href="./_app/immutable/chunks/rsSWfq8L.js" rel="modulepreload">
-		<link href="./_app/immutable/entry/app.DNjVAh3m.js" rel="modulepreload">
-		
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div id="loading-screen" class="loading-container">
-			<div>
-				<div class="loading-spinner"></div>
-				<div style="margin-top: 20px; text-align: center; color: #888;">
-					Loading Intelligence Platform...
-				</div>
-			</div>
-		</div>
-		
-		<div style="display: contents">
-			<script>
-				{
-					__sveltekit_12oxsxo = {
-						base: new URL(".", location).pathname.slice(0, -1),
-						assets: "/ecommerce-intel-platform"
-					};
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce News - Global Intelligence Platform</title>
+    <meta name="description" content="Latest breaking news from global e-commerce platforms and digital commerce industry">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-					const element = document.currentScript.parentElement;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: #f8fafc;
+            color: #333;
+        }
 
-					Promise.all([
-						import("./_app/immutable/entry/start.CTRgst0e.js"),
-						import("./_app/immutable/entry/app.DNjVAh3m.js")
-					]).then(([kit, app]) => {
-						kit.start(app, element);
-					});
-				}
-			</script>
-		</div>
-		
-		<script>
-			// Hide loading screen when app is ready
-			window.addEventListener('load', () => {
-				const loadingScreen = document.getElementById('loading-screen');
-				if (loadingScreen) {
-					loadingScreen.style.opacity = '0';
-					loadingScreen.style.transition = 'opacity 0.3s ease';
-					setTimeout(() => {
-						loadingScreen.remove();
-					}, 300);
-				}
-			});
-			
-			// Global error handler
-			window.addEventListener('error', (e) => {
-				console.error('Global error:', e.error);
-			});
-			
-			// Service worker for caching (optional)
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('/sw.js').catch(() => {
-					// Service worker not available, that's ok
-				});
-			}
-		</script>
-	</body>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #667eea;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Filters */
+        .filters {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .filter-select,
+        .search-input {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+        }
+
+        .filter-select:focus,
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-input {
+            width: 300px;
+        }
+
+        /* Stats */
+        .news-stats {
+            background: white;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-number {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* News Grid */
+        .news-content {
+            padding: 2rem 0;
+        }
+
+        .news-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .news-item-content {
+            padding: 1.5rem;
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .news-category {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .news-category.breaking {
+            background: #ef4444;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .news-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .news-priority {
+            font-size: 1.2rem;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .news-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .news-source {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .read-more-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .read-more-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-row {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🌐 E-commerce Intel</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html" class="active">News</a></li>
+                <li><a href="markets.html">Markets</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>📰 Global E-commerce News</h1>
+            <p>Breaking news, market updates, and platform insights from around the world</p>
+        </div>
+    </section>
+
+    <section class="filters">
+        <div class="container">
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="category">Category:</label>
+                    <select id="category" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="breaking">Breaking News</option>
+                        <option value="platforms">Platform Updates</option>
+                        <option value="markets">Market Analysis</option>
+                        <option value="technology">Technology</option>
+                        <option value="policy">Policy & Regulation</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="region">Region:</label>
+                    <select id="region" class="filter-select">
+                        <option value="global">Global</option>
+                        <option value="us">United States</option>
+                        <option value="eu">Europe</option>
+                        <option value="asia">Asia-Pacific</option>
+                        <option value="latam">Latin America</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <input type="search" id="search" class="search-input" placeholder="Search news articles...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-stats">
+        <div class="container">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalNews">156</span>
+                    <span class="stat-label">Total Articles</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="breakingNews">8</span>
+                    <span class="stat-label">Breaking News</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="platforms">12</span>
+                    <span class="stat-label">Platforms Covered</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24h</span>
+                    <span class="stat-label">Updated</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-content">
+        <div class="container">
+            <div class="news-grid" id="newsGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading latest e-commerce news...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Extended news data
+        const newsData = [
+            {
+                title: "Amazon Unveils Advanced AI Shopping Assistant for Holiday Season",
+                excerpt: "The retail giant's new AI tool uses natural language processing to help customers find perfect gifts and compare products across millions of listings.",
+                category: "breaking",
+                priority: "🔥",
+                time: "23 minutes ago",
+                source: "TechCrunch",
+                tags: ["Amazon", "AI", "Shopping", "Holiday"],
+                region: "global"
+            },
+            {
+                title: "Shopify's Revenue Surges 35% as SME Adoption Accelerates Globally",
+                excerpt: "The e-commerce platform reports record growth driven by small and medium enterprises embracing digital transformation worldwide.",
+                category: "markets",
+                priority: "📈",
+                time: "1 hour ago",
+                source: "Reuters",
+                tags: ["Shopify", "Revenue", "SME", "Growth"],
+                region: "global"
+            },
+            {
+                title: "eBay Introduces AI-Powered Authenticity Guarantee for Luxury Items",
+                excerpt: "New machine learning system will automatically verify luxury goods authenticity, reducing fraud and increasing buyer confidence.",
+                category: "technology",
+                priority: "🛡️",
+                time: "2 hours ago",
+                source: "The Verge",
+                tags: ["eBay", "AI", "Luxury", "Authenticity"],
+                region: "us"
+            },
+            {
+                title: "European Union Proposes New Regulations for Cross-Border E-commerce",
+                excerpt: "The Digital Services Act amendment aims to strengthen consumer protection and ensure fair competition in the EU digital marketplace.",
+                category: "policy",
+                priority: "⚖️",
+                time: "3 hours ago",
+                source: "Financial Times",
+                tags: ["EU", "Regulation", "Digital Services Act", "Consumer Protection"],
+                region: "eu"
+            },
+            {
+                title: "TikTok Shop Expands to 15 New Countries in Major Global Push",
+                excerpt: "ByteDance's social commerce platform continues rapid international expansion, targeting $50B in gross merchandise value by 2025.",
+                category: "platforms",
+                priority: "🌍",
+                time: "4 hours ago",
+                source: "Bloomberg",
+                tags: ["TikTok", "Social Commerce", "Expansion", "GMV"],
+                region: "global"
+            },
+            {
+                title: "Stripe Partners with Local Payment Providers in Southeast Asia",
+                excerpt: "Strategic partnerships with regional fintech companies enable support for popular local payment methods across Thailand, Vietnam, and Philippines.",
+                category: "technology",
+                priority: "💳",
+                time: "5 hours ago",
+                source: "TechInAsia",
+                tags: ["Stripe", "Payments", "Southeast Asia", "Partnerships"],
+                region: "asia"
+            },
+            {
+                title: "Walmart Launches Same-Day Delivery Service in 200+ Cities",
+                excerpt: "The retail giant expands its rapid fulfillment network to compete with Amazon Prime, offering delivery within 3 hours for essential items.",
+                category: "platforms",
+                priority: "🚚",
+                time: "6 hours ago",
+                source: "CNN Business",
+                tags: ["Walmart", "Delivery", "Logistics", "Competition"],
+                region: "us"
+            },
+            {
+                title: "Latin American E-commerce Market Projected to Hit $200B by 2025",
+                excerpt: "McKinsey report highlights explosive growth in Brazil, Mexico, and Argentina driven by mobile commerce and improved payment infrastructure.",
+                category: "markets",
+                priority: "📊",
+                time: "8 hours ago",
+                source: "McKinsey",
+                tags: ["Latin America", "Market Growth", "Mobile Commerce", "Infrastructure"],
+                region: "latam"
+            }
+        ];
+
+        let currentFilter = {
+            category: 'all',
+            region: 'global',
+            search: ''
+        };
+
+        function renderNews() {
+            const newsGrid = document.getElementById('newsGrid');
+            const filteredNews = newsData.filter(item => {
+                const categoryMatch = currentFilter.category === 'all' || item.category === currentFilter.category;
+                const regionMatch = currentFilter.region === 'global' || item.region === currentFilter.region || item.region === 'global';
+                const searchMatch = currentFilter.search === '' || 
+                    item.title.toLowerCase().includes(currentFilter.search.toLowerCase()) ||
+                    item.excerpt.toLowerCase().includes(currentFilter.search.toLowerCase()) ||
+                    item.tags.some(tag => tag.toLowerCase().includes(currentFilter.search.toLowerCase()));
+                
+                return categoryMatch && regionMatch && searchMatch;
+            });
+
+            // Update stats
+            document.getElementById('totalNews').textContent = filteredNews.length;
+            document.getElementById('breakingNews').textContent = filteredNews.filter(item => item.category === 'breaking').length;
+
+            newsGrid.innerHTML = filteredNews.map(item => `
+                <div class="news-item">
+                    <div class="news-item-content">
+                        <div class="news-header">
+                            <div class="news-meta">
+                                <span class="news-category ${item.category}">${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</span>
+                                <span class="news-time">${item.time}</span>
+                            </div>
+                            <div class="news-priority">${item.priority}</div>
+                        </div>
+                        <h2 class="news-title">${item.title}</h2>
+                        <p class="news-excerpt">${item.excerpt}</p>
+                        <div class="news-tags">
+                            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="news-footer">
+                            <div class="news-source">
+                                <span>📰</span>
+                                <span>${item.source}</span>
+                            </div>
+                            <button class="read-more-btn" onclick="readMore('${item.title}')">Read More</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function readMore(title) {
+            alert(`Full article coming soon: "${title}"`);
+        }
+
+        // Event listeners
+        document.getElementById('category').addEventListener('change', (e) => {
+            currentFilter.category = e.target.value;
+            renderNews();
+        });
+
+        document.getElementById('region').addEventListener('change', (e) => {
+            currentFilter.region = e.target.value;
+            renderNews();
+        });
+
+        document.getElementById('search').addEventListener('input', (e) => {
+            currentFilter.search = e.target.value;
+            renderNews();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                renderNews();
+            }, 1500);
+        });
+    </script>
+</body>
 </html>

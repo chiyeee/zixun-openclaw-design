@@ -1,149 +1,762 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="./favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>全球电商智能情报平台</title>
-		<meta name="description" content="Global E-commerce Intelligence Platform - Real-time market analysis, news tracking, and competitive intelligence for e-commerce businesses" />
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://chiyeee.github.io/ecommerce-intel-platform/" />
-		<meta property="og:title" content="全球电商智能情报平台" />
-		<meta property="og:description" content="Real-time market analysis and competitive intelligence" />
-		
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:title" content="全球电商智能情报平台" />
-		<meta property="twitter:description" content="Real-time market analysis and competitive intelligence" />
-		
-		<!-- Preload critical resources -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-		
-		<style>
-			/* Critical CSS to prevent FOUC */
-			html {
-				font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-				background: #0a0a0a;
-				color: #ffffff;
-			}
-			
-			body {
-				margin: 0;
-				background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-				min-height: 100vh;
-			}
-			
-			/* Loading animation */
-			.loading-container {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #0a0a0a;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				z-index: 9999;
-			}
-			
-			.loading-spinner {
-				width: 40px;
-				height: 40px;
-				border: 3px solid #333;
-				border-top: 3px solid #00d4ff;
-				border-radius: 50%;
-				animation: spin 1s linear infinite;
-			}
-			
-			@keyframes spin {
-				0% { transform: rotate(0deg); }
-				100% { transform: rotate(360deg); }
-			}
-			
-			/* Hide scrollbar but keep functionality */
-			::-webkit-scrollbar {
-				width: 6px;
-			}
-			
-			::-webkit-scrollbar-track {
-				background: #1a1a1a;
-			}
-			
-			::-webkit-scrollbar-thumb {
-				background: #444;
-				border-radius: 3px;
-			}
-			
-			::-webkit-scrollbar-thumb:hover {
-				background: #666;
-			}
-		</style>
-		
-		<link href="./_app/immutable/entry/start.CTRgst0e.js" rel="modulepreload">
-		<link href="./_app/immutable/chunks/J2AQlyW8.js" rel="modulepreload">
-		<link href="./_app/immutable/chunks/rsSWfq8L.js" rel="modulepreload">
-		<link href="./_app/immutable/entry/app.DNjVAh3m.js" rel="modulepreload">
-		
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div id="loading-screen" class="loading-container">
-			<div>
-				<div class="loading-spinner"></div>
-				<div style="margin-top: 20px; text-align: center; color: #888;">
-					Loading Intelligence Platform...
-				</div>
-			</div>
-		</div>
-		
-		<div style="display: contents">
-			<script>
-				{
-					__sveltekit_12oxsxo = {
-						base: new URL(".", location).pathname.slice(0, -1),
-						assets: "/ecommerce-intel-platform"
-					};
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Analysis - Global E-commerce Intelligence</title>
+    <meta name="description" content="Real-time market analysis, stock prices, and performance metrics for global e-commerce companies">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-					const element = document.currentScript.parentElement;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: #f8fafc;
+            color: #333;
+        }
 
-					Promise.all([
-						import("./_app/immutable/entry/start.CTRgst0e.js"),
-						import("./_app/immutable/entry/app.DNjVAh3m.js")
-					]).then(([kit, app]) => {
-						kit.start(app, element);
-					});
-				}
-			</script>
-		</div>
-		
-		<script>
-			// Hide loading screen when app is ready
-			window.addEventListener('load', () => {
-				const loadingScreen = document.getElementById('loading-screen');
-				if (loadingScreen) {
-					loadingScreen.style.opacity = '0';
-					loadingScreen.style.transition = 'opacity 0.3s ease';
-					setTimeout(() => {
-						loadingScreen.remove();
-					}, 300);
-				}
-			});
-			
-			// Global error handler
-			window.addEventListener('error', (e) => {
-				console.error('Global error:', e.error);
-			});
-			
-			// Service worker for caching (optional)
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('/sw.js').catch(() => {
-					// Service worker not available, that's ok
-				});
-			}
-		</script>
-	</body>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #667eea;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Market Summary */
+        .market-summary {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .summary-card {
+            padding: 1.5rem;
+        }
+
+        .summary-card h3 {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-change {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .positive {
+            color: #10b981;
+        }
+
+        .negative {
+            color: #ef4444;
+        }
+
+        .neutral {
+            color: #6b7280;
+        }
+
+        /* Controls */
+        .controls {
+            background: white;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .control-select,
+        .control-input {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .control-select:focus,
+        .control-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .timeframe-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .timeframe-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .timeframe-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Market Grid */
+        .market-content {
+            padding: 2rem 0;
+        }
+
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .stock-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stock-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .stock-header {
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .stock-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .stock-identity {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stock-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stock-details h3 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .stock-details p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .stock-remove {
+            background: #f3f4f6;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .stock-remove:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .stock-price {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .price-change {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .stock-metrics {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background: #f9fafb;
+            border-radius: 6px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .metric-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .performance-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .indicator-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .indicator-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .indicator-strong {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .indicator-moderate {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .indicator-weak {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .controls-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .timeframe-buttons {
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .market-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🌐 E-commerce Intel</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="markets.html" class="active">Markets</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>📈 Market Analysis</h1>
+            <p>Real-time stock prices and market performance for global e-commerce companies</p>
+        </div>
+    </section>
+
+    <section class="market-summary">
+        <div class="container">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Market Sentiment</h3>
+                    <div class="summary-value positive" id="marketSentiment">Bullish</div>
+                    <div class="summary-change positive">+2.4% today</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Market Cap</h3>
+                    <div class="summary-value neutral" id="totalMarketCap">$2.8T</div>
+                    <div class="summary-change positive">+0.8% today</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Gainers</h3>
+                    <div class="summary-value positive" id="gainersCount">18</div>
+                    <div class="summary-change neutral">of 25 stocks</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Top Performer</h3>
+                    <div class="summary-value positive" id="topPerformer">SHOP</div>
+                    <div class="summary-change positive">+5.7% today</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="controls">
+        <div class="container">
+            <div class="controls-row">
+                <div class="control-group">
+                    <label for="category">Category:</label>
+                    <select id="category" class="control-select">
+                        <option value="all">All Stocks</option>
+                        <option value="ecommerce">E-commerce Platforms</option>
+                        <option value="payments">Payment Processors</option>
+                        <option value="logistics">Logistics & Delivery</option>
+                        <option value="saas">SaaS Tools</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Timeframe:</label>
+                    <div class="timeframe-buttons">
+                        <button class="timeframe-btn active" data-timeframe="1D">1D</button>
+                        <button class="timeframe-btn" data-timeframe="1W">1W</button>
+                        <button class="timeframe-btn" data-timeframe="1M">1M</button>
+                        <button class="timeframe-btn" data-timeframe="3M">3M</button>
+                        <button class="timeframe-btn" data-timeframe="1Y">1Y</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <input type="text" id="addStock" class="control-input" placeholder="Add stock symbol (e.g., AMZN)">
+                    <button id="addStockBtn" class="timeframe-btn">Add</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="market-content">
+        <div class="container">
+            <div class="market-grid" id="marketGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading market data...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Market data
+        const stocksData = {
+            ecommerce: [
+                {
+                    symbol: 'AMZN',
+                    name: 'Amazon.com Inc',
+                    price: 142.35,
+                    change: 2.45,
+                    changePercent: 1.75,
+                    marketCap: 1487000000000,
+                    volume: 42350000,
+                    dayHigh: 144.25,
+                    dayLow: 139.80,
+                    yearHigh: 186.57,
+                    yearLow: 81.43,
+                    icon: '📦',
+                    color: '#ff9900'
+                },
+                {
+                    symbol: 'SHOP',
+                    name: 'Shopify Inc',
+                    price: 67.89,
+                    change: 3.67,
+                    changePercent: 5.71,
+                    marketCap: 85400000000,
+                    volume: 18750000,
+                    dayHigh: 69.15,
+                    dayLow: 64.22,
+                    yearHigh: 81.00,
+                    yearLow: 29.72,
+                    icon: '🛍️',
+                    color: '#96bf48'
+                },
+                {
+                    symbol: 'EBAY',
+                    name: 'eBay Inc',
+                    price: 44.28,
+                    change: -0.87,
+                    changePercent: -1.93,
+                    marketCap: 23650000000,
+                    volume: 8420000,
+                    dayHigh: 45.12,
+                    dayLow: 43.95,
+                    yearHigh: 51.50,
+                    yearLow: 35.92,
+                    icon: '🔍',
+                    color: '#e53238'
+                }
+            ],
+            payments: [
+                {
+                    symbol: 'SQ',
+                    name: 'Block Inc',
+                    price: 78.45,
+                    change: 1.23,
+                    changePercent: 1.59,
+                    marketCap: 45200000000,
+                    volume: 12800000,
+                    dayHigh: 79.87,
+                    dayLow: 76.34,
+                    yearHigh: 87.25,
+                    yearLow: 56.01,
+                    icon: '💳',
+                    color: '#00d924'
+                },
+                {
+                    symbol: 'PYPL',
+                    name: 'PayPal Holdings Inc',
+                    price: 89.67,
+                    change: 0.95,
+                    changePercent: 1.07,
+                    marketCap: 98750000000,
+                    volume: 15650000,
+                    dayHigh: 91.23,
+                    dayLow: 88.45,
+                    yearHigh: 123.50,
+                    yearLow: 70.00,
+                    icon: '💰',
+                    color: '#0070ba'
+                }
+            ],
+            logistics: [
+                {
+                    symbol: 'UPS',
+                    name: 'United Parcel Service',
+                    price: 156.23,
+                    change: 2.87,
+                    changePercent: 1.87,
+                    marketCap: 134500000000,
+                    volume: 3450000,
+                    dayHigh: 158.45,
+                    dayLow: 154.67,
+                    yearHigh: 175.43,
+                    yearLow: 135.24,
+                    icon: '📦',
+                    color: '#8b4513'
+                }
+            ],
+            saas: [
+                {
+                    symbol: 'BIGC',
+                    name: 'BigCommerce Holdings',
+                    price: 12.34,
+                    change: 0.45,
+                    changePercent: 3.78,
+                    marketCap: 925000000,
+                    volume: 1250000,
+                    dayHigh: 12.89,
+                    dayLow: 11.95,
+                    yearHigh: 19.25,
+                    yearLow: 8.71,
+                    icon: '⚙️',
+                    color: '#667eea'
+                }
+            ]
+        };
+
+        let currentCategory = 'all';
+        let currentTimeframe = '1D';
+
+        function getAllStocks() {
+            if (currentCategory === 'all') {
+                return Object.values(stocksData).flat();
+            }
+            return stocksData[currentCategory] || [];
+        }
+
+        function formatNumber(num) {
+            if (num >= 1e12) return (num / 1e12).toFixed(1) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+            return num.toFixed(0);
+        }
+
+        function formatPrice(price) {
+            return '$' + price.toFixed(2);
+        }
+
+        function formatPercent(percent) {
+            return (percent >= 0 ? '+' : '') + percent.toFixed(2) + '%';
+        }
+
+        function getPerformanceIndicator(changePercent) {
+            if (changePercent >= 3) return { class: 'indicator-strong', text: 'Strong Buy' };
+            if (changePercent >= 1) return { class: 'indicator-moderate', text: 'Buy' };
+            if (changePercent >= -1) return { class: 'indicator-moderate', text: 'Hold' };
+            if (changePercent >= -3) return { class: 'indicator-moderate', text: 'Sell' };
+            return { class: 'indicator-weak', text: 'Strong Sell' };
+        }
+
+        function renderStocks() {
+            const marketGrid = document.getElementById('marketGrid');
+            const stocks = getAllStocks();
+
+            marketGrid.innerHTML = stocks.map(stock => {
+                const changeClass = stock.change >= 0 ? 'positive' : 'negative';
+                const indicator = getPerformanceIndicator(stock.changePercent);
+                
+                return `
+                    <div class="stock-card">
+                        <div class="stock-header">
+                            <div class="stock-info">
+                                <div class="stock-identity">
+                                    <div class="stock-icon" style="background: ${stock.color}">
+                                        ${stock.icon}
+                                    </div>
+                                    <div class="stock-details">
+                                        <h3>${stock.symbol}</h3>
+                                        <p>${stock.name}</p>
+                                    </div>
+                                </div>
+                                <button class="stock-remove" onclick="removeStock('${stock.symbol}')" title="Remove from watchlist">
+                                    ✕
+                                </button>
+                            </div>
+                            <div class="stock-price">
+                                <div class="current-price">${formatPrice(stock.price)}</div>
+                                <div class="price-change ${changeClass}">
+                                    ${formatPrice(Math.abs(stock.change))} (${formatPercent(stock.changePercent)})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stock-metrics">
+                            <div class="metrics-grid">
+                                <div class="metric-item">
+                                    <span class="metric-label">Market Cap</span>
+                                    <span class="metric-value">${formatNumber(stock.marketCap)}</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Volume</span>
+                                    <span class="metric-value">${formatNumber(stock.volume)}</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Day High</span>
+                                    <span class="metric-value">${formatPrice(stock.dayHigh)}</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Day Low</span>
+                                    <span class="metric-value">${formatPrice(stock.dayLow)}</span>
+                                </div>
+                            </div>
+                            <div class="performance-indicator">
+                                <span class="indicator-label">52-Week Range:</span>
+                                <span class="metric-value">${formatPrice(stock.yearLow)} - ${formatPrice(stock.yearHigh)}</span>
+                            </div>
+                            <div class="performance-indicator">
+                                <span class="indicator-label">Recommendation:</span>
+                                <span class="indicator-value ${indicator.class}">${indicator.text}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeStock(symbol) {
+            if (confirm(`Remove ${symbol} from watchlist?`)) {
+                // In a real app, this would update the user's watchlist
+                alert(`${symbol} removed from watchlist`);
+            }
+        }
+
+        function addStock() {
+            const input = document.getElementById('addStock');
+            const symbol = input.value.toUpperCase().trim();
+            
+            if (symbol) {
+                alert(`Adding ${symbol} to watchlist (feature coming soon)`);
+                input.value = '';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('category').addEventListener('change', (e) => {
+            currentCategory = e.target.value;
+            renderStocks();
+        });
+
+        document.querySelectorAll('.timeframe-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentTimeframe = e.target.dataset.timeframe;
+                // In a real app, this would fetch new data for the selected timeframe
+                renderStocks();
+            });
+        });
+
+        document.getElementById('addStockBtn').addEventListener('click', addStock);
+        document.getElementById('addStock').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addStock();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                renderStocks();
+            }, 1500);
+        });
+    </script>
+</body>
 </html>
