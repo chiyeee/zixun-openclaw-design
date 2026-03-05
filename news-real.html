@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real E-commerce News - Global Intelligence Platform</title>
+    <meta name="description" content="Live breaking news from global e-commerce platforms using real news APIs">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: #f8fafc;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #667eea;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .api-status {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        /* API Configuration */
+        .api-config {
+            background: white;
+            padding: 2rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .config-form {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .api-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .api-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .api-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .api-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* News Sources */
+        .news-sources {
+            background: white;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sources-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .source-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .source-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* News Grid */
+        .news-content {
+            padding: 2rem 0;
+        }
+
+        .news-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .news-content-area {
+            padding: 1.5rem;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .news-source {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .news-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .news-title a:hover {
+            color: #667eea;
+        }
+
+        .news-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .read-more {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .read-more:hover {
+            background: #5a6fd8;
+        }
+
+        /* Loading States */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .config-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .api-input {
+                min-width: auto;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">🌐 E-commerce Intel</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news-real.html" class="active">Real News</a></li>
+                <li><a href="markets.html">Markets</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>📰 Real E-commerce News</h1>
+            <p>Live news from actual sources - NewsAPI, RSS feeds, and industry publications</p>
+            <div class="api-status">
+                <strong>Status:</strong> <span id="apiStatus">Ready to configure</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="api-config">
+        <div class="container">
+            <h3 style="margin-bottom: 1rem;">📡 Configure News API</h3>
+            <div class="config-form">
+                <input 
+                    type="password" 
+                    id="newsApiKey" 
+                    class="api-input" 
+                    placeholder="Enter your NewsAPI key (get free at newsapi.org)"
+                    value="">
+                <button id="connectApi" class="api-btn">Connect API</button>
+                <button id="loadDemo" class="api-btn" style="background: #10b981;">Load Demo</button>
+            </div>
+            <div id="configMessage"></div>
+        </div>
+    </section>
+
+    <section class="news-sources">
+        <div class="container">
+            <h4 style="text-align: center; margin-bottom: 1rem;">Select News Sources:</h4>
+            <div class="sources-grid">
+                <button class="source-btn active" data-source="all">All Sources</button>
+                <button class="source-btn" data-source="techcrunch">TechCrunch</button>
+                <button class="source-btn" data-source="reuters">Reuters</button>
+                <button class="source-btn" data-source="bloomberg">Bloomberg</button>
+                <button class="source-btn" data-source="wired">Wired</button>
+                <button class="source-btn" data-source="the-verge">The Verge</button>
+                <button class="source-btn" data-source="business-insider">Business Insider</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-content">
+        <div class="container">
+            <div class="news-grid" id="newsContainer">
+                <div class="loading">
+                    <p>Configure NewsAPI above to load real e-commerce news</p>
+                    <p style="color: #667eea; margin-top: 1rem;">
+                        <strong>Free API Key:</strong> Get yours at 
+                        <a href="https://newsapi.org" target="_blank" style="color: #667eea;">newsapi.org</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        class RealEcommerceNews {
+            constructor() {
+                this.apiKey = '';
+                this.selectedSource = 'all';
+                this.baseUrl = 'https://newsapi.org/v2/everything';
+                this.proxyUrl = 'https://api.allorigins.win/raw?url='; // CORS proxy
+                
+                this.initializeEventListeners();
+                this.loadSavedApiKey();
+            }
+
+            initializeEventListeners() {
+                document.getElementById('connectApi').addEventListener('click', () => this.connectApi());
+                document.getElementById('loadDemo').addEventListener('click', () => this.loadDemoNews());
+                
+                document.querySelectorAll('.source-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.selectSource(e.target.dataset.source));
+                });
+
+                document.getElementById('newsApiKey').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.connectApi();
+                });
+            }
+
+            loadSavedApiKey() {
+                const saved = localStorage.getItem('newsApiKey');
+                if (saved) {
+                    document.getElementById('newsApiKey').value = saved;
+                    this.apiKey = saved;
+                    this.updateStatus('API Key loaded from storage', 'success');
+                }
+            }
+
+            async connectApi() {
+                const keyInput = document.getElementById('newsApiKey');
+                const apiKey = keyInput.value.trim();
+                
+                if (!apiKey) {
+                    this.showMessage('Please enter your NewsAPI key', 'error');
+                    return;
+                }
+
+                this.apiKey = apiKey;
+                localStorage.setItem('newsApiKey', apiKey);
+                
+                this.updateStatus('Connecting to NewsAPI...', 'loading');
+                
+                try {
+                    await this.fetchRealNews();
+                    this.updateStatus('Connected successfully', 'success');
+                    this.showMessage('Successfully connected to NewsAPI!', 'success');
+                } catch (error) {
+                    this.updateStatus('Connection failed', 'error');
+                    this.showMessage(`Connection failed: ${error.message}`, 'error');
+                }
+            }
+
+            async fetchRealNews() {
+                if (!this.apiKey) {
+                    throw new Error('API key required');
+                }
+
+                this.showLoading();
+
+                const searchQueries = [
+                    'Amazon e-commerce OR "Amazon marketplace"',
+                    'Shopify OR "e-commerce platform"',
+                    'eBay marketplace',
+                    'PayPal payment OR Stripe payment',
+                    '"online shopping" OR "digital commerce"'
+                ];
+
+                const randomQuery = searchQueries[Math.floor(Math.random() * searchQueries.length)];
+                
+                const params = new URLSearchParams({
+                    q: randomQuery,
+                    apiKey: this.apiKey,
+                    language: 'en',
+                    sortBy: 'publishedAt',
+                    pageSize: 20
+                });
+
+                if (this.selectedSource !== 'all') {
+                    params.append('sources', this.selectedSource);
+                }
+
+                const url = `${this.baseUrl}?${params}`;
+                
+                try {
+                    // Try direct call first
+                    const response = await fetch(url);
+                    
+                    if (!response.ok) {
+                        throw new Error(`API returned ${response.status}: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.status !== 'ok') {
+                        throw new Error(data.message || 'API request failed');
+                    }
+
+                    this.renderNews(data.articles);
+                } catch (error) {
+                    // If CORS error, try with proxy
+                    if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                        try {
+                            const proxyResponse = await fetch(`${this.proxyUrl}${encodeURIComponent(url)}`);
+                            const data = await proxyResponse.json();
+                            this.renderNews(data.articles);
+                        } catch (proxyError) {
+                            throw new Error('Unable to fetch news due to CORS restrictions. Please use a CORS-enabled environment.');
+                        }
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+
+            async loadDemoNews() {
+                this.updateStatus('Loading demo news...', 'loading');
+                this.showLoading();
+
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                const demoNews = [
+                    {
+                        title: "Amazon Unveils New AI-Powered Product Recommendation System",
+                        description: "The e-commerce giant announces advanced machine learning capabilities to enhance customer shopping experience with personalized recommendations.",
+                        url: "https://techcrunch.com/amazon-ai-recommendations",
+                        source: { name: "TechCrunch" },
+                        publishedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 minutes ago
+                        urlToImage: null
+                    },
+                    {
+                        title: "Shopify Reports Record 40% Growth in Q4 2024",
+                        description: "The Canadian e-commerce platform sees unprecedented growth as more businesses embrace online selling during the digital transformation wave.",
+                        url: "https://reuters.com/shopify-growth-q4-2024",
+                        source: { name: "Reuters" },
+                        publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(), // 2 hours ago
+                        urlToImage: null
+                    },
+                    {
+                        title: "PayPal Introduces Cryptocurrency Payment Options for Merchants",
+                        description: "The payment processor expands crypto support, allowing merchants to accept Bitcoin, Ethereum, and other digital currencies directly.",
+                        url: "https://bloomberg.com/paypal-crypto-payments",
+                        source: { name: "Bloomberg" },
+                        publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(), // 4 hours ago
+                        urlToImage: null
+                    },
+                    {
+                        title: "eBay Launches Enhanced Mobile Seller Tools",
+                        description: "New mobile application features make it easier for sellers to manage listings, communicate with buyers, and track sales performance on the go.",
+                        url: "https://theverge.com/ebay-mobile-seller-tools",
+                        source: { name: "The Verge" },
+                        publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(), // 6 hours ago
+                        urlToImage: null
+                    }
+                ];
+
+                this.renderNews(demoNews);
+                this.updateStatus('Demo news loaded', 'success');
+                this.showMessage('Demo news loaded successfully! For real-time news, configure your NewsAPI key above.', 'success');
+            }
+
+            renderNews(articles) {
+                const container = document.getElementById('newsContainer');
+                
+                if (!articles || articles.length === 0) {
+                    container.innerHTML = `
+                        <div class="error">
+                            <h3>No articles found</h3>
+                            <p>Try adjusting your search criteria or check your API key.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = articles.map(article => `
+                    <div class="news-item">
+                        <div class="news-content-area">
+                            <div class="news-meta">
+                                <span class="news-source">${article.source.name}</span>
+                                <span class="news-time">${this.formatTime(article.publishedAt)}</span>
+                            </div>
+                            <h2 class="news-title">
+                                <a href="${article.url}" target="_blank" rel="noopener noreferrer">
+                                    ${article.title}
+                                </a>
+                            </h2>
+                            <p class="news-description">${article.description || 'No description available.'}</p>
+                            <div class="news-footer">
+                                <span style="color: #666; font-size: 0.9rem;">
+                                    📰 ${article.source.name}
+                                </span>
+                                <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="read-more">
+                                    Read Full Article →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            selectSource(source) {
+                this.selectedSource = source;
+                
+                document.querySelectorAll('.source-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                event.target.classList.add('active');
+                
+                if (this.apiKey) {
+                    this.fetchRealNews();
+                }
+            }
+
+            showLoading() {
+                document.getElementById('newsContainer').innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading real e-commerce news...</p>
+                    </div>
+                `;
+            }
+
+            updateStatus(message, type) {
+                const statusEl = document.getElementById('apiStatus');
+                statusEl.textContent = message;
+                
+                // Add visual indicator
+                statusEl.style.color = type === 'success' ? '#10b981' : 
+                                     type === 'error' ? '#ef4444' : 
+                                     type === 'loading' ? '#f59e0b' : '#333';
+            }
+
+            showMessage(message, type) {
+                const messageEl = document.getElementById('configMessage');
+                messageEl.className = type;
+                messageEl.textContent = message;
+                
+                setTimeout(() => {
+                    messageEl.textContent = '';
+                    messageEl.className = '';
+                }, 5000);
+            }
+
+            formatTime(dateString) {
+                const date = new Date(dateString);
+                const now = new Date();
+                const diff = now - date;
+                
+                if (diff < 60000) return 'Just now';
+                if (diff < 3600000) return Math.floor(diff / 60000) + 'm ago';
+                if (diff < 86400000) return Math.floor(diff / 3600000) + 'h ago';
+                return Math.floor(diff / 86400000) + 'd ago';
+            }
+        }
+
+        // Initialize the news system
+        document.addEventListener('DOMContentLoaded', () => {
+            new RealEcommerceNews();
+        });
+    </script>
+</body>
+</html>
