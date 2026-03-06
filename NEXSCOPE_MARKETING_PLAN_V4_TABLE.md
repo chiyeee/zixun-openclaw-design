@@ -1,9 +1,9 @@
-# Nexscope Marketing Execution Plan v4.4
+# Nexscope Marketing Execution Plan v4.5
 ## 可执行表格版
 
 > Nexscope · AI-Native Agent平台 · 美国Amazon卖家
 > 基于Linkfox Agent出海化 · 结合OpenClaw趋势红利
-> 2026-03-05
+> 2026-03-06
 
 ---
 
@@ -100,19 +100,19 @@
 |--------|---|------|------|--------|--------|
 | 🔴 P0 | A | OpenClaw生态 + Agent | 借热度获技术用户，Agent产品上线 | W1 | 3h |
 | 🔴 P0 | B | GitHub运营 | 开源信任建设，Stars+waitlist | W1 | 3h |
-| 🔴 P0 | D | YouTube | KOL合作+自制视频长尾流量 | W3 | 4h |
-| 🔴 P0 | G | SEO/Blog + GEO | 长尾搜索+AI引擎引用 | W4 | 4h |
-| 🔴 P0 | N | 付费广告 | 精准获客加速 | W4 | 2h+预算 |
-| 🔴 P0 | O | 红人/KOL跨平台 | 信任背书+精准流量 | W3 | 3h+预算 |
-| 🟡 P1 | C | Reddit | 卖家社区精准获客 | W1 | 4h |
-| 🟡 P1 | E | LinkedIn | B2B触达品牌卖家 | W2 | 3h |
-| 🟡 P1 | F | 冷邮件 | SellerPic存量+外部直接获客 | W2 | 3h |
-| 🟡 P1 | I | X (Twitter) | SaaS/AI圈品牌建设 | W2 | 2h |
+| 🔴 P0 | C | YouTube | KOL合作+自制视频长尾流量 | W3 | 4h |
+| 🔴 P0 | D | SEO/Blog + GEO | 长尾搜索+AI引擎引用 | W4 | 4h |
+| 🔴 P0 | E | 付费广告 | 精准获客加速 | W4 | 2h+预算 |
+| 🔴 P0 | F | 红人/KOL跨平台 | 信任背书+精准流量 | W3 | 3h+预算 |
+| 🟡 P1 | G | Reddit | 卖家社区精准获客 | W1 | 4h |
+| 🟡 P1 | H | LinkedIn | B2B触达品牌卖家 | W2 | 3h |
+| 🟡 P1 | I | 冷邮件 | SellerPic存量+外部直接获客 | W2 | 3h |
+| 🟡 P1 | J | X (Twitter) | SaaS/AI圈品牌建设 | W2 | 2h |
 | 🟡 P1 | K | 免费小工具 | 产品体验引流 | W5 | 8h一次 |
-| 🟡 P1 | M | Discord/TG社区 | 用户留存+口碑 | W2 | 2h |
-| 🟢 P2 | H | TikTok | 品牌曝光，触达年轻卖家 | W5 | 2h |
-| 🟢 P2 | L | 行业报告/PR | 媒体引用+外链+GEO | W8 | 6h/季 |
-| ⚪ P3 | J | Facebook Groups | 卖家社群信任 | W2 | 2h |
+| 🟡 P1 | L | Discord/TG社区 | 用户留存+口碑 | W2 | 2h |
+| 🟢 P2 | M | TikTok | 品牌曝光，触达年轻卖家 | W5 | 2h |
+| 🟢 P2 | N | 行业报告/PR | 媒体引用+外链+GEO | W8 | 6h/季 |
+| ⚪ P3 | O | Facebook Groups | 卖家社群信任 | W2 | 2h |
 | ⚪ P3 | P | Podcast/Webinar | 行业权威 | W8+ | 按机会 |
 
 ---
@@ -124,7 +124,7 @@
 | 步骤 | 动作 | 备注 |
 |------|------|------|
 | A1 | 定义Nexscope Agent产品形态 | 基于OpenClaw+Linkfox，预装电商skills+垂类数据源，免部署，Discord/TG/WhatsApp可用 |
-| A2 | 创建nexscope-skills仓库，开发5个Amazon skill | amazon-keyword-scout / competitor-radar / listing-audit / niche-finder / price-tracker |
+| A2 | 创建nexscope-skills仓库，开发多个Amazon skill | amazon-keyword-scout / competitor-radar / listing-audit / niche-finder / price-tracker |
 | A3 | 发布skills到skills.sh | `npx skills publish`，命名含"amazon"关键词 |
 | A4 | 在OpenClaw Discord #showcase发帖 | 30秒演示GIF：输入ASIN→返回分析 |
 | A5 | 部署Nexscope Agent到VPS | Gateway + 多渠道Bot + skills预装 + 数据源对接 |
@@ -135,82 +135,89 @@
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| B1 | 创建`nexscope` GitHub Organization | 设置Profile README |
+| B1 | 创建`nexscope-ai` GitHub Organization | 设置Profile README |
 | B2 | 核心仓库 | `nexscope-monitor`(仪表盘) · `nexscope-skills`(技能包) · `nexscope-examples`(示例) |
 | B3 | 引流型仓库 | `awesome-amazon-seller-tools` · `amazon-seller-resources` · `ecommerce-api-directory` · `amazon-category-data` · `openclaw-ecommerce-templates` |
 | B4 | Monitor仓库整理 | 重写README(截图/GIF/一键部署/CTA) · Docker · Vercel按钮 · topics · Issue模板 |
 | B5 | 日常运营 | 每周1 Release · 24h回Issue · 每两周1 Discussion · 每月1 Blog |
 
-### C. Reddit
+### C. YouTube
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| C1 | 目标subreddit | r/FulfillmentByAmazon · r/AmazonSeller · r/ecommerce · r/Entrepreneur · r/selfhosted |
-| C2 | 养号（前2周） | 每天2-3条回复，纯帮忙，不带链接，积累500+karma |
-| C3 | 内容（第3周起） | 每周1数据帖 · 每2周1个"Free ASIN Analysis"帖 · 链接放评论区 |
-| C4 | 防封号 | 新号只回复不发帖 · 不重复推链接 · 不多账号 · 考虑Reddit Premium($7/mo) |
+| C1 | KOL筛选（主线） | 1万-50万粉Amazon卖家频道，工具测评/教程类，近3月活跃，互动率>2% |
+| C2 | KOL合作方式 | 免费Pro账号换测评 · 付费植入$200-$2000 · 联合内容 · Affiliate分佣 |
+| C3 | KOL执行节奏 | W3-4筛选20个 → W5-6发邀请 → W7起每月2-3个合作 |
+| C4 | 自制内容（辅线） | 初期每月1-2个视频，数据分析/工具教程类，后期探索AI自动化制作 |
 
-### D. YouTube
-
-| 步骤 | 动作 | 备注 |
-|------|------|------|
-| D1 | KOL筛选（主线） | 1万-50万粉Amazon卖家频道，工具测评/教程类，近3月活跃，互动率>2% |
-| D2 | KOL合作方式 | 免费Pro账号换测评 · 付费植入$200-$2000 · 联合内容 · Affiliate分佣 |
-| D3 | KOL执行节奏 | W3-4筛选20个 → W5-6发邀请 → W7起每月2-3个合作 |
-| D4 | 自制内容（辅线） | 初期每月1-2个视频，数据分析/工具教程类，后期探索AI自动化制作 |
-
-### E. LinkedIn
+### D. SEO/Blog + GEO
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| E1 | Profile优化 | 标题写价值主张 · Banner品牌化 · Featured放GitHub和文章 |
-| E2 | 内容发布 | 每周2-3帖，数据洞察为主，Cron生成草稿→人工微调→手动发 |
-| E3 | 主动触达 | Sales Navigator筛选 · 每天20-30连接请求 · 互动2-3次再推产品 |
+| D1 | 关键词库 | 200+词，三层：工具词(高意向)、教程词(中)、对比词(极高意向) |
+| D2 | 批量内容 | programmatic-seo skill生成品类分析页，每周5页 |
+| D3 | 深度文章 | 每周1篇手动编辑，1500-2000字 |
+| D4 | 蹭热点 | OpenClaw/Skills教程、AI agent对比、"Nexscope vs MaxClaw" |
+| D5 | GEO优化 | 结构化H2/H3+FAQ schema · 明确数据来源 · 问答格式 · 多平台提及(GitHub/Reddit/Medium/PH) |
+| D6 | GEO实体建设 | Wikipedia/Crunchbase/G2/Capterra条目（后期） |
+| D7 | GEO测试 | 每月在ChatGPT/Gemini/Perplexity搜目标词，检查是否被引用 |
 
-### F. 冷邮件
+### E. 付费广告
 
-| 步骤 | 动作 | 备注 |
-|------|------|------|
-| F1 | 第一批：SellerPic用户（4万+） | 零成本最高优先级，筛选近6月活跃用户，分批500-1000封 |
-| F2 | SellerPic专属序列 | ①产品预告+waitlist → ②差异化说明 → ③优先试用邀请 |
-| F3 | 第二批：外部线索 | LinkedIn/Reddit/YouTube筛选，每周50个目标 |
-| F4 | 外部序列（5封/21天） | ①免费分析钩子 → ②PDF报告 → ③成功案例 → ④Beta邀请 → ⑤最后机会 |
-| F5 | 合规 | SendGrid/Resend · 含退订链接 · CAN-SPAM/GDPR |
+| 平台 | 投放方式 | 预估CPC/CPV | 备注 |
+|------|---------|------------|------|
+| Google Ads | 搜索"amazon seller tools"等高意向词 | $3-$10 | 意向最强，CPC最高 |
+| Reddit Ads | 按subreddit投r/FBA | $1-$3 | 素材要像自然帖 |
+| YouTube Ads | FBA教程视频前贴片 | $0.05-$0.15 CPV | 可复用KOL素材 |
+| Facebook/IG Ads | SellerPic邮箱做lookalike audience | $1-$5 | 4万邮箱是独家种子优势 |
 
-### G. SEO/Blog + GEO
+**预算**: Phase 1 $500/月测试 → Phase 2 集中最优平台$1000-$2000/月 · **目标CPA**: 注册<$5, 付费转化<$50
 
-| 步骤 | 动作 | 备注 |
-|------|------|------|
-| G1 | 关键词库 | 200+词，三层：工具词(高意向)、教程词(中)、对比词(极高意向) |
-| G2 | 批量内容 | programmatic-seo skill生成品类分析页，每周5页 |
-| G3 | 深度文章 | 每周1篇手动编辑，1500-2000字 |
-| G4 | 蹭热点 | OpenClaw/Skills教程、AI agent对比、"Nexscope vs MaxClaw" |
-| G5 | GEO优化 | 结构化H2/H3+FAQ schema · 明确数据来源 · 问答格式 · 多平台提及(GitHub/Reddit/Medium/PH) |
-| G6 | GEO实体建设 | Wikipedia/Crunchbase/G2/Capterra条目（后期） |
-| G7 | GEO测试 | 每月在ChatGPT/Gemini/Perplexity搜目标词，检查是否被引用 |
+### F. 红人/KOL跨平台
 
-### H. TikTok
+| 维度 | 内容 |
+|------|------|
+| Tier 1 | Amazon卖家KOL：YouTube/TikTok/Instagram工具测评+教程频道(1万-50万粉) |
+| Tier 2 | AI/SaaS类KOL：YouTube/X科技评测频道，切"AI agent for sellers"新品类 |
+| Tier 3 | 电商行业媒体：Marketplace Pulse · eCommerce Fuel · Seller Sessions |
+| 合作方式 | 免费Pro换测评 · 付费植入$200-$2000 · Affiliate注册$5/付费15% · 联合内容 · 赞助播客$500-$3000 |
+| 执行 | 建红人数据库 → W3筛选50个 → 每周10封邀请 → 每月落地3-5个 |
+| 素材 | 准备KOL合作包：one-pager + demo视频 + 数据截图 + talking points + 专属landing page |
 
-| 步骤 | 动作 | 备注 |
-|------|------|------|
-| H1 | 内容 | 从YouTube长视频剪15-60秒精华复用，数据揭秘/工具对比类 |
-| H2 | KOL合作 | 和YouTube KOL同步谈（很多人同时有TikTok） |
-| H3 | 节奏 | 每周2-3条，初期不单独制作 |
-
-### I. X (Twitter)
+### G. Reddit
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| I1 | 账号 | Nexscope品牌号，SaaS/AI/电商定位 |
-| I2 | 内容 | 产品更新 · 数据洞察 · AI/OpenClaw讨论 · 行业评论，每天1-2条 |
-| I3 | 互动 | 每天5-10条评论/转发，参与OpenClaw和电商话题 |
+| G1 | 目标subreddit | r/FulfillmentByAmazon · r/AmazonSeller · r/AmazonFBA · r/ecommerce · r/SideProject |
+| G2 | 养号（前2周） | 每天2-3条回复，纯帮忙，不带链接，积累500+karma |
+| G3 | 内容（第3周起） | 每周1数据帖 · 每2周1个"Free ASIN Analysis"帖 · 链接放评论区 |
+| G4 | 防封号 | 新号只回复不发帖 · 不重复推链接 · 不多账号 · 考虑Reddit Premium($7/mo) |
 
-### J. Facebook Groups
+### H. LinkedIn
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| J1 | 加入 | FBA Competitive Edge · FBA High Rollers · Seller Central Tips · Private Label Masters |
-| J2 | 节奏 | 前2周纯回答 → 之后每2周1个"Free ASIN Analysis"帖（轮换群组） |
+| H1 | Profile优化 | 标题写价值主张 · Banner品牌化 · Featured放GitHub和文章 |
+| H2 | 内容发布 | 每周2-3帖，数据洞察为主，Cron生成草稿→人工微调→手动发 |
+| H3 | 主动触达 | Sales Navigator筛选 · 每天20-30连接请求 · 互动2-3次再推产品 |
+
+### I. 冷邮件
+
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| I1 | 第一批：SellerPic用户（4万+） | 零成本最高优先级，筛选近6月活跃用户，分批500-1000封 |
+| I2 | SellerPic专属序列 | ①产品预告+waitlist → ②差异化说明 → ③优先试用邀请 |
+| I3 | 第二批：外部线索 | LinkedIn/Reddit/YouTube筛选，每周50个目标 |
+| I4 | 外部序列（5封/21天） | ①免费分析钩子 → ②PDF报告 → ③成功案例 → ④Beta邀请 → ⑤最后机会 |
+| I5 | 合规 | SendGrid/Resend · 含退订链接 · CAN-SPAM/GDPR |
+
+### J. X (Twitter)
+
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| J1 | 账号 | Nexscope品牌号，SaaS/AI/电商定位 |
+| J2 | 内容 | 产品更新 · 数据洞察 · AI/OpenClaw讨论 · 行业评论，每天1-2条 |
+| J3 | 互动 | 每天5-10条评论/转发，参与OpenClaw和电商话题 |
 
 ### K. 免费小工具
 
@@ -223,14 +230,7 @@
 
 每个=单页Web App，后端调Nexscope API，"Unlock Full Report"引导注册
 
-### L. 行业报告/PR
-
-| 步骤 | 动作 | 备注 |
-|------|------|------|
-| L1 | 每季度1份Amazon市场报告 | Nexscope数据生成独家洞察 |
-| L2 | 分发 | 电商媒体(Marketplace Pulse等) · LinkedIn Thread · 博客(下载需邮箱) |
-
-### M. Discord/TG社区
+### L. Discord/TG社区
 
 | 频道 | 用途 | 自动化 |
 |------|------|--------|
@@ -242,27 +242,27 @@
 
 同步运营Telegram群，各渠道导流到社区
 
-### N. 付费广告
+### M. TikTok
 
-| 平台 | 投放方式 | 预估CPC/CPV | 备注 |
-|------|---------|------------|------|
-| Google Ads | 搜索"amazon seller tools"等高意向词 | $3-$10 | 意向最强，CPC最高 |
-| Reddit Ads | 按subreddit投r/FBA | $1-$3 | 素材要像自然帖 |
-| YouTube Ads | FBA教程视频前贴片 | $0.05-$0.15 CPV | 可复用KOL素材 |
-| Facebook/IG Ads | SellerPic邮箱做lookalike audience | $1-$5 | 4万邮箱是独家种子优势 |
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| M1 | 内容 | 从YouTube长视频剪15-60秒精华复用，数据揭秘/工具对比类 |
+| M2 | KOL合作 | 和YouTube KOL同步谈（很多人同时有TikTok） |
+| M3 | 节奏 | 每周2-3条，初期不单独制作 |
 
-**预算**: Phase 1 $500/月测试 → Phase 2 集中最优平台$1000-$2000/月 · **目标CPA**: 注册<$5, 付费转化<$50
+### N. 行业报告/PR
 
-### O. 红人/KOL跨平台
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| N1 | 每季度1份Amazon市场报告 | Nexscope数据生成独家洞察 |
+| N2 | 分发 | 电商媒体(Marketplace Pulse等) · LinkedIn Thread · 博客(下载需邮箱) |
 
-| 维度 | 内容 |
-|------|------|
-| Tier 1 | Amazon卖家KOL：YouTube/TikTok/Instagram工具测评+教程频道(1万-50万粉) |
-| Tier 2 | AI/SaaS类KOL：YouTube/X科技评测频道，切"AI agent for sellers"新品类 |
-| Tier 3 | 电商行业媒体：Marketplace Pulse · eCommerce Fuel · Seller Sessions |
-| 合作方式 | 免费Pro换测评 · 付费植入$200-$2000 · Affiliate注册$5/付费15% · 联合内容 · 赞助播客$500-$3000 |
-| 执行 | 建红人数据库 → W3筛选50个 → 每周10封邀请 → 每月落地3-5个 |
-| 素材 | 准备KOL合作包：one-pager + demo视频 + 数据截图 + talking points + 专属landing page |
+### O. Facebook Groups
+
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| O1 | 加入 | FBA Competitive Edge · FBA High Rollers · Seller Central Tips · Private Label Masters |
+| O2 | 节奏 | 前2周纯回答 → 之后每2周1个"Free ASIN Analysis"帖（轮换群组） |
 
 ### P. Podcast/Webinar（低优先级）
 
@@ -353,4 +353,4 @@
 
 ---
 
-> 阿霞 · 2026-03-05
+> 阿霞 · 2026-03-06
