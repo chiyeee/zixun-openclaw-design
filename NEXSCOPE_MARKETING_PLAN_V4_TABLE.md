@@ -129,7 +129,7 @@
 |------|------|------|
 | A1 | 统一产品形态：云托管Web端 | nexscope.ai，类MaxClaw模式，所有用户同一个产品 |
 | A2 | 线1·OpenClaw用户获客 | **渠道**: skills.sh冲榜 · OpenClaw Discord showcase · 官方docs/clawhub提PR · GitHub模板仓库 · MaxClaw对比文章(Medium/Dev.to/r/selfhosted) · 技术教程(Medium/YouTube) · HN/PH · X tag @OpenClaw |
-| A2+ | 线1·文案+转化 | "Like MaxClaw, but for Amazon sellers" · 强调预装skills+数据源+免部署 · 路径: skills.sh/Discord/教程→nexscope.ai注册→试用→付费 |
+| A2+ | 线1·文案+转化 | "Like MaxClaw, but for Amazon sellers" · 强调预装skills+数据源+免部署 · TikTok蹭OpenClaw/Agent热度(M) · 路径: skills.sh/Discord/教程/TikTok→nexscope.ai注册→试用→付费 |
 | A3 | 线2·卖家获客 | **渠道**: Reddit(G) · YouTube KOL(C) · FB Groups(O) · LinkedIn(H) · 冷邮件/SellerPic 4万邮箱(I) · SEO/GEO(D) · 付费广告(E) · 免费小工具(K) · "Drop your ASIN"活动(A6) |
 | A3+ | 线2·文案+转化 | ✅"Your AI assistant for Amazon" · 不提OpenClaw · 路径: 内容/广告→nexscope.ai→免费体验→注册→付费 |
 
@@ -282,9 +282,10 @@
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| M1 | 内容 | 从YouTube长视频剪15-60秒精华复用，数据揭秘/工具对比类 |
-| M2 | KOL合作 | 和YouTube KOL同步谈（很多人同时有TikTok） |
-| M3 | 节奏 | 每周2-3条，初期不单独制作 |
+| M1 | OpenClaw/Agent概念类内容 | "I built an AI agent that runs my Amazon business" · "OpenClaw+Amazon=?" · "AI replacing VAs" · 录屏+文字叠加制作成本低 |
+| M2 | 电商数据类内容 | 品类揭秘 · 工具对比(JS vs Nexscope) · YouTube精华片段复用 |
+| M3 | KOL合作 | YouTube KOL同步谈 + AI/科技类TikToker("AI agent for ecommerce"新话题) |
+| M4 | 节奏 | 每周2-3条 · Agent概念类可单独制作 · 数据类从YouTube复用 |
 
 ### N. 行业报告/PR
 
