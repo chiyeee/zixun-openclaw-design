@@ -121,15 +121,49 @@
 
 ### A. OpenClaw生态 + Nexscope Agent
 
+> 两条线：线1→OpenClaw用户（用skills和社区拉进来）· 线2→Amazon卖家（不提OpenClaw，只讲AI助手）· skills=获客入口，Agent=留存产品
+
+**A-I. Agent产品 + 卖家分发**
+
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| A1 | 定义Nexscope Agent产品形态 | 基于OpenClaw+Linkfox，预装电商skills+垂类数据源，免部署，Discord/TG/WhatsApp可用 |
-| A2 | 创建nexscope-skills仓库，开发多个Amazon skill | amazon-keyword-scout / competitor-radar / listing-audit / niche-finder / price-tracker |
-| A3 | 发布skills到skills.sh | `npx skills publish`，命名含"amazon"关键词 |
-| A4 | 在OpenClaw Discord #showcase发帖 | 30秒演示GIF：输入ASIN→返回分析 |
-| A5 | 部署Nexscope Agent到VPS | Gateway + 多渠道Bot + skills预装 + 数据源对接 |
-| A6 | 配置Cron自动内容生产 | 每日简报、每周博客/LinkedIn/YouTube草稿 |
-| A7 | 蹭OpenClaw热度写内容 | "OpenClaw for e-commerce"教程、"AI replacing your VA"切AI焦虑 |
+| A1 | 定义Nexscope Agent产品形态 | 基于OpenClaw+Linkfox，预装电商skills+垂类数据源，免部署 |
+| A2 | 部署卖家触点：Discord Bot + Telegram Bot | Discord #free-analysis丢ASIN自动回 · TG @NexscopeBot私聊分析 · WhatsApp(后期) |
+| A3 | 面向卖家文案原则 | ❌"OpenClaw-based agent" → ✅"Your AI assistant for Amazon" · 卖家不需要知道底层框架 |
+
+**A-II. Skills发布 + skills.sh冲榜**
+
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| A4 | 开发5-8个skill | amazon-keyword-scout / competitor-radar / listing-audit / niche-finder / price-tracker / review-analyzer / bsr-monitor / ppc-optimizer |
+| A5 | 命名策略：全部`amazon-`开头 | `npx skills find amazon`搜到的全是Nexscope · 当前电商skills空白(最高仅1.1K安装) |
+| A6 | 每个skill的SKILL.md写清example | README底部加"Part of the Nexscope suite — try the full agent" |
+| A7 | 冲安装量 | 每篇文章带安装命令 · Discord回答问题时自然提到 · 团队内部也安装(基数不为零) |
+
+**A-III. OpenClaw Discord社区深耕**
+
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| A8 | 每周#showcase发1个demo | GIF/视频：输入ASIN→出报告 · 品类分析 · 关键词对比 |
+| A9 | #help主动回答电商/数据问题 | 目标：成为社区里"电商AI方向代表" · 不硬推 |
+| A10 | 提PR到docs.openclaw.ai | showcase页展示Nexscope · clawhub.ai提交展示位 |
+
+**A-IV. MaxClaw差异化 + 内容矩阵**
+
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| A11 | "MaxClaw vs Nexscope"对比文 | 不踩MaxClaw，强调"通用vs电商垂直" · SEO资产(搜maxclaw alternative) |
+| A12 | Medium/Dev.to教程 | "How I built an Amazon seller agent on OpenClaw" · "AI replacing your VA" |
+| A13 | YouTube教程 | "OpenClaw for e-commerce — full setup" · "Build Amazon AI agent in 10min" |
+| A14 | Reddit r/selfhosted + HN | "Show: open-source Amazon seller intelligence agent" |
+| A15 | X/Twitter | 每周1个Agent demo GIF + tag @OpenClaw |
+
+**A-V. 卖家免费体验驱动口碑**
+
+| 步骤 | 动作 | 备注 |
+|------|------|------|
+| A16 | Reddit/FB "Drop your ASIN"活动 | 每周1次 · 背后Agent自动跑 · 看到结果→引导到Bot |
+| A17 | KOL演示脚本 | 打开TG→搜@NexscopeBot→发ASIN→30秒出报告 · 比SaaS demo更直觉 |
 
 ### B. GitHub运营
 
