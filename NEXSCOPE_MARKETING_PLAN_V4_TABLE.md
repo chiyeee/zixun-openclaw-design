@@ -128,7 +128,7 @@
 | 步骤 | 动作 | 备注 |
 |------|------|------|
 | A1 | 定义Nexscope Agent产品形态 | 基于OpenClaw+Linkfox，预装电商skills+垂类数据源，免部署 |
-| A2 | 部署卖家触点：Discord Bot + Telegram Bot | Discord #free-analysis丢ASIN自动回 · TG @NexscopeBot私聊分析 · WhatsApp(后期) |
+| A2 | 部署卖家触点 | Web端对话界面(主) · API集成 · IM渠道可选(Discord Bot/TG Bot/WhatsApp) |
 | A3 | 面向卖家文案原则 | ❌"OpenClaw-based agent" → ✅"Your AI assistant for Amazon" · 卖家不需要知道底层框架 |
 
 **A-II. Skills发布 + skills.sh冲榜**
@@ -162,8 +162,8 @@
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| A16 | Reddit/FB "Drop your ASIN"活动 | 每周1次 · 背后Agent自动跑 · 看到结果→引导到Bot |
-| A17 | KOL演示脚本 | 打开TG→搜@NexscopeBot→发ASIN→30秒出报告 · 比SaaS demo更直觉 |
+| A16 | Reddit/FB "Drop your ASIN"活动 | 每周1次 · 背后Agent自动跑 · 看到结果→引导注册/waitlist |
+| A17 | KOL演示脚本 | 打开Nexscope→输入ASIN→30秒出报告 · 让KOL自己体验到价值 |
 
 ### B. GitHub运营
 
