@@ -129,7 +129,8 @@
 |------|------|------|
 | A1 | 统一产品形态：云托管Web端 | nexscope.ai，类MaxClaw模式，所有用户同一个产品 |
 | A2 | 线1·OpenClaw用户获客 | **渠道**: skills.sh冲榜 · OpenClaw Discord showcase · 官方docs/clawhub提PR · GitHub模板仓库 · MaxClaw对比文章(Medium/Dev.to/r/selfhosted) · 技术教程(Medium/YouTube) · HN/PH · X tag @OpenClaw |
-| A2+ | 线1·文案+转化 | "Like MaxClaw, but for Amazon sellers" · 强调预装skills+数据源+免部署 · TikTok蹭OpenClaw/Agent热度(M) · 路径: skills.sh/Discord/教程/TikTok→nexscope.ai注册→试用→付费 |
+| A2+ | 线1·广告+红人 | 付费广告投技术词"openclaw ecommerce"+r/selfhosted+AI agent视频(E) · AI/SaaS类红人做"Nexscope vs MaxClaw"内容(F Tier2) · TikTok蹭Agent热度(M) |
+| A2++ | 线1·文案+转化 | "Like MaxClaw, but for Amazon sellers" · 强调预装skills+数据源+免部署 · 路径: skills.sh/Discord/教程/广告/红人→nexscope.ai注册→试用→付费 |
 | A3 | 线2·卖家获客 | **渠道**: Reddit(G) · YouTube KOL(C) · FB Groups(O) · LinkedIn(H) · 冷邮件/SellerPic 4万邮箱(I) · SEO/GEO(D) · 付费广告(E) · 免费小工具(K) · "Drop your ASIN"活动(A6) |
 | A3+ | 线2·文案+转化 | ✅"Your AI assistant for Amazon" · 不提OpenClaw · 路径: 内容/广告→nexscope.ai→免费体验→注册→付费 |
 
