@@ -123,13 +123,13 @@
 
 > 两条线：线1→OpenClaw用户（用skills和社区拉进来）· 线2→Amazon卖家（不提OpenClaw，只讲AI助手）· skills=获客入口，Agent=留存产品
 
-**A-I. Agent产品 + 卖家分发**
+**A-I. Agent产品 + 双线分发**
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| A1 | 定义Nexscope Agent产品形态 | 基于OpenClaw+Linkfox，预装电商skills+垂类数据源，免部署 |
-| A2 | 部署卖家触点 | Web端对话界面(主) · API集成 · IM渠道可选(Discord Bot/TG Bot/WhatsApp) |
-| A3 | 面向卖家文案原则 | ❌"OpenClaw-based agent" → ✅"Your AI assistant for Amazon" · 卖家不需要知道底层框架 |
+| A1 | 定义Nexscope Agent产品形态 | 基于OpenClaw+Linkfox，预装电商skills+垂类数据源 |
+| A2 | 面向OpenClaw用户分发 | ①`npx skills add`装到自己实例 ②一键部署模板(clone即跑) ③云托管版(类MaxClaw) · 文案："已在用OpenClaw？装上电商skills即可" |
+| A3 | 面向卖家分发 | Web端对话界面(主) · API集成 · IM可选 · 文案：❌"OpenClaw-based" → ✅"Your AI assistant for Amazon" |
 
 **A-II. Skills发布 + skills.sh冲榜**
 
