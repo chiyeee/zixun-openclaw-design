@@ -127,9 +127,9 @@
 
 | 步骤 | 动作 | 备注 |
 |------|------|------|
-| A1 | 定义Nexscope Agent产品形态 | 基于OpenClaw+Linkfox，预装电商skills+垂类数据源 |
-| A2 | 面向OpenClaw用户分发 | ①`npx skills add`装到自己实例 ②一键部署模板(clone即跑) ③云托管版(类MaxClaw) · 文案："已在用OpenClaw？装上电商skills即可" |
-| A3 | 面向卖家分发 | Web端对话界面(主) · API集成 · IM可选 · 文案：❌"OpenClaw-based" → ✅"Your AI assistant for Amazon" |
+| A1 | 统一产品形态：云托管Web端 | nexscope.ai使用，类MaxClaw模式，所有用户同一个产品，区别只在获客路径和文案 |
+| A2 | 面向OpenClaw用户的文案 | "OpenClaw's e-commerce agent" · "Like MaxClaw, but for Amazon sellers" · 强调预装skills+数据源+免部署 |
+| A3 | 面向卖家的文案 | ❌"OpenClaw-based" → ✅"Your AI assistant for Amazon" · 不提底层框架 |
 
 **A-II. Skills发布 + skills.sh冲榜**
 
