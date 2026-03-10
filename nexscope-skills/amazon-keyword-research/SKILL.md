@@ -8,6 +8,43 @@ metadata: {"clawdbot":{"emoji":"🔍"}}
 
 Free keyword research for Amazon sellers. No API key — works out of the box.
 
+## Capabilities
+
+- **Long-tail keyword mining**: Extract 100-200 real search terms from Amazon's autocomplete engine
+- **Competitor landscape analysis**: Product count, price range, average rating, review distribution, top brands
+- **Seasonal trend detection**: 12-month Google Trends data to identify peak seasons and demand shifts
+- **Market opportunity scoring**: 1-10 score combining competition density, price room, and demand signals
+- **Multi-marketplace support**: US, UK, DE, FR, IT, ES, JP, CA, AU, IN, MX, BR
+- **Keyword comparison**: Side-by-side analysis of multiple keywords
+
+## Usage Examples
+
+Users can ask naturally. Examples:
+
+```
+Research the keyword "portable blender" on Amazon US
+```
+
+```
+Find long-tail keywords for "yoga mat" on Amazon
+```
+
+```
+I want to sell resistance bands. What does the Amazon keyword landscape look like?
+```
+
+```
+Compare "laptop stand" vs "monitor stand" on Amazon US — which has more opportunity?
+```
+
+```
+Analyze "Küchenmesser" on Amazon Germany
+```
+
+```
+Research "water bottle" across Amazon US, UK, and DE
+```
+
 ## Workflow
 
 ### Step 1: Gather Autocomplete Data
@@ -18,58 +55,116 @@ Run the bundled script to collect Amazon autocomplete suggestions:
 <skill>/scripts/research.sh "<keyword>" [marketplace]
 ```
 
-- Marketplaces: `us` (default), `uk`, `de`, `fr`, `it`, `es`, `jp`, `ca`, `au`, `in`, `mx`, `br`
-- Returns 100-200 long-tail keywords via seed + prefix expansion ("best", "cheap", "top") + a-z alphabet expansion
-- Output is plain text, one keyword per line
+**Parameters:**
+- `keyword` (required): The seed keyword to research
+- `marketplace` (optional): `us` (default), `uk`, `de`, `fr`, `it`, `es`, `jp`, `ca`, `au`, `in`, `mx`, `br`
+
+**What the script does:**
+- Queries Amazon's autocomplete API with the seed keyword
+- Expands with prefixes: "best [keyword]", "cheap [keyword]", "top [keyword]"
+- Expands with a-z suffixes: "[keyword] a", "[keyword] b", ... "[keyword] z"
+- Returns deduplicated, sorted list of real search suggestions — one per line
 
 Example:
 ```bash
 <skill>/scripts/research.sh "portable blender" us
+# Returns 100-200 long-tail keywords
 ```
+
+For multi-marketplace research, run the script once per marketplace.
 
 ### Step 2: Analyze Competition
 
-After collecting autocomplete data, use `web_search` to gather competitor intelligence for the seed keyword:
+Use `web_search` to gather competitor intelligence:
 
-1. Search `site:amazon.com "<keyword>"` — note total result count
-2. Search `"<keyword>" amazon review price` — extract price range, rating patterns, top brands from snippets
-3. Identify dominant brands, average price range, and review counts from search results
+1. Search `"<keyword>" site:amazon.com` — note approximate result count for competition density
+2. Search `"<keyword>" amazon best sellers price review` — extract price patterns, rating averages, dominant brands
+3. Summarize: total competitors, price range (min/avg/max), average star rating, top 5 brands by visibility
 
 ### Step 3: Check Seasonality
 
-Use `web_fetch` to pull Google Trends data:
+Use `web_fetch` on Google Trends:
 
 ```
 https://trends.google.com/trends/explore?q=<keyword>&geo=US
 ```
 
-Note the 12-month trend shape: rising, declining, seasonal peaks, or stable.
+Identify: trend direction (rising/declining/stable), seasonal peaks (which months), year-over-year change.
 
 ### Step 4: Synthesize Report
 
-Combine all data into a structured report:
+Combine all data into the output format below.
 
-- **Seed Keyword** and marketplace
-- **Long-tail Keywords**: Grouped by intent (informational, commercial, comparison)
-- **Competition Snapshot**: Result count, price range, average rating, FBA ratio, top brands
-- **Seasonality**: Trend direction and peak months
-- **Opportunity Score (1-10)**: Based on competition density, price room, and demand signals. Explain the reasoning.
+## Output Format
+
+Present the final report in this structure:
+
+```
+## Keyword Research Report: [keyword]
+**Marketplace:** Amazon [US/UK/DE/...]
+**Date:** [current date]
+
+### 1. Long-tail Keywords ([count] found)
+
+**High Commercial Intent:**
+- [keyword with "buy", "best", "vs", "for" etc.]
+- ...
+
+**Informational / Research:**
+- [keyword with "how to", "what is", "review" etc.]
+- ...
+
+**Niche / Specific:**
+- [long, specific keywords indicating clear purchase intent]
+- ...
+
+### 2. Competition Landscape
+
+| Metric | Value |
+|--------|-------|
+| Estimated competitors | [number] |
+| Price range | $[min] - $[max] |
+| Average price | $[avg] |
+| Average rating | [stars] |
+| Top brands | [brand1, brand2, brand3...] |
+
+### 3. Seasonal Trends
+
+[Describe 12-month trend: peaks, valleys, stable periods]
+[Note any upcoming peak seasons relevant to the keyword]
+
+### 4. Market Opportunity Score: [X/10]
+
+**Score breakdown:**
+- Competition density: [low/medium/high] — [why]
+- Price room: [low/medium/high] — [why]
+- Demand trend: [growing/stable/declining] — [why]
+- Niche potential: [low/medium/high] — [why]
+
+**Recommendation:** [1-2 sentence actionable recommendation]
+```
 
 ## Multi-Keyword Comparison
 
-When comparing keywords, run the script for each keyword, then present a side-by-side table:
+When comparing 2+ keywords, add a comparison table:
 
 | Metric | Keyword A | Keyword B |
 |--------|-----------|-----------|
-| Autocomplete count | — | — |
+| Long-tail count | — | — |
 | Avg price | — | — |
 | Top brand dominance | — | — |
-| Seasonality | — | — |
+| Trend direction | — | — |
 | Opportunity score | — | — |
+| **Recommendation** | — | — |
 
 ## Limitations
 
-This skill uses publicly available data (Amazon autocomplete + web search). It does not provide exact monthly search volumes or sales estimates. For precise data, the Pro version powered by Nexscope is coming soon.
+- No exact monthly search volume (Amazon does not publish this publicly)
+- No precise sales estimates per ASIN
+- Competition data is estimated from web search, not from Amazon's internal data
+- Autocomplete suggestions reflect current trends and may shift over time
+
+For precise search volumes, sales estimates, and keyword-level traffic data, the Pro version powered by Nexscope is coming soon.
 
 ---
 
