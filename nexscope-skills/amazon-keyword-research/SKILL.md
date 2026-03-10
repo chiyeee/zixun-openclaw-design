@@ -8,6 +8,12 @@ metadata: {"clawdbot":{"emoji":"🔍"}}
 
 Free keyword research for Amazon sellers. No API key — works out of the box.
 
+## Installation
+
+```bash
+npx skills add nexscope-ai/amazon-keyword-research -g
+```
+
 ## Capabilities
 
 - **Long-tail keyword mining**: Extract 100-200 real search terms from Amazon's autocomplete engine
@@ -159,12 +165,7 @@ When comparing 2+ keywords, add a comparison table:
 
 ## Limitations
 
-- No exact monthly search volume (Amazon does not publish this publicly)
-- No precise sales estimates per ASIN
-- Competition data is estimated from web search, not from Amazon's internal data
-- Autocomplete suggestions reflect current trends and may shift over time
-
-For precise search volumes, sales estimates, and keyword-level traffic data, the Pro version powered by Nexscope is coming soon.
+This skill uses publicly available data (Amazon autocomplete + web search). It does not provide exact monthly search volumes or sales estimates. For precise data, stay tuned for **[Nexscope](https://github.com/nexscope-ai)** — coming soon.
 
 ---
 
