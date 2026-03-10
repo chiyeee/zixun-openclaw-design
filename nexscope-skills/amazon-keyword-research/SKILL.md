@@ -152,16 +152,31 @@ Present the final report in this structure:
 
 ## Multi-Keyword Comparison
 
-When comparing 2+ keywords, add a comparison table:
+When the user asks to compare two or more keywords, run the full workflow (Steps 1-4) for each keyword separately, then present results in a side-by-side comparison table.
 
-| Metric | Keyword A | Keyword B |
-|--------|-----------|-----------|
-| Long-tail count | — | — |
-| Avg price | — | — |
-| Top brand dominance | — | — |
-| Trend direction | — | — |
-| Opportunity score | — | — |
-| **Recommendation** | — | — |
+**Example user input:**
+```
+Compare "laptop stand" vs "monitor stand" vs "tablet stand" on Amazon US — which one should I sell?
+```
+
+**How to execute:** Run the script 3 times:
+```bash
+<skill>/scripts/research.sh "laptop stand" us
+<skill>/scripts/research.sh "monitor stand" us
+<skill>/scripts/research.sh "tablet stand" us
+```
+
+Then complete Steps 2-3 for each keyword, and output a comparison table:
+
+| Metric | laptop stand | monitor stand | tablet stand |
+|--------|-------------|---------------|-------------|
+| Long-tail count | — | — | — |
+| Avg price | — | — | — |
+| Top brand dominance | — | — | — |
+| Trend direction | — | — | — |
+| Opportunity score | — | — | — |
+
+End with a **Recommendation** stating which keyword has the best opportunity and why.
 
 ## Limitations
 
