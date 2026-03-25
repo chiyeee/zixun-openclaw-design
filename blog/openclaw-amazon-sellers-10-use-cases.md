@@ -22,7 +22,7 @@
 
 # Cover Image
 
-![OpenClaw for Amazon Sellers: 10 Use Cases That Work in 2026](images/cover-openclaw-amazon-sellers.png)
+![OpenClaw for Amazon Sellers: 10 Use Cases That Work in 2026](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/cover-openclaw-amazon-sellers.png)
 
 > **Alt Text Check:** OpenClaw for Amazon Sellers: 10 Use Cases That Work in 2026 blog cover image with Nexscope logo
 
@@ -83,7 +83,7 @@ OpenClaw generates a complete branded landing page in approximately 10 minutes f
 | Fiverr freelancer | $100-300 | 2-5 days |
 | OpenClaw | $0.10-0.50 | 10 minutes |
 
-![OpenClaw AI generates a branded Amazon landing page in 10 minutes compared to original design](images/use-case-1-landing-page-comparison.png)
+![OpenClaw AI generates a branded Amazon landing page in 10 minutes compared to original design](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-1-landing-page-comparison.png)
 
 > **Alt Text Check:** OpenClaw AI generates a branded Amazon landing page in 10 minutes compared to original design
 
@@ -114,7 +114,7 @@ A sample report generated for a pet water bottle niche included:
 
 That level of cross-platform analysis would normally require a Helium 10 subscription ($229/month), a social listening tool ($50-100/month), and several hours of manual synthesis. OpenClaw produces the same output for the cost of a single AI API call.
 
-![OpenClaw AI product research report for Amazon sellers showing market data and competitor analysis](images/use-case-2-product-research-report.png)
+![OpenClaw AI product research report for Amazon sellers showing market data and competitor analysis](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-2-product-research-report.png)
 
 > **Alt Text Check:** OpenClaw AI product research report for Amazon sellers showing market data and competitor analysis
 
@@ -144,7 +144,7 @@ The structured analysis from that test revealed:
 
 This amazon review scraper capability goes beyond what tools like ReviewMeta or Fakespot offer. Those tools focus on fake review detection. OpenClaw performs full-text NLP analysis, clusters complaints by category, and outputs product development recommendations based on competitor weaknesses.
 
-![Amazon review analysis with OpenClaw showing competitor product complaint categories and frequencies](images/use-case-3-review-analysis-chart.png)
+![Amazon review analysis with OpenClaw showing competitor product complaint categories and frequencies](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-3-review-analysis-chart.png)
 
 > **Alt Text Check:** Amazon review analysis with OpenClaw showing competitor product complaint categories and frequencies
 
@@ -172,7 +172,7 @@ The result maintains accurate product details. Transparent materials show proper
 
 A catalog of 20 products at $400 each costs $8,000 with traditional photography. With ai product photography through OpenClaw, the same catalog costs under $3. That is a 2,600x cost reduction.
 
-![AI product photography with OpenClaw turns phone photos into studio-quality Amazon listing images](images/use-case-4-ai-product-photography.png)
+![AI product photography with OpenClaw turns phone photos into studio-quality Amazon listing images](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-4-ai-product-photography.png)
 
 > **Alt Text Check:** AI product photography with OpenClaw turns phone photos into studio-quality Amazon listing images
 
@@ -209,7 +209,7 @@ A test rewrite produced these specific changes:
 
 The listing reads like a native American English speaker wrote it, calibrated for U.S. search behavior and phrasing patterns.
 
-![Amazon listing optimization tool powered by OpenClaw showing before and after keyword integration](images/use-case-5-listing-optimization.png)
+![Amazon listing optimization tool powered by OpenClaw showing before and after keyword integration](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-5-listing-optimization.png)
 
 > **Alt Text Check:** Amazon listing optimization tool powered by OpenClaw showing before and after keyword integration
 
@@ -233,7 +233,7 @@ From r/dogs and r/hiking subreddits, OpenClaw extracted real user feedback inclu
 
 This kind of amazon review analysis from outside Amazon's ecosystem reveals pain points that on-platform review mining misses entirely. The extracted insights feed directly back into listing optimization to address real concerns that competitors ignore in their bullet points.
 
-![OpenClaw extracts Amazon product customer insights from Reddit communities for market research](images/use-case-6-reddit-customer-insights.png)
+![OpenClaw extracts Amazon product customer insights from Reddit communities for market research](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-6-reddit-customer-insights.png)
 
 > **Alt Text Check:** OpenClaw extracts Amazon product customer insights from Reddit communities for market research
 
@@ -252,7 +252,7 @@ Traditional UGC-style video production requires hiring creators ($200-500 per vi
 
 The quality is suitable for organic social posting and initial ad creative testing. For polished final ad creatives, the AI-generated clips work as storyboard references or B-roll supplements.
 
-![OpenClaw AI generates Amazon product video clips from static images for TikTok and social media](images/use-case-7-ai-product-video.png)
+![OpenClaw AI generates Amazon product video clips from static images for TikTok and social media](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-7-ai-product-video.png)
 
 > **Alt Text Check:** OpenClaw AI generates Amazon product video clips from static images for TikTok and social media
 
@@ -284,7 +284,7 @@ Markets shift fast on Amazon. A competitor drops their price by 20%. A new entra
 
 This amazon competitor analysis tool approach replaces the $399/month Jungle Scout Professional plan or the $229/month Helium 10 Diamond plan for the specific use case of competitor tracking.
 
-![Amazon competitor analysis tool via OpenClaw sends automated price and listing change alerts on Discord](images/use-case-8-competitor-monitoring-alerts.png)
+![Amazon competitor analysis tool via OpenClaw sends automated price and listing change alerts on Discord](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-8-competitor-monitoring-alerts.png)
 
 > **Alt Text Check:** Amazon competitor analysis tool via OpenClaw sends automated price and listing change alerts on Discord
 
@@ -311,7 +311,7 @@ This applies to any target market: UK English adjustments (colour, aluminium), J
 | Translation agency | $0.15-0.25/word | 3-5 days |
 | OpenClaw | ~$0.05-0.10 per listing | 2 minutes |
 
-![OpenClaw localizes Amazon listings for international markets with region-specific keywords and formatting](images/use-case-9-listing-localization.png)
+![OpenClaw localizes Amazon listings for international markets with region-specific keywords and formatting](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-9-listing-localization.png)
 
 > **Alt Text Check:** OpenClaw localizes Amazon listings for international markets with region-specific keywords and formatting
 
@@ -330,7 +330,7 @@ Every seller encounters inaccurate or unfair negative reviews. A customer compla
 
 OpenClaw drafts the response. A human reviews and approves before posting. This workflow reduces the time per response from 15-20 minutes of careful writing to 2 minutes of review and approval.
 
-![OpenClaw drafts professional Amazon review responses that address negative feedback with product facts](images/use-case-10-review-response-draft.png)
+![OpenClaw drafts professional Amazon review responses that address negative feedback with product facts](https://raw.githubusercontent.com/chiyeee/zixun-openclaw-design/main/blog/images/use-case-10-review-response-draft.png)
 
 > **Alt Text Check:** OpenClaw drafts professional Amazon review responses that address negative feedback with product facts
 
