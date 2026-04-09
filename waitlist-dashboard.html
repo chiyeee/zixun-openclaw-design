@@ -95,7 +95,7 @@
     <h3>🎯 By Channel</h3>
     <canvas id="sourceChart"></canvas>
   </div>
-  <div class="chart-card tall">
+  <div class="chart-card">
     <h3>🌍 Top Countries</h3>
     <canvas id="countryChart"></canvas>
   </div>
@@ -215,57 +215,45 @@ new Chart(document.getElementById('sourceChart'), {
 // 3. Country Bar
 const countryEntries = Object.entries(DATA.by_country_all);
 const countryNames = {
-  'United States of America': '🇺🇸 United States',
-  'United Arab Emirates': '🇦🇪 UAE',
-  'Saudi Arabia': '🇸🇦 Saudi Arabia',
-  'India': '🇮🇳 India',
-  'Pakistan': '🇵🇰 Pakistan',
-  'Hong Kong': '🇭🇰 Hong Kong',
-  'Egypt': '🇪🇬 Egypt',
-  'Philippines': '🇵🇭 Philippines',
-  'Japan': '🇯🇵 Japan',
-  'Brazil': '🇧🇷 Brazil',
-  'Viet Nam': '🇻🇳 Vietnam',
-  'China': '🇨🇳 China',
-  'Oman': '🇴🇲 Oman',
-  'Kuwait': '🇰🇼 Kuwait',
-  "Cote D'ivoire": '🇨🇮 Ivory Coast',
-  'Germany': '🇩🇪 Germany',
-  'Romania': '🇷🇴 Romania',
-  'Bolivia': '🇧🇴 Bolivia',
-  'Armenia': '🇦🇲 Armenia',
-  'Singapore': '🇸🇬 Singapore',
-  'Taiwan': '🇹🇼 Taiwan'
+  'United States of America': 'USA',
+  'United Arab Emirates': 'UAE',
+  'Saudi Arabia': 'Saudi',
+  'India': 'India',
+  'Pakistan': 'Pakistan',
+  'Hong Kong': 'Hong Kong',
+  'Egypt': 'Egypt',
+  'Philippines': 'Philippines',
+  'Japan': 'Japan',
+  'Brazil': 'Brazil',
+  'Viet Nam': 'Vietnam',
+  'China': 'China',
+  'Oman': 'Oman',
+  'Kuwait': 'Kuwait',
+  "Cote D'ivoire": 'Ivory Coast',
+  'Germany': 'Germany',
+  'Romania': 'Romania',
+  'Bolivia': 'Bolivia',
+  'Armenia': 'Armenia',
+  'Singapore': 'Singapore',
+  'Taiwan': 'Taiwan'
 };
+const countryColors = ['#58a6ff','#3fb950','#d29922','#f0883e','#f85149','#bc8cff','#79c0ff','#56d4dd','#e3b341','#8b949e','#ff9bce','#a5d6ff','#7ee787','#ffa657','#d2a8ff'];
 new Chart(document.getElementById('countryChart'), {
-  type: 'bar',
+  type: 'doughnut',
   data: {
-    labels: countryEntries.map(e => countryNames[e[0]] || e[0]),
+    labels: countryEntries.map(e => (countryNames[e[0]] || e[0]) + ' (' + e[1] + ')'),
     datasets: [{
       data: countryEntries.map(e => e[1]),
-      backgroundColor: '#58a6ff88',
-      borderColor: '#58a6ff',
-      borderWidth: 1,
-      borderRadius: 4
+      backgroundColor: countryColors.slice(0, countryEntries.length),
+      borderWidth: 0
     }]
   },
   options: {
     responsive: true,
-    maintainAspectRatio: false,
-    indexAxis: 'y',
-    layout: { padding: { left: 10 } },
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { grid: { color: '#21262d' } },
-      y: {
-        ticks: {
-          font: { size: 13 },
-          autoSkip: false,
-          padding: 8
-        },
-        afterFit: function(scale) {
-          scale.width = 160;
-        }
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: { font: { size: 11 }, padding: 8, usePointStyle: true, pointStyleWidth: 8 }
       }
     }
   }
