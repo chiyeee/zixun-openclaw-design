@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexscope Waitlist Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e1e4e8; padding: 20px; }
+  .header { text-align: center; margin-bottom: 30px; }
+  .header h1 { font-size: 28px; color: #fff; margin-bottom: 5px; }
+  .header .subtitle { color: #8b949e; font-size: 14px; }
+  .header .update-time { color: #58a6ff; font-size: 12px; margin-top: 5px; }
+  
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .kpi-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; text-align: center; }
+  .kpi-card .value { font-size: 36px; font-weight: 700; color: #58a6ff; }
+  .kpi-card .label { font-size: 13px; color: #8b949e; margin-top: 4px; }
+  .kpi-card .change { font-size: 14px; margin-top: 4px; }
+  .kpi-card .change.up { color: #3fb950; }
+  .kpi-card .change.down { color: #f85149; }
+  
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .chart-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; }
+  .chart-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
+  .chart-card.full { grid-column: 1 / -1; }
+  
+  .table-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .table-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 8px 12px; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+  td { padding: 8px 12px; border-bottom: 1px solid #21262d; font-size: 13px; }
+  tr:hover { background: #1c2128; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge-ads { background: #1f3d1f; color: #3fb950; }
+  .badge-direct { background: #1d2d44; color: #58a6ff; }
+  .badge-high { background: #1f3d1f; color: #3fb950; }
+  .badge-medium { background: #3d3d1f; color: #d29922; }
+  .badge-low { background: #3d1f1f; color: #f85149; }
+  
+  .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 30px; }
+  
+  @media (max-width: 768px) {
+    .charts-grid { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 Nexscope Waitlist Dashboard</h1>
+  <div class="subtitle">Real-time waitlist analytics for nexscope.ai</div>
+  <div class="update-time" id="updateTime"></div>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="value" id="kpiTotal">—</div>
+    <div class="label">Total Signups</div>
+  </div>
+  <div class="kpi-card">
+    <div class="value" id="kpiToday">—</div>
+    <div class="label">Today</div>
+    <div class="change up" id="kpiTodayChange"></div>
+  </div>
+  <div class="kpi-card">
+    <div class="value" id="kpiAvg">—</div>
+    <div class="label">Daily Average</div>
+  </div>
+  <div class="kpi-card">
+    <div class="value" id="kpiHighQuality">—</div>
+    <div class="label">High Quality</div>
+  </div>
+  <div class="kpi-card">
+    <div class="value" id="kpiTopSource">—</div>
+    <div class="label">Top Paid Channel</div>
+  </div>
+</div>
+
+<!-- Charts Row 1: Trend + Cumulative -->
+<div class="charts-grid">
+  <div class="chart-card full">
+    <h3>📈 Daily Signups & Cumulative Growth</h3>
+    <canvas id="trendChart" height="80"></canvas>
+  </div>
+</div>
+
+<!-- Charts Row 2: Source + Country -->
+<div class="charts-grid">
+  <div class="chart-card">
+    <h3>🎯 By Channel</h3>
+    <canvas id="sourceChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>🌍 Top Countries</h3>
+    <canvas id="countryChart"></canvas>
+  </div>
+</div>
+
+<!-- Charts Row 3: Source stacked + Hourly + Device -->
+<div class="charts-grid">
+  <div class="chart-card">
+    <h3>📢 Daily Signups by Channel</h3>
+    <canvas id="sourceStackChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>⏰ Signup Hour (UTC)</h3>
+    <canvas id="hourlyChart"></canvas>
+  </div>
+</div>
+
+<div class="charts-grid">
+  <div class="chart-card">
+    <h3>📱 Device Split</h3>
+    <canvas id="deviceChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>⭐ Lead Quality</h3>
+    <canvas id="qualityChart"></canvas>
+  </div>
+</div>
+
+<div class="footer">
+  Built by 牛马哥🐂 for Nexscope · Updated twice daily
+</div>
+
+<script>
+// === DATA (auto-updated by 牛马哥) ===
+const DATA = {"dates": ["2026-04-03", "2026-04-04", "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09"], "daily_new": [4, 4, 2, 6, 16, 45, 10], "cumulative": [4, 8, 10, 16, 32, 77, 87], "by_source_daily": {"direct": [4, 4, 2, 6, 16, 41, 6], "Gadskill": [0, 0, 0, 0, 0, 1, 1], "GadAmagent": [0, 0, 0, 0, 0, 3, 2], "Gadagent": [0, 0, 0, 0, 0, 0, 1]}, "by_country_all": {"India": 27, "United States of America": 21, "Saudi Arabia": 6, "Pakistan": 4, "Hong Kong": 3, "Egypt": 3, "United Arab Emirates": 2, "Philippines": 2, "Japan": 2, "Brazil": 2, "Viet Nam": 2, "China": 1, "Oman": 1, "Kuwait": 1, "Cote D'ivoire": 1}, "by_source_all": {"direct": 79, "Gadskill": 2, "GadAmagent": 5, "Gadagent": 1}, "by_device_all": {"Desktop": 50, "Mobile": 37}, "total": 87, "generated_at": "2026-04-09T09:16:07.522969Z", "hourly": [2, 2, 4, 2, 2, 6, 0, 2, 5, 2, 5, 3, 5, 5, 5, 6, 3, 7, 4, 1, 6, 5, 3, 2], "quality": {"high": 33, "medium": 53, "low": 1}};
+
+// === Render ===
+Chart.defaults.color = '#8b949e';
+Chart.defaults.borderColor = '#30363d';
+
+const dates = DATA.dates.map(d => d.slice(5)); // MM-DD format
+
+// KPIs
+document.getElementById('kpiTotal').textContent = DATA.total;
+const today = DATA.daily_new[DATA.daily_new.length - 1];
+const yesterday = DATA.daily_new.length > 1 ? DATA.daily_new[DATA.daily_new.length - 2] : 0;
+document.getElementById('kpiToday').textContent = '+' + today;
+const change = yesterday > 0 ? Math.round((today - yesterday) / yesterday * 100) : 0;
+const changeEl = document.getElementById('kpiTodayChange');
+if (yesterday > 0) {
+  changeEl.textContent = (change >= 0 ? '↑' : '↓') + Math.abs(change) + '% vs yesterday';
+  changeEl.className = 'change ' + (change >= 0 ? 'up' : 'down');
+}
+document.getElementById('kpiAvg').textContent = (DATA.total / DATA.dates.length).toFixed(1);
+document.getElementById('kpiHighQuality').textContent = DATA.quality.high;
+// Top paid
+const paidSources = {...DATA.by_source_all};
+delete paidSources['direct'];
+const topPaid = Object.entries(paidSources).sort((a,b) => b[1]-a[1])[0];
+document.getElementById('kpiTopSource').textContent = topPaid ? topPaid[0] : '—';
+document.getElementById('updateTime').textContent = 'Last updated: ' + DATA.generated_at.replace('T', ' ').slice(0, 19) + ' UTC';
+
+// 1. Trend Chart (combo bar + line)
+new Chart(document.getElementById('trendChart'), {
+  type: 'bar',
+  data: {
+    labels: dates,
+    datasets: [
+      {
+        label: 'Daily New',
+        data: DATA.daily_new,
+        backgroundColor: '#58a6ff88',
+        borderColor: '#58a6ff',
+        borderWidth: 1,
+        borderRadius: 4,
+        yAxisID: 'y'
+      },
+      {
+        label: 'Cumulative',
+        data: DATA.cumulative,
+        type: 'line',
+        borderColor: '#3fb950',
+        backgroundColor: '#3fb95022',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 4,
+        pointBackgroundColor: '#3fb950',
+        yAxisID: 'y1'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    scales: {
+      y: { position: 'left', title: { display: true, text: 'Daily' }, grid: { color: '#21262d' } },
+      y1: { position: 'right', title: { display: true, text: 'Cumulative' }, grid: { display: false } }
+    }
+  }
+});
+
+// 2. Source Doughnut
+const sourceColors = { direct: '#58a6ff', Gadskill: '#3fb950', GadAmagent: '#d29922', Gadagent: '#f0883e' };
+new Chart(document.getElementById('sourceChart'), {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(DATA.by_source_all),
+    datasets: [{
+      data: Object.values(DATA.by_source_all),
+      backgroundColor: Object.keys(DATA.by_source_all).map(k => sourceColors[k] || '#8b949e'),
+      borderWidth: 0
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+});
+
+// 3. Country Bar
+const countryEntries = Object.entries(DATA.by_country_all).slice(0, 10);
+new Chart(document.getElementById('countryChart'), {
+  type: 'bar',
+  data: {
+    labels: countryEntries.map(e => e[0].replace('United States of America', 'USA').replace('United Arab Emirates', 'UAE').replace('Saudi Arabia', 'Saudi')),
+    datasets: [{
+      data: countryEntries.map(e => e[1]),
+      backgroundColor: '#58a6ff88',
+      borderColor: '#58a6ff',
+      borderWidth: 1,
+      borderRadius: 4
+    }]
+  },
+  options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#21262d' } } } }
+});
+
+// 4. Source Stacked
+new Chart(document.getElementById('sourceStackChart'), {
+  type: 'bar',
+  data: {
+    labels: dates,
+    datasets: [
+      { label: 'Direct', data: DATA.by_source_daily.direct, backgroundColor: '#58a6ff88' },
+      { label: 'GadAmagent', data: DATA.by_source_daily.GadAmagent, backgroundColor: '#d2992288' },
+      { label: 'Gadskill', data: DATA.by_source_daily.Gadskill, backgroundColor: '#3fb95088' },
+      { label: 'Gadagent', data: DATA.by_source_daily.Gadagent, backgroundColor: '#f0883e88' }
+    ]
+  },
+  options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, grid: { color: '#21262d' } } } }
+});
+
+// 5. Hourly
+new Chart(document.getElementById('hourlyChart'), {
+  type: 'bar',
+  data: {
+    labels: Array.from({length: 24}, (_, i) => i + ':00'),
+    datasets: [{
+      data: DATA.hourly,
+      backgroundColor: '#58a6ff44',
+      borderColor: '#58a6ff',
+      borderWidth: 1,
+      borderRadius: 2
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#21262d' } } } }
+});
+
+// 6. Device
+new Chart(document.getElementById('deviceChart'), {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(DATA.by_device_all),
+    datasets: [{
+      data: Object.values(DATA.by_device_all),
+      backgroundColor: ['#58a6ff', '#f0883e'],
+      borderWidth: 0
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+});
+
+// 7. Quality
+new Chart(document.getElementById('qualityChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['High Quality', 'Medium', 'Low/Suspicious'],
+    datasets: [{
+      data: [DATA.quality.high, DATA.quality.medium, DATA.quality.low],
+      backgroundColor: ['#3fb950', '#d29922', '#f85149'],
+      borderWidth: 0
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+});
+</script>
+</body>
+</html>
