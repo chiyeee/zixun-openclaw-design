@@ -212,11 +212,34 @@ new Chart(document.getElementById('sourceChart'), {
 });
 
 // 3. Country Bar
-const countryEntries = Object.entries(DATA.by_country_all).slice(0, 10);
+const countryEntries = Object.entries(DATA.by_country_all);
+const countryNames = {
+  'United States of America': '🇺🇸 United States',
+  'United Arab Emirates': '🇦🇪 UAE',
+  'Saudi Arabia': '🇸🇦 Saudi Arabia',
+  'India': '🇮🇳 India',
+  'Pakistan': '🇵🇰 Pakistan',
+  'Hong Kong': '🇭🇰 Hong Kong',
+  'Egypt': '🇪🇬 Egypt',
+  'Philippines': '🇵🇭 Philippines',
+  'Japan': '🇯🇵 Japan',
+  'Brazil': '🇧🇷 Brazil',
+  'Viet Nam': '🇻🇳 Vietnam',
+  'China': '🇨🇳 China',
+  'Oman': '🇴🇲 Oman',
+  'Kuwait': '🇰🇼 Kuwait',
+  "Cote D'ivoire": '🇨🇮 Ivory Coast',
+  'Germany': '🇩🇪 Germany',
+  'Romania': '🇷🇴 Romania',
+  'Bolivia': '🇧🇴 Bolivia',
+  'Armenia': '🇦🇲 Armenia',
+  'Singapore': '🇸🇬 Singapore',
+  'Taiwan': '🇹🇼 Taiwan'
+};
 new Chart(document.getElementById('countryChart'), {
   type: 'bar',
   data: {
-    labels: countryEntries.map(e => e[0].replace('United States of America', 'USA').replace('United Arab Emirates', 'UAE').replace('Saudi Arabia', 'Saudi')),
+    labels: countryEntries.map(e => countryNames[e[0]] || e[0]),
     datasets: [{
       data: countryEntries.map(e => e[1]),
       backgroundColor: '#58a6ff88',
@@ -225,7 +248,7 @@ new Chart(document.getElementById('countryChart'), {
       borderRadius: 4
     }]
   },
-  options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#21262d' } } } }
+  options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#21262d' } }, y: { ticks: { font: { size: 12 } } } } }
 });
 
 // 4. Source Stacked
