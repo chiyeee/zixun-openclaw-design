@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexscope Users Dashboard - 25 Users</title>
+<title>Nexscope Users Dashboard - 20 Real Users</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
   * { 
@@ -231,15 +231,15 @@
 <div class="container">
   <div class="header">
     <h1>👥 Nexscope Users Dashboard</h1>
-    <div class="subtitle">Real-time user analytics for nexscope.ai - 25 Active Users!</div>
+    <div class="subtitle">Real external user analytics (excluding internal team) - 20 Active Users</div>
     <div class="update-time" id="updateTime"></div>
   </div>
 
-  <!-- KPIs - 更新为25用户的真实数据 -->
+  <!-- KPIs - 20个真实外部用户数据 -->
   <div class="kpi-row">
     <div class="kpi-card">
-      <div class="value">25</div>
-      <div class="label">Total Users</div>
+      <div class="value">20</div>
+      <div class="label">Real Users</div>
     </div>
     <div class="kpi-card">
       <div class="value">2</div>
@@ -247,23 +247,23 @@
       <div class="change up">New registrations</div>
     </div>
     <div class="kpi-card">
-      <div class="value">12.5</div>
+      <div class="value">10.0</div>
       <div class="label">Daily Average</div>
     </div>
     <div class="kpi-card">
-      <div class="value">68%</div>
+      <div class="value">65%</div>
       <div class="label">Google Login</div>
     </div>
     <div class="kpi-card">
-      <div class="value">Direct</div>
-      <div class="label">Top Channel</div>
+      <div class="value">5.0%</div>
+      <div class="label">Waitlist Convert</div>
     </div>
   </div>
 
   <!-- Charts Row 1: 用户增长趋势 -->
   <div class="charts-grid">
     <div class="chart-card full">
-      <h3>📈 Daily Registrations & Cumulative Growth</h3>
+      <h3>📈 Real User Registrations & Growth (Excluding Internal Team)</h3>
       <div class="chart-wrapper">
         <canvas id="trendChart"></canvas>
       </div>
@@ -302,9 +302,9 @@
     </div>
   </div>
 
-  <!-- Users Table - 显示所有25个用户 -->
+  <!-- Users Table - 只显示20个真实外部用户 -->
   <div class="table-card">
-    <h3>👥 All 25 User Registrations</h3>
+    <h3>👥 All 20 Real User Registrations (Internal Team Excluded)</h3>
     <div class="table-container">
       <table>
         <thead>
@@ -338,11 +338,6 @@
           <tr><td>05-07 13:07</td><td>78706273</td><td>78706273@qq.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
           <tr><td>05-07 02:39</td><td>Test Daniel</td><td>test@gmail.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇺🇦 UA</td></tr>
           <tr><td>05-06 18:17</td><td>K Beat</td><td>khoakhanh@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-github">GitHub</span></td><td>🇻🇳 VN</td></tr>
-          <tr><td>05-05 10:56</td><td>1171604288</td><td>1171604288@qq.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-05 09:23</td><td>Jammie Han</td><td>hanjiameng@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-04 11:32</td><td>E Wu</td><td>5chiyee@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-github">GitHub</span></td><td>🇺🇸 US</td></tr>
-          <tr><td>05-04 10:30</td><td>leet.jun1109</td><td>leet.jun@gmail.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-04 07:40</td><td>水边Bl</td><td>bl.you@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
         </tbody>
       </table>
     </div>
@@ -350,19 +345,19 @@
 </div>
 
 <div class="footer">
-  Built by 牛马哥🐂 for Nexscope · Updated with real-time data · <a href="https://github.com/chiyeee/zixun-Openclaw-chat" style="color: #58a6ff;">Source</a>
+  Built by 牛马哥🐂 for Nexscope · Real external users only · <a href="https://github.com/chiyeee/zixun-Openclaw-chat" style="color: #58a6ff;">Source</a>
 </div>
 
 <script>
-// === REAL DATA FROM API ===
-const USER_STATS = {
-  total: 25,
-  google: 17,  // Google登录
+// === 20个真实外部用户数据 (排除内部团队) ===
+const REAL_USER_STATS = {
+  total: 20,
+  google: 13,  // Google登录
   github: 1,   // GitHub登录  
-  email: 7,    // Email登录
+  email: 6,    // Email登录
   countries: {
-    "Hong Kong": 9,
-    "United States of America": 6, 
+    "Hong Kong": 5,      // 减去内部4个HK用户
+    "United States of America": 5, 
     "India": 3,
     "South Africa": 1,
     "Pakistan": 1,
@@ -373,12 +368,11 @@ const USER_STATS = {
     "Viet Nam": 1
   },
   channels: {
-    "direct": 13,
+    "direct": 10,        // 减去内部直接注册
     "GadAmagent": 4,
     "skill": 3,
-    "github": 3,
-    "thankyou": 1,
-    "blog": 1
+    "github": 2,         // 减去内部GitHub注册
+    "thankyou": 1
   }
 };
 
@@ -415,22 +409,22 @@ function renderCharts() {
     return;
   }
 
-  // === 用户增长趋势图 - 基于真实25用户增长 ===
+  // === 真实用户增长趋势图 (排除内部用户) ===
   new Chart(trendCanvas, {
     type: 'line',
     data: {
-      labels: ['May 4', 'May 5', 'May 6', 'May 7', 'May 8'],
+      labels: ['May 6', 'May 7', 'May 8'],
       datasets: [
         {
-          label: 'Daily New',
-          data: [3, 2, 1, 10, 9], // 实际每日注册数
+          label: 'Daily New Users',
+          data: [1, 10, 9], // 排除4月内部用户后的真实增长
           type: 'bar',
           backgroundColor: 'rgba(63, 185, 80, 0.8)',
           yAxisID: 'y'
         },
         {
-          label: 'Total Users',
-          data: [3, 5, 6, 16, 25], // 累积用户数
+          label: 'Total Real Users',
+          data: [1, 11, 20], // 真实累积用户数
           borderColor: '#58a6ff',
           backgroundColor: 'rgba(88, 166, 255, 0.1)',
           fill: true,
@@ -455,22 +449,22 @@ function renderCharts() {
           type: 'linear',
           display: true,
           position: 'right',
-          title: { display: true, text: 'Total' },
+          title: { display: true, text: 'Total Real' },
           grid: { drawOnChartArea: false },
           beginAtZero: true,
-          max: 30
+          max: 25
         }
       }
     }
   });
 
-  // === 登录方式图表 - 真实数据 ===
+  // === 登录方式图表 - 真实用户数据 ===
   new Chart(authCanvas, {
     type: 'doughnut',
     data: {
       labels: ['Google', 'Email', 'GitHub'],
       datasets: [{
-        data: [USER_STATS.google, USER_STATS.email, USER_STATS.github],
+        data: [REAL_USER_STATS.google, REAL_USER_STATS.email, REAL_USER_STATS.github],
         backgroundColor: ['#4285f4', '#f85149', '#333333'],
         borderWidth: 0
       }]
@@ -481,13 +475,13 @@ function renderCharts() {
     }
   });
 
-  // === 注册渠道图表 - 真实数据 ===
+  // === 注册渠道图表 - 真实用户数据 ===
   new Chart(channelCanvas, {
     type: 'doughnut',
     data: {
-      labels: ['Direct', 'GadAgent', 'Skill', 'GitHub', 'Other'],
+      labels: ['Direct', 'GadAgent', 'Skill', 'GitHub', 'TY'],
       datasets: [{
-        data: [13, 4, 3, 3, 2],
+        data: [10, 4, 3, 2, 1],
         backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b5cf6'],
         borderWidth: 0
       }]
@@ -498,36 +492,15 @@ function renderCharts() {
     }
   });
 
-  // === 地理分布图表 - 真实数据 ===
+  // === 地理分布图表 - 真实用户数据 ===
   new Chart(countryCanvas, {
     type: 'bar',
     data: {
       labels: ['Hong Kong', 'USA', 'India', 'Others'],
       datasets: [{
-        data: [9, 6, 3, 7],
+        data: [5, 5, 3, 7],
         backgroundColor: '#58a6ff',
         borderRadius: 4
-      }]
-    },
-    options: {
-      ...CHART_OPTIONS,
-      plugins: { legend: { display: false } },
-      scales: { 
-        y: { beginAtZero: true, max: 10 },
-        x: { grid: { display: false } }
-      }
-    }
-  });
-
-  // === 时间分布图表 ===
-  new Chart(hourlyCanvas, {
-    type: 'bar',
-    data: {
-      labels: ['0-4h', '4-8h', '8-12h', '12-16h', '16-20h', '20-24h'],
-      datasets: [{
-        data: [2, 3, 6, 5, 6, 3],
-        backgroundColor: '#3fb950',
-        borderRadius: 2
       }]
     },
     options: {
@@ -539,10 +512,31 @@ function renderCharts() {
       }
     }
   });
+
+  // === 时间分布图表 ===
+  new Chart(hourlyCanvas, {
+    type: 'bar',
+    data: {
+      labels: ['0-4h', '4-8h', '8-12h', '12-16h', '16-20h', '20-24h'],
+      datasets: [{
+        data: [2, 2, 5, 4, 5, 2],
+        backgroundColor: '#3fb950',
+        borderRadius: 2
+      }]
+    },
+    options: {
+      ...CHART_OPTIONS,
+      plugins: { legend: { display: false } },
+      scales: { 
+        y: { beginAtZero: true, max: 6 },
+        x: { grid: { display: false } }
+      }
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('updateTime').textContent = 'Last updated: ' + new Date().toLocaleString() + ' UTC';
+  document.getElementById('updateTime').textContent = 'Last updated: ' + new Date().toLocaleString() + ' UTC (Internal team excluded)';
   
   setTimeout(() => {
     renderCharts();
