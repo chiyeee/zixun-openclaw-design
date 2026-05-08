@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexscope Analytics - Compact Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+    background: #0f1117; 
+    color: #e1e4e8; 
+    padding: 15px;
+    overflow-x: hidden;
+  }
+  
+  .container { max-width: 1400px; margin: 0 auto; }
+  
+  .header { 
+    text-align: center; 
+    margin-bottom: 20px; 
+    padding: 15px;
+    background: linear-gradient(135deg, #161b22, #21262d);
+    border-radius: 12px;
+    border: 1px solid #30363d;
+  }
+  .header h1 { font-size: 24px; color: #fff; margin-bottom: 5px; }
+  .header .subtitle { color: #8b949e; font-size: 13px; margin-bottom: 8px; }
+  .header .update-time { color: #58a6ff; font-size: 11px; }
+  
+  /* Compact Tab Styles */
+  .tab-container { margin-bottom: 20px; text-align: center; }
+  .tab-buttons { 
+    display: inline-flex; 
+    background: #161b22; 
+    border: 1px solid #30363d; 
+    border-radius: 8px; 
+    padding: 3px; 
+  }
+  .tab-button { 
+    padding: 8px 16px; 
+    border: none; 
+    background: transparent; 
+    color: #8b949e; 
+    cursor: pointer; 
+    font-size: 13px; 
+    font-weight: 500; 
+    border-radius: 6px; 
+    transition: all 0.2s; 
+  }
+  .tab-button.active { background: #58a6ff; color: #fff; }
+  .tab-button:hover:not(.active) { background: #21262d; color: #c9d1d9; }
+  
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  
+  /* Compact Layout Grid */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    height: calc(100vh - 180px);
+  }
+  
+  .left-panel, .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Compact Cards */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 15px;
+  }
+  
+  .card h3 {
+    font-size: 14px;
+    color: #c9d1d9;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  /* KPI Row - Horizontal */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  .kpi-mini {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+  
+  .kpi-mini .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #58a6ff;
+    margin-bottom: 2px;
+  }
+  
+  .kpi-mini .label {
+    font-size: 10px;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Chart Cards */
+  .chart-card {
+    flex: 1;
+    min-height: 200px;
+    position: relative;
+  }
+  
+  .chart-card canvas {
+    max-height: 180px !important;
+  }
+  
+  /* Table Compact */
+  .table-compact {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .table-compact table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  
+  .table-compact th {
+    padding: 8px 6px;
+    border-bottom: 1px solid #30363d;
+    color: #8b949e;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: left;
+  }
+  
+  .table-compact td {
+    padding: 6px;
+    border-bottom: 1px solid #21262d;
+    font-size: 11px;
+  }
+  
+  .table-compact tr:hover {
+    background: #1c2128;
+  }
+  
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: 600;
+  }
+  .badge-ads { background: #1f3d1f; color: #3fb950; }
+  .badge-direct { background: #1d2d44; color: #58a6ff; }
+  .badge-skill { background: #3d1f1f; color: #f85149; }
+  .badge-github { background: #2d2d2d; color: #c9d1d9; }
+  
+  /* Status Banner */
+  .status-banner {
+    background: linear-gradient(135deg, #f85149, #fd7e14);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .status-banner.live {
+    background: linear-gradient(135deg, #3fb950, #58a6ff);
+  }
+  .status-banner h4 {
+    color: white;
+    margin-bottom: 2px;
+    font-size: 14px;
+  }
+  .status-banner p {
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+    .kpi-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    body { padding: 10px; }
+    .header h1 { font-size: 20px; }
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+    .tab-buttons { width: 100%; }
+    .tab-button { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Compact Header -->
+  <div class="header">
+    <h1>🎯 Nexscope Analytics</h1>
+    <div class="subtitle">Waitlist Journey → Active Users</div>
+    <div class="update-time" id="updateTime">Live Dashboard</div>
+  </div>
+
+  <!-- Compact Tabs -->
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-button active" onclick="switchTab('waitlist')">📝 Waitlist (399)</button>
+      <button class="tab-button" onclick="switchTab('users')">👥 Users (16)</button>
+    </div>
+  </div>
+
+  <!-- Waitlist Dashboard -->
+  <div id="waitlist-content" class="tab-content active">
+    <div class="status-banner">
+      <h4>🎉 Waitlist Completed - May 6, 2026</h4>
+      <p>399 users joined before launch • Product now live!</p>
+    </div>
+    
+    <!-- Compact KPIs -->
+    <div class="kpi-row">
+      <div class="kpi-mini">
+        <div class="value">399</div>
+        <div class="label">Total</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="value">44</div>
+        <div class="label">Peak Day</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="value">12</div>
+        <div class="label">Avg/Day</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="value">50%</div>
+        <div class="label">Direct</div>
+      </div>
+    </div>
+    
+    <!-- Compact Charts Grid -->
+    <div class="dashboard-grid">
+      <div class="left-panel">
+        <!-- Main Trend Chart -->
+        <div class="card chart-card">
+          <h3>📈 Waitlist Growth</h3>
+          <canvas id="waitlistTrendChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="right-panel">
+        <!-- Sources Chart -->
+        <div class="card chart-card" style="flex: 0.6;">
+          <h3>🎯 Top Channels</h3>
+          <canvas id="waitlistSourceChart"></canvas>
+        </div>
+        
+        <!-- Recent Signups Table -->
+        <div class="card table-compact">
+          <h3>📋 Final Signups</h3>
+          <table>
+            <thead>
+              <tr><th>Date</th><th>Email</th><th>Source</th><th>Country</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>05-06</td><td>nimra***@gmail.com</td><td><span class="badge badge-ads">Ads</span></td><td>🇵🇰 PK</td></tr>
+              <tr><td>05-06</td><td>boheh***@inreur.com</td><td><span class="badge badge-direct">Direct</span></td><td>🇮🇳 IN</td></tr>
+              <tr><td>05-06</td><td>eric@spark***</td><td><span class="badge badge-skill">Skill</span></td><td>🇺🇸 US</td></tr>
+              <tr><td>05-06</td><td>ecomm***@gmail.com</td><td><span class="badge badge-ads">Ads</span></td><td>🇮🇳 IN</td></tr>
+              <tr><td>05-06</td><td>scriven***@gmail.com</td><td><span class="badge badge-ads">Ads</span></td><td>🇮🇳 IN</td></tr>
+              <tr><td>05-05</td><td>noodle***@gmail.com</td><td><span class="badge badge-ads">Ads</span></td><td>🇮🇳 IN</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Dashboard -->
+  <div id="users-content" class="tab-content">
+    <div class="status-banner live">
+      <h4>🚀 Product Live - Active Users</h4>
+      <p>Real-time registrations • No more waiting!</p>
+    </div>
+    
+    <!-- Compact KPIs -->
+    <div class="kpi-row">
+      <div class="kpi-mini">
+        <div class="value">16</div>
+        <div class="label">Total</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="value">3</div>
+        <div class="label">Today</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="value">87%</div>
+        <div class="label">Google</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="value">4%</div>
+        <div class="label">Convert</div>
+      </div>
+    </div>
+    
+    <!-- Compact Charts Grid -->
+    <div class="dashboard-grid">
+      <div class="left-panel">
+        <!-- User Registration Trend -->
+        <div class="card chart-card">
+          <h3>📈 Daily Registrations</h3>
+          <canvas id="usersTrendChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="right-panel">
+        <!-- Auth Methods -->
+        <div class="card chart-card" style="flex: 0.6;">
+          <h3>🔐 Sign-up Methods</h3>
+          <canvas id="usersAuthChart"></canvas>
+        </div>
+        
+        <!-- Recent Users Table -->
+        <div class="card table-compact">
+          <h3>👥 Recent Users</h3>
+          <table>
+            <thead>
+              <tr><th>Time</th><th>Name</th><th>Auth</th><th>Country</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>05-08 01:15</td><td>Jason Sher</td><td>🔵 Google</td><td>🇿🇦 ZA</td></tr>
+              <tr><td>05-08 01:12</td><td>Mussab Bin Tahir</td><td>🔵 Google</td><td>🇵🇰 PK</td></tr>
+              <tr><td>05-08 01:08</td><td>Anonymous</td><td>📧 Email</td><td>🇮🇳 IN</td></tr>
+              <tr><td>05-08 01:03</td><td>ModernMarcos</td><td><span class="badge badge-github">GitHub</span></td><td>🇺🇸 US</td></tr>
+              <tr><td>05-08 00:58</td><td>AMZ Sachper</td><td>🔵 Google</td><td>🇮🇳 IN</td></tr>
+              <tr><td>05-07 23:45</td><td>Dev User</td><td>🔵 Google</td><td>🇸🇬 SG</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// === TAB SWITCHING ===
+function switchTab(tab) {
+  document.getElementById('waitlist-content').classList.remove('active');
+  document.getElementById('users-content').classList.remove('active');
+  document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+  
+  document.getElementById(tab + '-content').classList.add('active');
+  event.target.classList.add('active');
+  
+  // Render charts for active tab
+  if (tab === 'waitlist') {
+    renderWaitlistCharts();
+  } else {
+    renderUsersCharts();
+  }
+}
+
+// === CHART DEFAULTS ===
+Chart.defaults.color = '#8b949e';
+Chart.defaults.borderColor = '#30363d';
+Chart.defaults.plugins.legend.display = false; // Hide legends to save space
+
+// === WAITLIST CHARTS ===
+function renderWaitlistCharts() {
+  // Waitlist growth trend
+  new Chart(document.getElementById('waitlistTrendChart'), {
+    type: 'line',
+    data: {
+      labels: ['Apr 3', 'Apr 8', 'Apr 15', 'Apr 22', 'Apr 29', 'May 6'],
+      datasets: [{
+        data: [1, 65, 219, 293, 337, 399],
+        borderColor: '#58a6ff',
+        backgroundColor: 'rgba(88, 166, 255, 0.1)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { 
+          beginAtZero: true,
+          grid: { color: '#21262d' },
+          ticks: { font: { size: 11 } }
+        },
+        x: { 
+          grid: { display: false },
+          ticks: { font: { size: 11 } }
+        }
+      },
+      plugins: {
+        tooltip: {
+          backgroundColor: '#161b22',
+          titleColor: '#c9d1d9',
+          bodyColor: '#e1e4e8',
+          borderColor: '#30363d',
+          borderWidth: 1
+        }
+      }
+    }
+  });
+
+  // Sources donut chart
+  new Chart(document.getElementById('waitlistSourceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Direct', 'Google Ads', 'Skills', 'GitHub'],
+      datasets: [{
+        data: [200, 101, 25, 14],
+        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922'],
+        borderWidth: 2,
+        borderColor: '#0f1117'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        tooltip: {
+          backgroundColor: '#161b22',
+          titleColor: '#c9d1d9',
+          bodyColor: '#e1e4e8'
+        }
+      }
+    }
+  });
+}
+
+// === USERS CHARTS ===
+function renderUsersCharts() {
+  // Users daily registration
+  new Chart(document.getElementById('usersTrendChart'), {
+    type: 'bar',
+    data: {
+      labels: ['May 7', 'May 8'],
+      datasets: [{
+        data: [10, 6],
+        backgroundColor: '#3fb950',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { 
+          beginAtZero: true,
+          grid: { color: '#21262d' },
+          ticks: { font: { size: 11 } }
+        },
+        x: { 
+          grid: { display: false },
+          ticks: { font: { size: 11 } }
+        }
+      }
+    }
+  });
+
+  // Auth methods
+  new Chart(document.getElementById('usersAuthChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Google', 'GitHub', 'Email'],
+      datasets: [{
+        data: [14, 2, 0],
+        backgroundColor: ['#4285f4', '#333', '#f85149'],
+        borderWidth: 2,
+        borderColor: '#0f1117'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%'
+    }
+  });
+}
+
+// === INITIALIZATION ===
+document.addEventListener('DOMContentLoaded', function() {
+  renderWaitlistCharts(); // Load waitlist by default
+  document.getElementById('updateTime').textContent = 'Updated: ' + new Date().toLocaleTimeString();
+});
+</script>
+
+</body>
+</html>
