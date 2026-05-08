@@ -3,264 +3,359 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexscope Analytics Dashboard</title>
+<title>Nexscope Analytics - Single Screen</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e1e4e8; padding: 20px; }
-  .header { text-align: center; margin-bottom: 30px; }
-  .header h1 { font-size: 28px; color: #fff; margin-bottom: 5px; }
-  .header .subtitle { color: #8b949e; font-size: 14px; }
-  .header .update-time { color: #58a6ff; font-size: 12px; margin-top: 5px; }
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+    background: #0f1117; 
+    color: #e1e4e8; 
+    padding: 15px;
+    height: 100vh;
+    overflow: hidden; /* 禁止滚动 */
+  }
   
-  /* 简单的tab样式，不破坏原版布局 */
-  .tab-nav { text-align: center; margin-bottom: 30px; }
-  .tab-nav .tab-buttons { display: inline-flex; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 4px; }
-  .tab-nav .tab-button { padding: 12px 24px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-size: 14px; font-weight: 500; border-radius: 8px; transition: all 0.2s; }
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  /* 紧凑的头部 */
+  .header { 
+    text-align: center; 
+    margin-bottom: 15px;
+    flex-shrink: 0;
+  }
+  .header h1 { font-size: 22px; color: #fff; margin-bottom: 3px; }
+  .header .subtitle { color: #8b949e; font-size: 12px; }
+  
+  /* 紧凑的tab */
+  .tab-nav { 
+    text-align: center; 
+    margin-bottom: 15px; 
+    flex-shrink: 0;
+  }
+  .tab-nav .tab-buttons { 
+    display: inline-flex; 
+    background: #161b22; 
+    border: 1px solid #30363d; 
+    border-radius: 8px; 
+    padding: 3px; 
+  }
+  .tab-nav .tab-button { 
+    padding: 8px 16px; 
+    border: none; 
+    background: transparent; 
+    color: #8b949e; 
+    cursor: pointer; 
+    font-size: 13px; 
+    font-weight: 500; 
+    border-radius: 6px; 
+    transition: all 0.2s; 
+  }
   .tab-nav .tab-button.active { background: #58a6ff; color: #fff; }
-  .tab-nav .tab-button:hover:not(.active) { background: #21262d; color: #c9d1d9; }
   
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  .tab-content { 
+    display: none; 
+    flex: 1;
+    overflow: hidden;
+  }
+  .tab-content.active { 
+    display: flex;
+    flex-direction: column;
+  }
   
-  /* 原版waitlist dashboard的所有样式，完全不变 */
-  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
-  .kpi-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; text-align: center; }
-  .kpi-card .value { font-size: 36px; font-weight: 700; color: #58a6ff; }
-  .kpi-card .label { font-size: 13px; color: #8b949e; margin-top: 4px; }
-  .kpi-card .change { font-size: 14px; margin-top: 4px; }
-  .kpi-card .change.up { color: #3fb950; }
-  .kpi-card .change.down { color: #f85149; }
+  /* 单屏布局 */
+  .single-screen-layout {
+    display: grid;
+    grid-template-areas:
+      "kpis kpis"
+      "chart1 chart2"
+      "table table";
+    grid-template-rows: auto 1fr auto;
+    gap: 15px;
+    height: 100%;
+  }
   
-  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
-  .chart-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; min-height: 350px; }
-  .chart-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
-  .chart-card.full { grid-column: 1 / -1; }
-  .chart-card.tall { min-height: 500px; }
+  /* 紧凑KPI */
+  .kpi-section {
+    grid-area: kpis;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
   
-  .table-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
-  .table-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
-  table { width: 100%; border-collapse: collapse; }
-  th { text-align: left; padding: 8px 12px; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 12px; font-weight: 600; text-transform: uppercase; }
-  td { padding: 8px 12px; border-bottom: 1px solid #21262d; font-size: 13px; }
+  .kpi-mini {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  
+  .kpi-mini .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #58a6ff;
+    margin-bottom: 2px;
+  }
+  
+  .kpi-mini .label {
+    font-size: 10px;
+    color: #8b949e;
+    text-transform: uppercase;
+  }
+  
+  /* 图表区域 */
+  .chart-left { grid-area: chart1; }
+  .chart-right { grid-area: chart2; }
+  
+  .chart-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .chart-box h3 {
+    font-size: 13px;
+    color: #c9d1d9;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  
+  .chart-container {
+    flex: 1;
+    position: relative;
+    min-height: 0; /* 重要：允许flex压缩 */
+  }
+  
+  .chart-container canvas {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* 紧凑表格 */
+  .table-section {
+    grid-area: table;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 15px;
+    overflow: hidden;
+    max-height: 200px; /* 限制表格高度 */
+  }
+  
+  .table-section h3 {
+    font-size: 13px;
+    color: #c9d1d9;
+    margin-bottom: 10px;
+  }
+  
+  .table-container {
+    overflow-y: auto;
+    max-height: 150px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  
+  th {
+    padding: 6px 8px;
+    border-bottom: 1px solid #30363d;
+    color: #8b949e;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    background: #161b22;
+  }
+  
+  td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #21262d;
+  }
+  
   tr:hover { background: #1c2128; }
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  
+  .badge {
+    display: inline-block;
+    padding: 1px 4px;
+    border-radius: 6px;
+    font-size: 8px;
+    font-weight: 600;
+  }
   .badge-ads { background: #1f3d1f; color: #3fb950; }
   .badge-direct { background: #1d2d44; color: #58a6ff; }
-  .badge-high { background: #1f3d1f; color: #3fb950; }
-  .badge-medium { background: #3d3d1f; color: #d29922; }
-  .badge-low { background: #3d1f1f; color: #f85149; }
   .badge-github { background: #2d2d2d; color: #c9d1d9; }
   
-  .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 30px; }
+  /* 响应式 */
+  @media (max-width: 1000px) {
+    .single-screen-layout {
+      grid-template-areas:
+        "kpis"
+        "chart1"
+        "table";
+      grid-template-columns: 1fr;
+    }
+    .chart-right { display: none; }
+    .kpi-section { grid-template-columns: repeat(2, 1fr); }
+  }
   
-  @media (max-width: 768px) {
-    .charts-grid { grid-template-columns: 1fr; }
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
-    .tab-nav .tab-buttons { flex-direction: column; width: 100%; }
+  @media (max-width: 600px) {
+    body { padding: 10px; }
+    .kpi-section { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>📊 Nexscope Analytics Dashboard</h1>
-  <div class="subtitle">Complete journey from waitlist to active users</div>
-  <div class="update-time" id="updateTime"></div>
-</div>
+<div class="container">
+  <div class="header">
+    <h1>🎯 Nexscope Analytics</h1>
+    <div class="subtitle">Single Screen Dashboard</div>
+  </div>
 
-<!-- 简单的tab导航 -->
-<div class="tab-nav">
-  <div class="tab-buttons">
-    <button class="tab-button active" onclick="switchTab('waitlist')">📝 Waitlist Journey (399)</button>
-    <button class="tab-button" onclick="switchTab('users')">👥 Active Users (16)</button>
+  <div class="tab-nav">
+    <div class="tab-buttons">
+      <button class="tab-button active" onclick="switchTab('waitlist')">📝 Waitlist (399)</button>
+      <button class="tab-button" onclick="switchTab('users')">👥 Users (16)</button>
+    </div>
   </div>
-</div>
 
-<!-- Waitlist Content - 完全基于原版布局 -->
-<div id="waitlist-content" class="tab-content active">
+  <!-- Waitlist Tab -->
+  <div id="waitlist-content" class="tab-content active">
+    <div class="single-screen-layout">
+      <!-- KPIs -->
+      <div class="kpi-section">
+        <div class="kpi-mini">
+          <div class="value">399</div>
+          <div class="label">Total</div>
+        </div>
+        <div class="kpi-mini">
+          <div class="value">44</div>
+          <div class="label">Peak Day</div>
+        </div>
+        <div class="kpi-mini">
+          <div class="value">50%</div>
+          <div class="label">Direct</div>
+        </div>
+        <div class="kpi-mini">
+          <div class="value">May 6</div>
+          <div class="label">Completed</div>
+        </div>
+      </div>
+      
+      <!-- Charts -->
+      <div class="chart-box chart-left">
+        <h3>📈 Growth Trend</h3>
+        <div class="chart-container">
+          <canvas id="waitlistTrendChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="chart-box chart-right">
+        <h3>🎯 Sources</h3>
+        <div class="chart-container">
+          <canvas id="waitlistSourceChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- Compact Table -->
+      <div class="table-section">
+        <h3>📋 Final Signups</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Date</th><th>Email</th><th>Source</th><th>Country</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>05-06</td><td>nimra***@gmail.com</td><td><span class="badge badge-ads">Ads</span></td><td>🇵🇰</td></tr>
+              <tr><td>05-06</td><td>boheh***@inreur.com</td><td><span class="badge badge-direct">Direct</span></td><td>🇮🇳</td></tr>
+              <tr><td>05-06</td><td>eric@spark***</td><td><span class="badge badge-github">Skill</span></td><td>🇺🇸</td></tr>
+              <tr><td>05-06</td><td>ecomm***@gmail.com</td><td><span class="badge badge-ads">Ads</span></td><td>🇮🇳</td></tr>
+              <tr><td>05-06</td><td>scriven***@gmail.com</td><td><span class="badge badge-ads">Ads</span></td><td>🇮🇳</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- KPIs -->
-<div class="kpi-row">
-  <div class="kpi-card">
-    <div class="value" id="kpiTotal">399</div>
-    <div class="label">Total Signups</div>
+  <!-- Users Tab -->
+  <div id="users-content" class="tab-content">
+    <div class="single-screen-layout">
+      <!-- KPIs -->
+      <div class="kpi-section">
+        <div class="kpi-mini">
+          <div class="value">16</div>
+          <div class="label">Total</div>
+        </div>
+        <div class="kpi-mini">
+          <div class="value">3</div>
+          <div class="label">Today</div>
+        </div>
+        <div class="kpi-mini">
+          <div class="value">87%</div>
+          <div class="label">Google</div>
+        </div>
+        <div class="kpi-mini">
+          <div class="value">4%</div>
+          <div class="label">Convert</div>
+        </div>
+      </div>
+      
+      <!-- Charts -->
+      <div class="chart-box chart-left">
+        <h3>📈 Registrations</h3>
+        <div class="chart-container">
+          <canvas id="usersTrendChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="chart-box chart-right">
+        <h3>🔐 Auth Methods</h3>
+        <div class="chart-container">
+          <canvas id="usersAuthChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- Compact Table -->
+      <div class="table-section">
+        <h3>👥 Recent Users</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Time</th><th>Name</th><th>Auth</th><th>Country</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>05-08</td><td>Jason Sher</td><td>Google</td><td>🇿🇦</td></tr>
+              <tr><td>05-08</td><td>Mussab Tahir</td><td>Google</td><td>🇵🇰</td></tr>
+              <tr><td>05-08</td><td>Anonymous</td><td>Email</td><td>🇮🇳</td></tr>
+              <tr><td>05-08</td><td>Modern Marcos</td><td>GitHub</td><td>🇺🇸</td></tr>
+              <tr><td>05-08</td><td>AMZ Sachper</td><td>Google</td><td>🇮🇳</td></tr>
+              <tr><td>05-07</td><td>LX Developer</td><td>Google</td><td>🇨🇳</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="kpi-card">
-    <div class="value" id="kpiYesterday">13</div>
-    <div class="label">Yesterday</div>
-    <div class="change down" id="kpiYesterdayChange">Launch Day ✅</div>
-  </div>
-  <div class="kpi-card">
-    <div class="value" id="kpiAvg">12</div>
-    <div class="label">Daily Average</div>
-  </div>
-  <div class="kpi-card">
-    <div class="value" id="kpiHighQuality">163</div>
-    <div class="label">High Quality</div>
-  </div>
-  <div class="kpi-card">
-    <div class="value" id="kpiTopSource">GadAmagent</div>
-    <div class="label">Top Paid Channel</div>
-  </div>
-</div>
-
-<!-- Charts Row 1: Trend + Cumulative -->
-<div class="charts-grid">
-  <div class="chart-card full">
-    <h3>📈 Daily Signups & Cumulative Growth</h3>
-    <canvas id="trendChart" height="80"></canvas>
-  </div>
-</div>
-
-<!-- Charts Row 2: Source + Country -->
-<div class="charts-grid">
-  <div class="chart-card">
-    <h3>🎯 By Channel</h3>
-    <canvas id="sourceChart"></canvas>
-  </div>
-  <div class="chart-card">
-    <h3>🌍 Top Countries</h3>
-    <canvas id="countryChart"></canvas>
-  </div>
-</div>
-
-<!-- Charts Row 3: Hourly + Device -->
-<div class="charts-grid">
-  <div class="chart-card">
-    <h3>⏰ Hourly Signups (UTC)</h3>
-    <canvas id="hourlyChart"></canvas>
-  </div>
-  <div class="chart-card">
-    <h3>📱 Device Types</h3>
-    <canvas id="deviceChart"></canvas>
-  </div>
-</div>
-
-<!-- Recent signups -->
-<div class="table-card">
-  <h3>📋 Final Waitlist Signups (Before Launch)</h3>
-  <table id="recentTable">
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Email</th>
-        <th>Source</th>
-        <th>Landing</th>
-        <th>Location</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>05-06 22:40</td><td>nimrariazwaheed@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>/agent</td><td>🇵🇰 Pakistan</td></tr>
-      <tr><td>05-06 16:34</td><td>boheh47953@inreur.com</td><td><span class="badge badge-direct">direct</span></td><td>/</td><td>🇮🇳 India</td></tr>
-      <tr><td>05-06 15:22</td><td>eric@sparkengineering.co</td><td><span class="badge badge-high">skill</span></td><td>/</td><td>🇺🇸 United States</td></tr>
-      <tr><td>05-06 13:44</td><td>ecomm.mhl@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>/</td><td>🇮🇳 India</td></tr>
-      <tr><td>05-06 13:19</td><td>scrivenglef@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>/</td><td>🇮🇳 India</td></tr>
-      <tr><td>05-06 12:45</td><td>martines1590@gmail.com</td><td><span class="badge badge-ads">Gadagent</span></td><td>/</td><td>🇺🇸 United States</td></tr>
-      <tr><td>05-06 10:49</td><td>2573614730@qq.com</td><td><span class="badge badge-github">github</span></td><td>/</td><td>🇸🇬 Singapore</td></tr>
-      <tr><td>05-06 06:52</td><td>jjabllc4@gmail.com</td><td><span class="badge badge-direct">direct</span></td><td>/</td><td>🇺🇸 United States</td></tr>
-      <tr><td>05-06 06:47</td><td>nafizakib@gmail.com</td><td><span class="badge badge-direct">direct</span></td><td>/agent</td><td>🇺🇸 United States</td></tr>
-      <tr><td>05-06 05:18</td><td>punknewsfanzine@gmail.com</td><td><span class="badge badge-ads">Gadagent</span></td><td>/agent</td><td>🇺🇸 United States</td></tr>
-    </tbody>
-  </table>
-</div>
-
-</div>
-
-<!-- Users Content -->
-<div id="users-content" class="tab-content">
-
-<!-- KPIs -->
-<div class="kpi-row">
-  <div class="kpi-card">
-    <div class="value">16</div>
-    <div class="label">Total Users</div>
-  </div>
-  <div class="kpi-card">
-    <div class="value">3</div>
-    <div class="label">Today</div>
-    <div class="change up">+3 new</div>
-  </div>
-  <div class="kpi-card">
-    <div class="value">8.0</div>
-    <div class="label">Users/Day</div>
-  </div>
-  <div class="kpi-card">
-    <div class="value">87%</div>
-    <div class="label">Google Auth</div>
-  </div>
-  <div class="kpi-card">
-    <div class="value">4.0%</div>
-    <div class="label">Waitlist Conversion</div>
-  </div>
-</div>
-
-<!-- Charts Row 1: User Trend -->
-<div class="charts-grid">
-  <div class="chart-card full">
-    <h3>📈 Daily User Registrations (Since Launch)</h3>
-    <canvas id="usersTrendChart" height="80"></canvas>
-  </div>
-</div>
-
-<!-- Charts Row 2: Auth + Sources -->
-<div class="charts-grid">
-  <div class="chart-card">
-    <h3>🔐 Authentication Methods</h3>
-    <canvas id="usersAuthChart"></canvas>
-  </div>
-  <div class="chart-card">
-    <h3>🎯 Registration Sources</h3>
-    <canvas id="usersSourceChart"></canvas>
-  </div>
-</div>
-
-<!-- Charts Row 3: Countries + Hourly -->
-<div class="charts-grid">
-  <div class="chart-card">
-    <h3>🌍 User Countries</h3>
-    <canvas id="usersCountryChart"></canvas>
-  </div>
-  <div class="chart-card">
-    <h3>⏰ Registration Hours (UTC)</h3>
-    <canvas id="usersHourlyChart"></canvas>
-  </div>
-</div>
-
-<!-- Recent users -->
-<div class="table-card">
-  <h3>👥 Recent User Registrations</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Auth</th>
-        <th>Location</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>05-08 01:15</td><td>Jason Sher</td><td>jason@functionsharp.com</td><td>🔵 Google</td><td>🇿🇦 South Africa</td></tr>
-      <tr><td>05-08 01:12</td><td>Mussab Bin Tahir</td><td>m.tahir@spctek.com</td><td>🔵 Google</td><td>🇵🇰 Pakistan</td></tr>
-      <tr><td>05-08 01:08</td><td>Anonymous User</td><td>fsb7210@gmail.com</td><td>📧 Email</td><td>🇮🇳 India</td></tr>
-      <tr><td>05-08 01:03</td><td>Modern Marcos</td><td>modernmarcos76@gmail.com</td><td>⚫ GitHub</td><td>🇺🇸 United States</td></tr>
-      <tr><td>05-08 00:58</td><td>AMZ Sachper</td><td>amz@sachper.com</td><td>🔵 Google</td><td>🇮🇳 India</td></tr>
-      <tr><td>05-07 23:45</td><td>LX Developer</td><td>lx0923661@gmail.com</td><td>🔵 Google</td><td>🇨🇳 China</td></tr>
-      <tr><td>05-07 23:41</td><td>Gokul Kumar</td><td>gokul155@gmail.com</td><td>⚫ GitHub</td><td>🇮🇳 India</td></tr>
-      <tr><td>05-07 23:35</td><td>Shao JS</td><td>shaojs@gmail.com</td><td>🔵 Google</td><td>🇸🇬 Singapore</td></tr>
-    </tbody>
-  </table>
-</div>
-
-</div>
-
-<div class="footer">
-  Built by 牛马哥🐂 for Nexscope · Updated hourly · <a href="https://github.com/chiyeee/zixun-Openclaw-chat" style="color: #58a6ff;">Source</a>
 </div>
 
 <script>
-// === TAB SWITCHING ===
 function switchTab(tab) {
   document.getElementById('waitlist-content').classList.remove('active');
   document.getElementById('users-content').classList.remove('active');
@@ -269,86 +364,32 @@ function switchTab(tab) {
   document.getElementById(tab + '-content').classList.add('active');
   event.target.classList.add('active');
   
-  if (tab === 'waitlist') {
-    renderWaitlistCharts();
-  } else {
-    renderUsersCharts();
-  }
+  setTimeout(() => {
+    if (tab === 'waitlist') {
+      renderWaitlistCharts();
+    } else {
+      renderUsersCharts();
+    }
+  }, 100);
 }
 
-// === CHART DEFAULTS (和原版一样) ===
 Chart.defaults.color = '#8b949e';
 Chart.defaults.borderColor = '#30363d';
 
-// === WAITLIST CHARTS (完全复制原版代码) ===
 function renderWaitlistCharts() {
-  // Trend Chart - 原版样式
-  new Chart(document.getElementById('trendChart'), {
+  Chart.getChart('waitlistTrendChart')?.destroy();
+  Chart.getChart('waitlistSourceChart')?.destroy();
+  
+  new Chart(document.getElementById('waitlistTrendChart'), {
     type: 'line',
     data: {
-      labels: ['Apr 3', 'Apr 8', 'Apr 15', 'Apr 22', 'Apr 29', 'May 6'],
-      datasets: [
-        {
-          label: 'Daily New',
-          data: [1, 44, 36, 17, 8, 13],
-          type: 'bar',
-          backgroundColor: 'rgba(63, 185, 80, 0.8)',
-          yAxisID: 'y'
-        },
-        {
-          label: 'Total Waitlist',
-          data: [1, 65, 219, 293, 337, 399],
-          borderColor: '#58a6ff',
-          backgroundColor: 'rgba(88, 166, 255, 0.1)',
-          fill: true,
-          tension: 0.4,
-          yAxisID: 'y1'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { intersect: false },
-      scales: {
-        y: {
-          type: 'linear',
-          display: true,
-          position: 'left',
-          title: { display: true, text: 'Daily Signups' }
-        },
-        y1: {
-          type: 'linear',
-          display: true,
-          position: 'right',
-          title: { display: true, text: 'Total Waitlist' },
-          grid: { drawOnChartArea: false }
-        }
-      }
-    }
-  });
-
-  // Source Chart
-  new Chart(document.getElementById('sourceChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Direct', 'GadAmagent', 'Skill', 'GitHub', 'Gadagent', 'Other'],
+      labels: ['Apr 3', 'Apr 15', 'Apr 29', 'May 6'],
       datasets: [{
-        data: [200, 101, 25, 14, 19, 40],
-        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b5cf6', '#8b949e']
-      }]
-    },
-    options: { responsive: true, maintainAspectRatio: false }
-  });
-
-  // Country Chart
-  new Chart(document.getElementById('countryChart'), {
-    type: 'bar',
-    data: {
-      labels: ['India', 'USA', 'UK', 'Pakistan', 'Saudi'],
-      datasets: [{
-        data: [106, 102, 17, 15, 15],
-        backgroundColor: '#58a6ff'
+        data: [1, 219, 337, 399],
+        borderColor: '#58a6ff',
+        backgroundColor: 'rgba(88, 166, 255, 0.1)',
+        fill: true,
+        tension: 0.4
       }]
     },
     options: {
@@ -359,46 +400,32 @@ function renderWaitlistCharts() {
     }
   });
 
-  // Hourly Chart
-  new Chart(document.getElementById('hourlyChart'), {
-    type: 'bar',
+  new Chart(document.getElementById('waitlistSourceChart'), {
+    type: 'doughnut',
     data: {
-      labels: Array.from({length: 24}, (_, i) => i + ':00'),
+      labels: ['Direct', 'Ads', 'Skill', 'Other'],
       datasets: [{
-        data: [20, 18, 10, 6, 19, 14, 9, 10, 10, 10, 13, 10, 14, 20, 12, 25, 23, 16, 28, 26, 19, 20, 20, 21],
-        backgroundColor: '#3fb950'
+        data: [200, 120, 25, 54],
+        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#8b949e']
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true } }
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } }
     }
-  });
-
-  // Device Chart
-  new Chart(document.getElementById('deviceChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Mobile', 'Desktop'],
-      datasets: [{
-        data: [153, 240],
-        backgroundColor: ['#f85149', '#58a6ff']
-      }]
-    },
-    options: { responsive: true, maintainAspectRatio: false }
   });
 }
 
-// === USERS CHARTS ===
 function renderUsersCharts() {
+  Chart.getChart('usersTrendChart')?.destroy();
+  Chart.getChart('usersAuthChart')?.destroy();
+  
   new Chart(document.getElementById('usersTrendChart'), {
     type: 'bar',
     data: {
       labels: ['May 7', 'May 8'],
       datasets: [{
-        label: 'Daily Registrations',
         data: [10, 6],
         backgroundColor: '#3fb950'
       }]
@@ -406,6 +433,7 @@ function renderUsersCharts() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
       scales: { y: { beginAtZero: true } }
     }
   });
@@ -419,60 +447,16 @@ function renderUsersCharts() {
         backgroundColor: ['#4285f4', '#333', '#f85149']
       }]
     },
-    options: { responsive: true, maintainAspectRatio: false }
-  });
-
-  new Chart(document.getElementById('usersSourceChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['GitHub', 'Direct', 'Google'],
-      datasets: [{
-        data: [8, 5, 3],
-        backgroundColor: ['#333333', '#58a6ff', '#3fb950']
-      }]
-    },
-    options: { responsive: true, maintainAspectRatio: false }
-  });
-
-  new Chart(document.getElementById('usersCountryChart'), {
-    type: 'bar',
-    data: {
-      labels: ['South Africa', 'Pakistan', 'India', 'USA', 'China'],
-      datasets: [{
-        data: [1, 1, 5, 4, 2],
-        backgroundColor: '#58a6ff'
-      }]
-    },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true } }
-    }
-  });
-
-  new Chart(document.getElementById('usersHourlyChart'), {
-    type: 'bar',
-    data: {
-      labels: Array.from({length: 24}, (_, i) => i + ':00'),
-      datasets: [{
-        data: [0,3,2,1,0,0,0,0,1,0,2,0,0,1,0,0,1,1,2,1,1,0,0,1],
-        backgroundColor: '#3fb950'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true } }
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } }
     }
   });
 }
 
-// === INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', function() {
-  renderWaitlistCharts(); // 默认加载waitlist
-  document.getElementById('updateTime').textContent = 'Last updated: ' + new Date().toLocaleString() + ' UTC';
+  setTimeout(() => renderWaitlistCharts(), 300);
 });
 </script>
 
