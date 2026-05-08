@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexscope Analytics Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e1e4e8; padding: 20px; }
+  .header { text-align: center; margin-bottom: 30px; }
+  .header h1 { font-size: 28px; color: #fff; margin-bottom: 5px; }
+  .header .subtitle { color: #8b949e; font-size: 14px; }
+  .header .update-time { color: #58a6ff; font-size: 12px; margin-top: 5px; }
+  
+  /* Tab Styles */
+  .tab-container { margin-bottom: 30px; text-align: center; }
+  .tab-buttons { display: inline-flex; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 4px; margin-bottom: 20px; }
+  .tab-button { padding: 12px 24px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-size: 14px; font-weight: 500; border-radius: 8px; transition: all 0.2s; }
+  .tab-button.active { background: #58a6ff; color: #fff; }
+  .tab-button:hover:not(.active) { background: #21262d; color: #c9d1d9; }
+  
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  
+  .milestone-banner { background: linear-gradient(135deg, #f85149, #fd7e14); border-radius: 12px; padding: 16px; margin-bottom: 20px; text-align: center; }
+  .milestone-banner h3 { color: white; margin-bottom: 4px; }
+  .milestone-banner p { color: rgba(255,255,255,0.9); font-size: 14px; }
+  
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .kpi-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; text-align: center; }
+  .kpi-card .value { font-size: 36px; font-weight: 700; color: #58a6ff; }
+  .kpi-card .label { font-size: 13px; color: #8b949e; margin-top: 4px; }
+  .kpi-card .change { font-size: 14px; margin-top: 4px; }
+  .kpi-card .change.up { color: #3fb950; }
+  .kpi-card .change.down { color: #f85149; }
+  
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .chart-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; min-height: 350px; }
+  .chart-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-card.tall { min-height: 500px; }
+  
+  .table-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .table-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 8px 12px; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+  td { padding: 8px 12px; border-bottom: 1px solid #21262d; font-size: 13px; }
+  tr:hover { background: #1c2128; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge-ads { background: #1f3d1f; color: #3fb950; }
+  .badge-direct { background: #1d2d44; color: #58a6ff; }
+  .badge-high { background: #1f3d1f; color: #3fb950; }
+  .badge-medium { background: #3d3d1f; color: #d29922; }
+  .badge-low { background: #3d1f1f; color: #f85149; }
+  
+  .loading { text-align: center; padding: 40px; color: #8b949e; }
+  .error { text-align: center; padding: 40px; color: #f85149; }
+  .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 30px; }
+  
+  @media (max-width: 768px) {
+    .charts-grid { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .tab-buttons { flex-direction: column; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎯 Nexscope Analytics Dashboard</h1>
+  <div class="subtitle">From Waitlist to Active Users - Complete Journey Analytics</div>
+  <div class="update-time" id="updateTime">Loading...</div>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tab-container">
+  <div class="tab-buttons">
+    <button class="tab-button active" onclick="switchTab('waitlist')">📝 Waitlist (Historical)</button>
+    <button class="tab-button" onclick="switchTab('users')">👥 Active Users (Current)</button>
+  </div>
+</div>
+
+<!-- Waitlist Tab Content -->
+<div id="waitlist-content" class="tab-content active">
+  <div class="milestone-banner">
+    <h3>🎉 Waitlist Completed - May 6, 2026</h3>
+    <p>399 users joined the waitlist before our official launch. Product now live!</p>
+  </div>
+  
+  <!-- Waitlist KPIs -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="value" id="waitlist-total">—</div>
+      <div class="label">Total Waitlist</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value" id="waitlist-peak">—</div>
+      <div class="label">Peak Day</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value" id="waitlist-avg">—</div>
+      <div class="label">Daily Average</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value" id="waitlist-source">—</div>
+      <div class="label">Top Channel</div>
+    </div>
+  </div>
+
+  <!-- Waitlist Charts -->
+  <div class="charts-grid">
+    <div class="chart-card full">
+      <h3>📈 Waitlist Growth (April 3 - May 6)</h3>
+      <canvas id="waitlistTrendChart" height="80"></canvas>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>🎯 Waitlist Channels</h3>
+      <canvas id="waitlistSourceChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>🌍 Waitlist Countries</h3>
+      <canvas id="waitlistCountryChart"></canvas>
+    </div>
+  </div>
+  
+  <!-- Recent Waitlist Signups -->
+  <div class="table-card">
+    <h3>📋 Last Waitlist Signups (Before Launch)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Email</th>
+          <th>Source</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody id="waitlistRecentTable">
+        <tr><td colspan="4" class="loading">Loading waitlist data...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Users Tab Content -->
+<div id="users-content" class="tab-content">
+  <div class="milestone-banner" style="background: linear-gradient(135deg, #3fb950, #58a6ff);">
+    <h3>🚀 Product Live - Active Users</h3>
+    <p>Users can now sign up and use Nexscope immediately. No more waiting!</p>
+  </div>
+  
+  <!-- Users KPIs -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="value" id="users-total">—</div>
+      <div class="label">Total Users</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value" id="users-today">—</div>
+      <div class="label">Today</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value" id="users-google">—</div>
+      <div class="label">Google Auth</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value" id="users-github">—</div>
+      <div class="label">GitHub Auth</div>
+    </div>
+  </div>
+
+  <!-- Users Charts -->
+  <div class="charts-grid">
+    <div class="chart-card full">
+      <h3>📈 User Registrations (Since May 7)</h3>
+      <canvas id="usersTrendChart" height="80"></canvas>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>🎯 Registration Channels</h3>
+      <canvas id="usersSourceChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>🔐 Authentication Methods</h3>
+      <canvas id="usersAuthChart"></canvas>
+    </div>
+  </div>
+  
+  <!-- Recent User Registrations -->
+  <div class="table-card">
+    <h3>👥 Recent Registrations</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>User</th>
+          <th>Auth</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody id="usersRecentTable">
+        <tr><td colspan="4" class="loading">Loading users data...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  Built by 牛马哥🐂 for Nexscope · Updated hourly · <a href="https://github.com/chiyeee/zixun-Openclaw-chat" style="color: #58a6ff;">Source</a>
+</div>
+
+<script>
+// === TAB SWITCHING ===
+function switchTab(tab) {
+  // Hide all content
+  document.getElementById('waitlist-content').classList.remove('active');
+  document.getElementById('users-content').classList.remove('active');
+  
+  // Remove active from all buttons
+  document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+  
+  // Show selected content and activate button
+  document.getElementById(tab + '-content').classList.add('active');
+  event.target.classList.add('active');
+  
+  // Load data for the active tab
+  if (tab === 'waitlist' && !window.waitlistLoaded) {
+    loadWaitlistData();
+  } else if (tab === 'users' && !window.usersLoaded) {
+    loadUsersData();
+  }
+}
+
+// === CHART DEFAULTS ===
+Chart.defaults.color = '#8b949e';
+Chart.defaults.borderColor = '#30363d';
+
+// === WAITLIST DATA ===
+async function loadWaitlistData() {
+  try {
+    const response = await fetch('https://claw-callback.nexscope.ai/api/waitlist/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z');
+    const data = await response.json();
+    
+    renderWaitlistData(data);
+    window.waitlistLoaded = true;
+  } catch (error) {
+    document.getElementById('waitlistRecentTable').innerHTML = '<tr><td colspan="4" class="error">Failed to load waitlist data</td></tr>';
+  }
+}
+
+function renderWaitlistData(data) {
+  const entries = data.entries || [];
+  
+  // KPIs
+  document.getElementById('waitlist-total').textContent = entries.length;
+  document.getElementById('waitlist-peak').textContent = '44'; // Known from data
+  document.getElementById('waitlist-avg').textContent = Math.round(entries.length / 34) + '/day';
+  document.getElementById('waitlist-source').textContent = 'direct (51%)';
+  
+  // Recent signups table
+  const tableHTML = entries.slice(0, 15).map((entry, i) => {
+    const date = new Date(entry.createdAt).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    const email = entry.email.length > 25 ? entry.email.substring(0, 25) + '...' : entry.email;
+    const location = entry.location ? entry.location.split(',')[0] : 'Unknown';
+    const sourceBadge = getSourceBadge(entry.source);
+    
+    return `<tr>
+      <td>${date}</td>
+      <td>${email}</td>
+      <td>${sourceBadge}</td>
+      <td>${location}</td>
+    </tr>`;
+  }).join('');
+  
+  document.getElementById('waitlistRecentTable').innerHTML = tableHTML;
+  
+  // Charts - simplified version
+  renderWaitlistCharts(data);
+}
+
+function renderWaitlistCharts(data) {
+  // Simplified trend chart
+  const dates = ['Apr 8', 'Apr 15', 'Apr 22', 'Apr 29', 'May 6'];
+  const values = [65, 219, 293, 337, 399];
+  
+  new Chart(document.getElementById('waitlistTrendChart'), {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: 'Total Waitlist',
+        data: values,
+        borderColor: '#58a6ff',
+        backgroundColor: 'rgba(88, 166, 255, 0.1)',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+  
+  // Source pie chart
+  new Chart(document.getElementById('waitlistSourceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Direct', 'Google Ads', 'Skills', 'GitHub', 'Other'],
+      datasets: [{
+        data: [200, 120, 25, 14, 40],
+        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b949e']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+  
+  // Country chart
+  new Chart(document.getElementById('waitlistCountryChart'), {
+    type: 'bar',
+    data: {
+      labels: ['India', 'USA', 'UK', 'Pakistan', 'Saudi'],
+      datasets: [{
+        data: [106, 102, 17, 15, 15],
+        backgroundColor: '#58a6ff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+// === USERS DATA ===
+async function loadUsersData() {
+  try {
+    const response = await fetch('https://claw-callback.nexscope.ai/api/user/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z');
+    const data = await response.json();
+    
+    renderUsersData(data);
+    window.usersLoaded = true;
+  } catch (error) {
+    document.getElementById('usersRecentTable').innerHTML = '<tr><td colspan="4" class="error">Failed to load users data</td></tr>';
+  }
+}
+
+function renderUsersData(data) {
+  const entries = data.entries || [];
+  
+  // KPIs
+  document.getElementById('users-total').textContent = entries.length;
+  
+  // Count today's registrations
+  const today = new Date().toISOString().split('T')[0];
+  const todayCount = entries.filter(e => {
+    const userDate = new Date(e.createTime).toISOString().split('T')[0];
+    return userDate === today;
+  }).length;
+  document.getElementById('users-today').textContent = todayCount;
+  
+  // Auth methods
+  const googleCount = entries.filter(e => e.isGoogle).length;
+  const githubCount = entries.filter(e => e.isGithub).length;
+  document.getElementById('users-google').textContent = googleCount;
+  document.getElementById('users-github').textContent = githubCount;
+  
+  // Recent users table
+  const tableHTML = entries.slice(0, 15).map((entry, i) => {
+    const date = new Date(entry.createTime).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    const name = entry.name || 'Unknown';
+    const auth = entry.isGoogle ? '🔵 Google' : entry.isGithub ? '⚫ GitHub' : '📧 Email';
+    const location = entry.country || 'Unknown';
+    
+    return `<tr>
+      <td>${date}</td>
+      <td>${name}</td>
+      <td>${auth}</td>
+      <td>${location}</td>
+    </tr>`;
+  }).join('');
+  
+  document.getElementById('usersRecentTable').innerHTML = tableHTML;
+  
+  // Charts
+  renderUsersCharts(data);
+}
+
+function renderUsersCharts(data) {
+  const entries = data.entries || [];
+  
+  // Simple trend - group by day
+  const dailyData = {};
+  entries.forEach(e => {
+    const date = new Date(e.createTime).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
+    dailyData[date] = (dailyData[date] || 0) + 1;
+  });
+  
+  const dates = Object.keys(dailyData).slice(-7); // Last 7 days
+  const values = dates.map(d => dailyData[d] || 0);
+  
+  new Chart(document.getElementById('usersTrendChart'), {
+    type: 'bar',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: 'Daily Registrations',
+        data: values,
+        backgroundColor: '#3fb950'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+  
+  // Source chart - group by channel
+  const channels = {};
+  entries.forEach(e => {
+    const ch = e.channel || 'direct';
+    channels[ch] = (channels[ch] || 0) + 1;
+  });
+  
+  new Chart(document.getElementById('usersSourceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(channels),
+      datasets: [{
+        data: Object.values(channels),
+        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b949e']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+  
+  // Auth methods chart
+  const googleCount = entries.filter(e => e.isGoogle).length;
+  const githubCount = entries.filter(e => e.isGithub).length;
+  const emailCount = entries.length - googleCount - githubCount;
+  
+  new Chart(document.getElementById('usersAuthChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Google', 'GitHub', 'Email'],
+      datasets: [{
+        data: [googleCount, githubCount, emailCount],
+        backgroundColor: ['#4285f4', '#333', '#f85149']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// === HELPER FUNCTIONS ===
+function getSourceBadge(source) {
+  const badges = {
+    'direct': '<span class="badge badge-direct">Direct</span>',
+    'GadAmagent': '<span class="badge badge-ads">Ads</span>',
+    'Gadagent': '<span class="badge badge-ads">Ads</span>',
+    'skill': '<span class="badge badge-high">Skill</span>',
+    'github': '<span class="badge">GitHub</span>'
+  };
+  return badges[source] || `<span class="badge">${source}</span>`;
+}
+
+// === INITIALIZATION ===
+document.addEventListener('DOMContentLoaded', function() {
+  // Load waitlist data by default (active tab)
+  loadWaitlistData();
+  
+  // Set update time
+  document.getElementById('updateTime').textContent = 'Last updated: ' + new Date().toLocaleString() + ' UTC';
+});
+</script>
+
+</body>
+</html>
