@@ -33,10 +33,36 @@
   .kpi-card .change.down { color: #f85149; }
   
   .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
-  .chart-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; min-height: 350px; }
-  .chart-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
+  .chart-card { 
+    background: #161b22; 
+    border: 1px solid #30363d; 
+    border-radius: 12px; 
+    padding: 20px; 
+    /* FIXED HEIGHT - 防止图表加载后变形 */
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+  }
+  .chart-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; flex-shrink: 0; }
   .chart-card.full { grid-column: 1 / -1; }
-  .chart-card.tall { min-height: 500px; }
+  .chart-card.tall { height: 500px; }
+  
+  /* 图表容器 - 关键修复 */
+  .chart-container {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 250px; /* 最小高度 */
+  }
+  
+  .chart-container canvas {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
   
   .table-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
   .table-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; }
@@ -58,6 +84,7 @@
     .charts-grid { grid-template-columns: 1fr; }
     .kpi-row { grid-template-columns: repeat(2, 1fr); }
     .tab-nav .tab-buttons { flex-direction: column; width: 100%; }
+    .chart-card { height: 300px; } /* 移动端稍微矮一点 */
   }
 </style>
 </head>
@@ -107,9 +134,11 @@
 
   <!-- Charts Row 1: Main trend -->
   <div class="charts-grid">
-    <div class="chart-card full">
+    <div class="chart-card full tall">
       <h3>📈 Waitlist Growth Journey (April 3 - May 6, 2026)</h3>
-      <canvas id="waitlistTrendChart" height="80"></canvas>
+      <div class="chart-container">
+        <canvas id="waitlistTrendChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -117,11 +146,15 @@
   <div class="charts-grid">
     <div class="chart-card">
       <h3>🎯 Signup Channels</h3>
-      <canvas id="waitlistSourceChart"></canvas>
+      <div class="chart-container">
+        <canvas id="waitlistSourceChart"></canvas>
+      </div>
     </div>
     <div class="chart-card">
       <h3>🌍 Top Countries</h3>
-      <canvas id="waitlistCountryChart"></canvas>
+      <div class="chart-container">
+        <canvas id="waitlistCountryChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -129,11 +162,15 @@
   <div class="charts-grid">
     <div class="chart-card">
       <h3>⏰ Hourly Signups (UTC)</h3>
-      <canvas id="waitlistHourlyChart"></canvas>
+      <div class="chart-container">
+        <canvas id="waitlistHourlyChart"></canvas>
+      </div>
     </div>
     <div class="chart-card">
       <h3>📱 Device Types</h3>
-      <canvas id="waitlistDeviceChart"></canvas>
+      <div class="chart-container">
+        <canvas id="waitlistDeviceChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -196,9 +233,11 @@
 
   <!-- Charts Row 1: User registrations -->
   <div class="charts-grid">
-    <div class="chart-card full">
+    <div class="chart-card full tall">
       <h3>📈 Daily User Registrations (Since Launch - May 7, 2026)</h3>
-      <canvas id="usersTrendChart" height="80"></canvas>
+      <div class="chart-container">
+        <canvas id="usersTrendChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -206,11 +245,15 @@
   <div class="charts-grid">
     <div class="chart-card">
       <h3>🔐 Authentication Methods</h3>
-      <canvas id="usersAuthChart"></canvas>
+      <div class="chart-container">
+        <canvas id="usersAuthChart"></canvas>
+      </div>
     </div>
     <div class="chart-card">
       <h3>🎯 Registration Channels</h3>
-      <canvas id="usersSourceChart"></canvas>
+      <div class="chart-container">
+        <canvas id="usersSourceChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -218,11 +261,15 @@
   <div class="charts-grid">
     <div class="chart-card">
       <h3>🌍 User Countries</h3>
-      <canvas id="usersCountryChart"></canvas>
+      <div class="chart-container">
+        <canvas id="usersCountryChart"></canvas>
+      </div>
     </div>
     <div class="chart-card">
       <h3>⏰ Registration Hours (UTC)</h3>
-      <canvas id="usersHourlyChart"></canvas>
+      <div class="chart-container">
+        <canvas id="usersHourlyChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -267,11 +314,14 @@ function switchTab(tab) {
   document.getElementById(tab + '-content').classList.add('active');
   event.target.classList.add('active');
   
-  if (tab === 'waitlist') {
-    renderWaitlistCharts();
-  } else {
-    renderUsersCharts();
-  }
+  // 延迟渲染图表，确保容器尺寸正确
+  setTimeout(() => {
+    if (tab === 'waitlist') {
+      renderWaitlistCharts();
+    } else {
+      renderUsersCharts();
+    }
+  }, 100);
 }
 
 // === CHART DEFAULTS ===
@@ -280,6 +330,13 @@ Chart.defaults.borderColor = '#30363d';
 
 // === WAITLIST CHARTS ===
 function renderWaitlistCharts() {
+  // 清理现有图表
+  Chart.getChart('waitlistTrendChart')?.destroy();
+  Chart.getChart('waitlistSourceChart')?.destroy();
+  Chart.getChart('waitlistCountryChart')?.destroy();
+  Chart.getChart('waitlistHourlyChart')?.destroy();
+  Chart.getChart('waitlistDeviceChart')?.destroy();
+  
   // Main growth trend
   new Chart(document.getElementById('waitlistTrendChart'), {
     type: 'line',
@@ -397,6 +454,13 @@ function renderWaitlistCharts() {
 
 // === USERS CHARTS ===
 function renderUsersCharts() {
+  // 清理现有图表
+  Chart.getChart('usersTrendChart')?.destroy();
+  Chart.getChart('usersAuthChart')?.destroy();
+  Chart.getChart('usersSourceChart')?.destroy();
+  Chart.getChart('usersCountryChart')?.destroy();
+  Chart.getChart('usersHourlyChart')?.destroy();
+  
   // User registrations
   new Chart(document.getElementById('usersTrendChart'), {
     type: 'bar',
@@ -486,8 +550,12 @@ function renderUsersCharts() {
 
 // === INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', function() {
-  renderWaitlistCharts(); // Default to waitlist
   document.getElementById('updateTime').textContent = 'Last updated: ' + new Date().toLocaleString() + ' UTC';
+  
+  // 延迟渲染初始图表，确保布局稳定
+  setTimeout(() => {
+    renderWaitlistCharts();
+  }, 500);
 });
 </script>
 
