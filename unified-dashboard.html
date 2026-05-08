@@ -8,24 +8,21 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e1e4e8; padding: 20px; }
+  
   .header { text-align: center; margin-bottom: 30px; }
   .header h1 { font-size: 28px; color: #fff; margin-bottom: 5px; }
   .header .subtitle { color: #8b949e; font-size: 14px; }
   .header .update-time { color: #58a6ff; font-size: 12px; margin-top: 5px; }
   
-  /* Tab Styles */
-  .tab-container { margin-bottom: 30px; text-align: center; }
-  .tab-buttons { display: inline-flex; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 4px; margin-bottom: 20px; }
-  .tab-button { padding: 12px 24px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-size: 14px; font-weight: 500; border-radius: 8px; transition: all 0.2s; }
-  .tab-button.active { background: #58a6ff; color: #fff; }
-  .tab-button:hover:not(.active) { background: #21262d; color: #c9d1d9; }
+  /* Tab Navigation */
+  .tab-nav { text-align: center; margin-bottom: 30px; }
+  .tab-nav .tab-buttons { display: inline-flex; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 4px; }
+  .tab-nav .tab-button { padding: 12px 24px; border: none; background: transparent; color: #8b949e; cursor: pointer; font-size: 14px; font-weight: 500; border-radius: 8px; transition: all 0.2s; }
+  .tab-nav .tab-button.active { background: #58a6ff; color: #fff; }
+  .tab-nav .tab-button:hover:not(.active) { background: #21262d; color: #c9d1d9; }
   
   .tab-content { display: none; }
   .tab-content.active { display: block; }
-  
-  .milestone-banner { background: linear-gradient(135deg, #f85149, #fd7e14); border-radius: 12px; padding: 16px; margin-bottom: 20px; text-align: center; }
-  .milestone-banner h3 { color: white; margin-bottom: 4px; }
-  .milestone-banner p { color: rgba(255,255,255,0.9); font-size: 14px; }
   
   .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
   .kpi-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; text-align: center; }
@@ -53,17 +50,14 @@
   .badge-high { background: #1f3d1f; color: #3fb950; }
   .badge-medium { background: #3d3d1f; color: #d29922; }
   .badge-low { background: #3d1f1f; color: #f85149; }
+  .badge-github { background: #2d2d2d; color: #c9d1d9; }
   
-  .loading { text-align: center; padding: 40px; color: #8b949e; }
-  .error { text-align: center; padding: 40px; color: #f85149; }
   .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 30px; }
-  
-  .cors-warning { background: #f85149; color: white; padding: 12px; border-radius: 8px; margin: 20px 0; text-align: center; }
   
   @media (max-width: 768px) {
     .charts-grid { grid-template-columns: 1fr; }
     .kpi-row { grid-template-columns: repeat(2, 1fr); }
-    .tab-buttons { flex-direction: column; width: 100%; }
+    .tab-nav .tab-buttons { flex-direction: column; width: 100%; }
   }
 </style>
 </head>
@@ -71,156 +65,189 @@
 
 <div class="header">
   <h1>🎯 Nexscope Analytics Dashboard</h1>
-  <div class="subtitle">From Waitlist to Active Users - Complete Journey Analytics</div>
-  <div class="update-time" id="updateTime">Loading...</div>
-</div>
-
-<!-- CORS Warning -->
-<div class="cors-warning" id="corsWarning" style="display: none;">
-  ⚠️ Unable to load live data due to browser security restrictions. <a href="#" onclick="showStaticData()" style="color: white; text-decoration: underline;">Click here to view with sample data</a>
+  <div class="subtitle">Complete journey from waitlist to active users</div>
+  <div class="update-time" id="updateTime">Last updated: Loading...</div>
 </div>
 
 <!-- Tab Navigation -->
-<div class="tab-container">
+<div class="tab-nav">
   <div class="tab-buttons">
-    <button class="tab-button active" onclick="switchTab('waitlist')">📝 Waitlist (Historical)</button>
-    <button class="tab-button" onclick="switchTab('users')">👥 Active Users (Current)</button>
+    <button class="tab-button active" onclick="switchTab('waitlist')">📝 Waitlist Journey (399 users)</button>
+    <button class="tab-button" onclick="switchTab('users')">👥 Active Users (16 users)</button>
   </div>
 </div>
 
-<!-- Waitlist Tab Content -->
+<!-- Waitlist Tab -->
 <div id="waitlist-content" class="tab-content active">
-  <div class="milestone-banner">
-    <h3>🎉 Waitlist Completed - May 6, 2026</h3>
-    <p>399 users joined the waitlist before our official launch. Product now live!</p>
-  </div>
   
-  <!-- Waitlist KPIs -->
+  <!-- KPIs -->
   <div class="kpi-row">
     <div class="kpi-card">
-      <div class="value" id="waitlist-total">399</div>
+      <div class="value">399</div>
       <div class="label">Total Waitlist</div>
     </div>
     <div class="kpi-card">
-      <div class="value" id="waitlist-peak">44</div>
-      <div class="label">Peak Day (Apr 8)</div>
+      <div class="value">13</div>
+      <div class="label">Last Day (May 6)</div>
+      <div class="change down">Completed ✅</div>
     </div>
     <div class="kpi-card">
-      <div class="value" id="waitlist-avg">12</div>
+      <div class="value">12</div>
       <div class="label">Daily Average</div>
     </div>
     <div class="kpi-card">
-      <div class="value" id="waitlist-source">Direct</div>
-      <div class="label">Top Channel (50%)</div>
+      <div class="value">163</div>
+      <div class="label">High Quality</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value">GadAmagent</div>
+      <div class="label">Top Paid Channel</div>
     </div>
   </div>
 
-  <!-- Waitlist Charts -->
+  <!-- Charts Row 1: Main trend -->
   <div class="charts-grid">
     <div class="chart-card full">
-      <h3>📈 Waitlist Growth (April 3 - May 6)</h3>
+      <h3>📈 Waitlist Growth Journey (April 3 - May 6, 2026)</h3>
       <canvas id="waitlistTrendChart" height="80"></canvas>
     </div>
   </div>
 
+  <!-- Charts Row 2: Sources + Countries -->
   <div class="charts-grid">
     <div class="chart-card">
-      <h3>🎯 Waitlist Channels</h3>
+      <h3>🎯 Signup Channels</h3>
       <canvas id="waitlistSourceChart"></canvas>
     </div>
     <div class="chart-card">
-      <h3>🌍 Waitlist Countries</h3>
+      <h3>🌍 Top Countries</h3>
       <canvas id="waitlistCountryChart"></canvas>
     </div>
   </div>
-  
-  <!-- Recent Waitlist Signups -->
+
+  <!-- Charts Row 3: Hourly + Device -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>⏰ Hourly Signups (UTC)</h3>
+      <canvas id="waitlistHourlyChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>📱 Device Types</h3>
+      <canvas id="waitlistDeviceChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Recent signups table -->
   <div class="table-card">
-    <h3>📋 Last Waitlist Signups (Before Launch)</h3>
+    <h3>📋 Final Waitlist Signups (Before Product Launch)</h3>
     <table>
       <thead>
         <tr>
           <th>Time</th>
           <th>Email</th>
           <th>Source</th>
+          <th>Landing</th>
           <th>Location</th>
         </tr>
       </thead>
-      <tbody id="waitlistRecentTable">
-        <tr><td>05-06 22:40</td><td>nimrariazwa***@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>🇵🇰 Pakistan</td></tr>
-        <tr><td>05-06 16:34</td><td>boheh479***@inreur.com</td><td><span class="badge badge-direct">Direct</span></td><td>🇮🇳 India</td></tr>
-        <tr><td>05-06 15:22</td><td>eric@spar***@engineering.co</td><td><span class="badge badge-high">Skill</span></td><td>🇺🇸 USA</td></tr>
-        <tr><td>05-06 13:44</td><td>ecomm.m***@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>🇮🇳 India</td></tr>
-        <tr><td>05-06 13:19</td><td>scriven***@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>🇮🇳 India</td></tr>
+      <tbody>
+        <tr><td>05-06 22:40</td><td>nimrariazwaheed@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>/agent</td><td>🇵🇰 Pakistan</td></tr>
+        <tr><td>05-06 16:34</td><td>boheh47953@inreur.com</td><td><span class="badge badge-direct">direct</span></td><td>/</td><td>🇮🇳 India</td></tr>
+        <tr><td>05-06 15:22</td><td>eric@sparkengineering.co</td><td><span class="badge badge-high">skill</span></td><td>/</td><td>🇺🇸 United States</td></tr>
+        <tr><td>05-06 13:44</td><td>ecomm.mhl@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>/</td><td>🇮🇳 India</td></tr>
+        <tr><td>05-06 13:19</td><td>scrivenglef@gmail.com</td><td><span class="badge badge-ads">GadAmagent</span></td><td>/</td><td>🇮🇳 India</td></tr>
+        <tr><td>05-06 12:45</td><td>martines1590@gmail.com</td><td><span class="badge badge-ads">Gadagent</span></td><td>/</td><td>🇺🇸 United States</td></tr>
+        <tr><td>05-06 10:49</td><td>2573614730@qq.com</td><td><span class="badge badge-github">github</span></td><td>/</td><td>🇸🇬 Singapore</td></tr>
+        <tr><td>05-06 06:52</td><td>jjabllc4@gmail.com</td><td><span class="badge badge-direct">direct</span></td><td>/</td><td>🇺🇸 United States</td></tr>
+        <tr><td>05-06 06:47</td><td>nafizakib@gmail.com</td><td><span class="badge badge-direct">direct</span></td><td>/agent</td><td>🇺🇸 United States</td></tr>
+        <tr><td>05-06 05:18</td><td>punknewsfanzine@gmail.com</td><td><span class="badge badge-ads">Gadagent</span></td><td>/agent</td><td>🇺🇸 United States</td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<!-- Users Tab Content -->
+<!-- Users Tab -->
 <div id="users-content" class="tab-content">
-  <div class="milestone-banner" style="background: linear-gradient(135deg, #3fb950, #58a6ff);">
-    <h3>🚀 Product Live - Active Users</h3>
-    <p>Users can now sign up and use Nexscope immediately. No more waiting!</p>
-  </div>
   
-  <!-- Users KPIs -->
+  <!-- KPIs -->
   <div class="kpi-row">
     <div class="kpi-card">
-      <div class="value" id="users-total">16</div>
+      <div class="value">16</div>
       <div class="label">Total Users</div>
     </div>
     <div class="kpi-card">
-      <div class="value" id="users-today">3</div>
-      <div class="label">Today</div>
+      <div class="value">3</div>
+      <div class="label">Today (May 8)</div>
+      <div class="change up">+3 from yesterday</div>
     </div>
     <div class="kpi-card">
-      <div class="value" id="users-google">14</div>
-      <div class="label">Google Auth (87%)</div>
+      <div class="value">8.0</div>
+      <div class="label">Users/Day</div>
     </div>
     <div class="kpi-card">
-      <div class="value" id="users-github">2</div>
-      <div class="label">GitHub Auth (13%)</div>
+      <div class="value">87%</div>
+      <div class="label">Google Auth</div>
+    </div>
+    <div class="kpi-card">
+      <div class="value">4.0%</div>
+      <div class="label">Waitlist Conversion</div>
     </div>
   </div>
 
-  <!-- Users Charts -->
+  <!-- Charts Row 1: User registrations -->
   <div class="charts-grid">
     <div class="chart-card full">
-      <h3>📈 User Registrations (Since May 7)</h3>
+      <h3>📈 Daily User Registrations (Since Launch - May 7, 2026)</h3>
       <canvas id="usersTrendChart" height="80"></canvas>
     </div>
   </div>
 
+  <!-- Charts Row 2: Auth + Channels -->
   <div class="charts-grid">
-    <div class="chart-card">
-      <h3>🎯 Registration Channels</h3>
-      <canvas id="usersSourceChart"></canvas>
-    </div>
     <div class="chart-card">
       <h3>🔐 Authentication Methods</h3>
       <canvas id="usersAuthChart"></canvas>
     </div>
+    <div class="chart-card">
+      <h3>🎯 Registration Channels</h3>
+      <canvas id="usersSourceChart"></canvas>
+    </div>
   </div>
-  
-  <!-- Recent User Registrations -->
+
+  <!-- Charts Row 3: Geography + Activity -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>🌍 User Countries</h3>
+      <canvas id="usersCountryChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>⏰ Registration Hours (UTC)</h3>
+      <canvas id="usersHourlyChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Recent users table -->
   <div class="table-card">
-    <h3>👥 Recent Registrations</h3>
+    <h3>👥 Recent User Registrations</h3>
     <table>
       <thead>
         <tr>
           <th>Time</th>
-          <th>User</th>
-          <th>Auth</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Auth Method</th>
           <th>Location</th>
         </tr>
       </thead>
-      <tbody id="usersRecentTable">
-        <tr><td>05-08 01:15</td><td>Jason Sher</td><td>🔵 Google</td><td>🇿🇦 South Africa</td></tr>
-        <tr><td>05-08 01:12</td><td>Mussab Bin Tahir</td><td>🔵 Google</td><td>🇵🇰 Pakistan</td></tr>
-        <tr><td>05-08 01:08</td><td>Anonymous User</td><td>📧 Email</td><td>🇮🇳 India</td></tr>
-        <tr><td>05-08 01:03</td><td>ModernMarcos</td><td>⚫ GitHub</td><td>🇺🇸 USA</td></tr>
-        <tr><td>05-08 00:58</td><td>AMZ Sachper</td><td>🔵 Google</td><td>🇮🇳 India</td></tr>
+      <tbody>
+        <tr><td>05-08 01:15</td><td>Jason Sher</td><td>jason@functionsharp.com</td><td>🔵 Google</td><td>🇿🇦 South Africa</td></tr>
+        <tr><td>05-08 01:12</td><td>Mussab Bin Tahir</td><td>m.tahir@spctek.com</td><td>🔵 Google</td><td>🇵🇰 Pakistan</td></tr>
+        <tr><td>05-08 01:08</td><td>Anonymous User</td><td>fsb7210@gmail.com</td><td>📧 Email</td><td>🇮🇳 India</td></tr>
+        <tr><td>05-08 01:03</td><td>Modern Marcos</td><td>modernmarcos76@gmail.com</td><td>⚫ GitHub</td><td>🇺🇸 United States</td></tr>
+        <tr><td>05-08 00:58</td><td>AMZ Sachper</td><td>amz@sachper.com</td><td>🔵 Google</td><td>🇮🇳 India</td></tr>
+        <tr><td>05-07 23:45</td><td>LX Developer</td><td>lx0923661@gmail.com</td><td>🔵 Google</td><td>🇨🇳 China</td></tr>
+        <tr><td>05-07 23:41</td><td>Gokul Kumar</td><td>gokul155@gmail.com</td><td>⚫ GitHub</td><td>🇮🇳 India</td></tr>
+        <tr><td>05-07 23:35</td><td>Shao JS</td><td>shaojs@gmail.com</td><td>🔵 Google</td><td>🇸🇬 Singapore</td></tr>
       </tbody>
     </table>
   </div>
@@ -233,22 +260,17 @@
 <script>
 // === TAB SWITCHING ===
 function switchTab(tab) {
-  // Hide all content
   document.getElementById('waitlist-content').classList.remove('active');
   document.getElementById('users-content').classList.remove('active');
-  
-  // Remove active from all buttons
   document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
   
-  // Show selected content and activate button
   document.getElementById(tab + '-content').classList.add('active');
   event.target.classList.add('active');
   
-  // Try to load real data if not already loaded
-  if (tab === 'waitlist' && !window.waitlistLoaded) {
-    loadWaitlistData();
-  } else if (tab === 'users' && !window.usersLoaded) {
-    loadUsersData();
+  if (tab === 'waitlist') {
+    renderWaitlistCharts();
+  } else {
+    renderUsersCharts();
   }
 }
 
@@ -256,103 +278,62 @@ function switchTab(tab) {
 Chart.defaults.color = '#8b949e';
 Chart.defaults.borderColor = '#30363d';
 
-// === STATIC DATA (FALLBACK) ===
-const WAITLIST_STATIC_DATA = {
-  dates: ['04-03', '04-08', '04-15', '04-22', '04-29', '05-06'],
-  cumulative: [1, 65, 219, 293, 337, 399],
-  daily: [1, 44, 36, 17, 8, 13]
-};
-
-const USERS_STATIC_DATA = {
-  dates: ['05-07', '05-08'],
-  daily: [10, 6],
-  cumulative: [10, 16]
-};
-
-// === DATA LOADING ===
-async function loadWaitlistData() {
-  try {
-    // Try to fetch real data
-    const response = await fetch('https://claw-callback.nexscope.ai/api/waitlist/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z');
-    
-    if (!response.ok) {
-      throw new Error('CORS or API error');
-    }
-    
-    const data = await response.json();
-    renderWaitlistData(data);
-    window.waitlistLoaded = true;
-    
-  } catch (error) {
-    console.warn('Failed to load live waitlist data, using static data:', error);
-    showCorsWarning();
-    renderWaitlistDataStatic();
-    window.waitlistLoaded = true;
-  }
-}
-
-async function loadUsersData() {
-  try {
-    // Try to fetch real data
-    const response = await fetch('https://claw-callback.nexscope.ai/api/user/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z');
-    
-    if (!response.ok) {
-      throw new Error('CORS or API error');
-    }
-    
-    const data = await response.json();
-    renderUsersData(data);
-    window.usersLoaded = true;
-    
-  } catch (error) {
-    console.warn('Failed to load live users data, using static data:', error);
-    showCorsWarning();
-    renderUsersDataStatic();
-    window.usersLoaded = true;
-  }
-}
-
-function showCorsWarning() {
-  document.getElementById('corsWarning').style.display = 'block';
-}
-
-function showStaticData() {
-  document.getElementById('corsWarning').style.display = 'none';
-  renderWaitlistDataStatic();
-  renderUsersDataStatic();
-}
-
-// === STATIC DATA RENDERING ===
-function renderWaitlistDataStatic() {
-  // Render waitlist trend chart
+// === WAITLIST CHARTS ===
+function renderWaitlistCharts() {
+  // Main growth trend
   new Chart(document.getElementById('waitlistTrendChart'), {
     type: 'line',
     data: {
-      labels: WAITLIST_STATIC_DATA.dates,
-      datasets: [{
-        label: 'Total Waitlist',
-        data: WAITLIST_STATIC_DATA.cumulative,
-        borderColor: '#58a6ff',
-        backgroundColor: 'rgba(88, 166, 255, 0.1)',
-        fill: true,
-        tension: 0.4
-      }]
+      labels: ['Apr 3', 'Apr 8', 'Apr 15', 'Apr 22', 'Apr 29', 'May 6'],
+      datasets: [
+        {
+          label: 'Daily New',
+          data: [1, 44, 36, 17, 8, 13],
+          type: 'bar',
+          backgroundColor: 'rgba(63, 185, 80, 0.8)',
+          yAxisID: 'y'
+        },
+        {
+          label: 'Total Waitlist',
+          data: [1, 65, 219, 293, 337, 399],
+          borderColor: '#58a6ff',
+          backgroundColor: 'rgba(88, 166, 255, 0.1)',
+          fill: true,
+          tension: 0.4,
+          yAxisID: 'y1'
+        }
+      ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      scales: { y: { beginAtZero: true } }
+      interaction: { intersect: false },
+      scales: {
+        y: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          title: { display: true, text: 'Daily Signups' }
+        },
+        y1: {
+          type: 'linear',
+          display: true,
+          position: 'right',
+          title: { display: true, text: 'Total Waitlist' },
+          grid: { drawOnChartArea: false }
+        }
+      }
     }
   });
-  
-  // Source pie chart
+
+  // Sources
   new Chart(document.getElementById('waitlistSourceChart'), {
     type: 'doughnut',
     data: {
-      labels: ['Direct', 'Google Ads', 'Skills', 'GitHub', 'Other'],
+      labels: ['Direct', 'GadAmagent', 'Skill', 'GitHub', 'Gadagent', 'Other'],
       datasets: [{
-        data: [200, 101, 25, 14, 59],
-        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b949e']
+        data: [200, 101, 25, 14, 19, 40],
+        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b5cf6', '#8b949e']
       }]
     },
     options: {
@@ -360,8 +341,8 @@ function renderWaitlistDataStatic() {
       maintainAspectRatio: false
     }
   });
-  
-  // Country chart
+
+  // Countries
   new Chart(document.getElementById('waitlistCountryChart'), {
     type: 'bar',
     data: {
@@ -374,20 +355,56 @@ function renderWaitlistDataStatic() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
       scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  // Hourly
+  new Chart(document.getElementById('waitlistHourlyChart'), {
+    type: 'bar',
+    data: {
+      labels: Array.from({length: 24}, (_, i) => i + ':00'),
+      datasets: [{
+        data: [20, 18, 10, 6, 19, 14, 9, 10, 10, 10, 13, 10, 14, 20, 12, 25, 23, 16, 28, 26, 19, 20, 20, 21],
+        backgroundColor: '#3fb950'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  // Device
+  new Chart(document.getElementById('waitlistDeviceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Mobile', 'Desktop'],
+      datasets: [{
+        data: [153, 240],
+        backgroundColor: ['#f85149', '#58a6ff']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
     }
   });
 }
 
-function renderUsersDataStatic() {
-  // Users trend chart
+// === USERS CHARTS ===
+function renderUsersCharts() {
+  // User registrations
   new Chart(document.getElementById('usersTrendChart'), {
     type: 'bar',
     data: {
-      labels: USERS_STATIC_DATA.dates,
+      labels: ['May 7', 'May 8'],
       datasets: [{
         label: 'Daily Registrations',
-        data: USERS_STATIC_DATA.daily,
+        data: [10, 6],
         backgroundColor: '#3fb950'
       }]
     },
@@ -397,24 +414,8 @@ function renderUsersDataStatic() {
       scales: { y: { beginAtZero: true } }
     }
   });
-  
-  // Source chart
-  new Chart(document.getElementById('usersSourceChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['GitHub', 'Direct', 'Google'],
-      datasets: [{
-        data: [8, 5, 3],
-        backgroundColor: ['#333333', '#58a6ff', '#3fb950']
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
-    }
-  });
-  
-  // Auth methods chart
+
+  // Auth methods
   new Chart(document.getElementById('usersAuthChart'), {
     type: 'doughnut',
     data: {
@@ -429,27 +430,63 @@ function renderUsersDataStatic() {
       maintainAspectRatio: false
     }
   });
-}
 
-// === REAL DATA RENDERING (same as before) ===
-function renderWaitlistData(data) {
-  // Implementation would be the same as the original
-  console.log('Rendering real waitlist data:', data);
-  renderWaitlistDataStatic(); // Fallback to static for now
-}
+  // Registration sources
+  new Chart(document.getElementById('usersSourceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['GitHub', 'Direct', 'Google'],
+      datasets: [{
+        data: [8, 5, 3],
+        backgroundColor: ['#333333', '#58a6ff', '#3fb950']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
 
-function renderUsersData(data) {
-  // Implementation would be the same as the original  
-  console.log('Rendering real users data:', data);
-  renderUsersDataStatic(); // Fallback to static for now
+  // Countries
+  new Chart(document.getElementById('usersCountryChart'), {
+    type: 'bar',
+    data: {
+      labels: ['South Africa', 'Pakistan', 'India', 'USA', 'China'],
+      datasets: [{
+        data: [1, 1, 5, 4, 2],
+        backgroundColor: '#58a6ff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+
+  // Hourly activity
+  new Chart(document.getElementById('usersHourlyChart'), {
+    type: 'bar',
+    data: {
+      labels: Array.from({length: 24}, (_, i) => i + ':00'),
+      datasets: [{
+        data: [0,3,2,1,0,0,0,0,1,0,2,0,0,1,0,0,1,1,2,1,1,0,0,1],
+        backgroundColor: '#3fb950'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
 }
 
 // === INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', function() {
-  // Load waitlist data by default (active tab)
-  loadWaitlistData();
-  
-  // Set update time
+  renderWaitlistCharts(); // Default to waitlist
   document.getElementById('updateTime').textContent = 'Last updated: ' + new Date().toLocaleString() + ' UTC';
 });
 </script>
