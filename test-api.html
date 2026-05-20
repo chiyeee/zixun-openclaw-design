@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nexscope API Test</title>
+</head>
+<body>
+    <h1>Nexscope User API Test</h1>
+    <div id="result">Loading...</div>
+    
+    <script>
+        async function testAPI() {
+            try {
+                console.log('Testing API...');
+                const response = await fetch('https://claw-callback.nexscope.ai/api/user/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z', {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('API Data:', data);
+                
+                document.getElementById('result').innerHTML = `
+                    <h2>✅ API 调用成功!</h2>
+                    <p><strong>总用户数:</strong> ${data.total}</p>
+                    <p><strong>最新用户:</strong> ${data.entries[0]?.email || '无'}</p>
+                    <p><strong>渠道统计:</strong> ${Object.keys(data.stats.byChannel).length} 个渠道</p>
+                    <pre>${JSON.stringify(data.stats.byChannel, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                console.error('API Error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h2>❌ API 调用失败</h2>
+                    <p><strong>错误:</strong> ${error.message}</p>
+                    <p>请检查控制台获取详细错误信息</p>
+                `;
+            }
+        }
+        
+        // 页面加载后测试API
+        testAPI();
+    </script>
+</body>
+</html>
