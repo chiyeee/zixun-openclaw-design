@@ -117,31 +117,31 @@
 <!-- KPI Cards -->
 <div class="kpi-row">
   <div class="kpi-card users">
-    <div class="value" id="totalUsers">143</div>
+    <div class="value" id="totalUsers">146</div>
     <div class="label">Total Users</div>
-    <div class="change up" id="totalUsersChange">+75 since launch</div>
+    <div class="change up" id="totalUsersChange">+77 since launch</div>
   </div>
   
   <div class="kpi-card today">
-    <div class="value" id="todayUsers">8</div>
+    <div class="value" id="todayUsers">3</div>
     <div class="label">Today's New Users</div>
-    <div class="change up" id="todayChange">+2 vs yesterday</div>
+    <div class="change up" id="todayChange">+1 vs yesterday</div>
   </div>
   
   <div class="kpi-card google">
-    <div class="value" id="googleUsers">112</div>
+    <div class="value" id="googleUsers">115</div>
     <div class="label">Google Sign-ups</div>
-    <div class="change neutral" id="googlePercent">78% of total</div>
+    <div class="change neutral" id="googlePercent">79% of total</div>
   </div>
   
   <div class="kpi-card github">
-    <div class="value" id="githubUsers">7</div>
+    <div class="value" id="githubUsers">8</div>
     <div class="label">GitHub Sign-ups</div>
     <div class="change neutral" id="githubPercent">5% of total</div>
   </div>
   
   <div class="kpi-card growth">
-    <div class="value" id="avgDaily">4.2</div>
+    <div class="value" id="avgDaily">4.5</div>
     <div class="label">Avg Daily Growth</div>
     <div class="change up" id="growthTrend">↗️ Trending up</div>
   </div>
@@ -197,45 +197,54 @@
 </div>
 
 <script>
-// === FALLBACK DATA (in case API fails) ===
+// === REAL FALLBACK DATA (最新146用户) ===
 const FALLBACK_DATA = {
-  total: "143",
-  entries: [
-    {
-      id: "96937910726561978",
-      email: "ernest.nnagbo@gmail.com",
-      name: "Ernest Nnagbo",
-      channel: "",
-      country: "United States of America",
-      area: "Maryland, Annapolis Junction",
-      isGoogle: true,
-      isGithub: false,
-      createTime: "2026-05-19 23:53:21"
-    },
-    {
-      id: "96929007506821050",
-      email: "aayyelely466@gmail.com",
-      name: "aayyelely466",
-      channel: "",
-      country: "Nigeria",
-      area: "Lagos, Lagos",
-      isGoogle: true,
-      isGithub: false,
-      createTime: "2026-05-19 22:42:35"
-    }
+  "total": "146",
+  "entries": [
+    {"id":"96980559785361854","email":"rlaffitte@gmail.com","name":"Rafael Laffitte","channel":"","country":"Panama","area":"Panama, Panama","isGoogle":true,"isGithub":false,"createTime":"2026-05-20 05:32:18"},
+    {"id":"96960973797065149","email":"adamclausner@gmail.com","name":"Adam Clausner","channel":"","country":"Canada","area":"Ontario, Toronto","isGoogle":true,"isGithub":false,"createTime":"2026-05-20 02:56:37"},
+    {"id":"96956030562341306","email":"lesytung94@gmail.com","name":"Tung Le","channel":"github","country":"Viet Nam","area":"Thanh Hoa, Thanh Hoa","isGoogle":true,"isGithub":false,"createTime":"2026-05-20 02:17:20"},
+    {"id":"96937910726561978","email":"ernest.nnagbo@gmail.com","name":"Ernest Nnagbo","channel":"","country":"United States of America","area":"Maryland, Annapolis Junction","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 23:53:21"},
+    {"id":"96929007506821050","email":"aayyelely466@gmail.com","name":"aayyelely466","channel":"","country":"Nigeria","area":"Lagos, Lagos","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 22:42:35"},
+    {"id":"96923133061107386","email":"jimmy.ruggiero@gmail.com","name":"Jimmy Ruggiero","channel":"","country":"United States of America","area":"California, Santa Monica","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 21:55:55"},
+    {"id":"96921870313459130","email":"zubair.shafique1000@gmail.com","name":"Mohammed Shafique","channel":"","country":"United Kingdom of Great Britain and Northern Ireland","area":"Wales, Greenfield","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 21:45:52"},
+    {"id":"96917377064635578","email":"amflyshe@honeys.be","name":"amflyshe","channel":"","country":"United Kingdom of Great Britain and Northern Ireland","area":"England, Middlesbrough","isGoogle":false,"isGithub":false,"createTime":"2026-05-19 21:10:10"},
+    {"id":"96906626771979194","email":"gpbusiness2020@gmail.com","name":"Gerome Peters","channel":"","country":"United States of America","area":"New York, New York City","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 19:44:43"},
+    {"id":"96905108236798650","email":"nicolaasmaritz@gmail.com","name":"nicolaas maritz","channel":"","country":"South Africa","area":"Free State, Virginia","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 19:32:38"},
+    {"id":"96904508302428602","email":"chandraraj4391@gmail.com","name":"Chandra Raj Giri","channel":"","country":"United States of America","area":"New York, Queens","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 19:27:52"},
+    {"id":"96904037575690426","email":"nic@localbuzzai.ca","name":"Nic Hossfeld","channel":"","country":"Canada","area":"Ontario, Hamilton","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 19:24:09"},
+    {"id":"96902127355430842","email":"j.medina.talavera@gmail.com","name":"Jose Medina","channel":"","country":"Puerto Rico","area":"Trujillo Alto, Trujillo Alto","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 19:08:58"},
+    {"id":"96901890863793850","email":"wasifsajjad@gmail.com","name":"wasif sajjad","channel":"Rob","country":"Pakistan","area":"Punjab, Rawalpindi","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 19:07:05"},
+    {"id":"96894068853835194","email":"jehughes@gmail.com","name":"Joan Hughes","channel":"skill","country":"United States of America","area":"Massachusetts, Boston","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 18:04:55"},
+    {"id":"96891019529815226","email":"saloni@enviroguardsolutions.com","name":"Saloni Dani","channel":"","country":"India","area":"Maharashtra, Thane","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 17:40:41"},
+    {"id":"96878064497066938","email":"jackstar121@yahoo.com","name":"jackstar121","channel":"GadNewAM","country":"United States of America","area":"Maryland, Frederick","isGoogle":false,"isGithub":false,"createTime":"2026-05-19 15:57:44"},
+    {"id":"96863892652688058","email":"jess61398@gmail.com","name":"Jess","channel":"","country":"United States of America","area":"New York, Yonkers","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 14:05:05"},
+    {"id":"96858078240047546","email":"walterjeffries12@gmail.com","name":"walter jeffries","channel":"GadAM3","country":"United Kingdom of Great Britain and Northern Ireland","area":"England, Stafford","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 13:18:53"},
+    {"id":"96847063467164345","email":"inova.solucoes.f@gmail.com","name":"Inova Financeiras","channel":"GadBrand","country":"Brazil","area":"Santa Catarina, Jaguaruna","isGoogle":true,"isGithub":false,"createTime":"2026-05-19 11:51:21"}
   ],
-  stats: {
-    byCountry: {
+  "stats": {
+    "byCountry": {
       "United States of America": "43",
       "India": "18",
-      "United Kingdom of Great Britain and Northern Ireland": "17"
+      "United Kingdom of Great Britain and Northern Ireland": "17",
+      "Canada": "9",
+      "Pakistan": "7",
+      "Spain": "5",
+      "China": "3",
+      "Hong Kong": "3",
+      "Viet Nam": "3",
+      "Indonesia": "3"
     },
-    byChannel: {
-      "direct": "66",
+    "byChannel": {
+      "direct": "68",
       "GadAM3": "21",
       "skill": "13",
       "GadNewAM": "12",
-      "GadAmagent": "12"
+      "GadAmagent": "12",
+      "github": "8",
+      "GadBrand": "3",
+      "XadAgN": "2",
+      "XadAM": "2"
     }
   }
 };
