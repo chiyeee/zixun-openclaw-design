@@ -21,6 +21,10 @@
   .launch-banner .stat-value { font-size: 20px; font-weight: bold; }
   .launch-banner .stat-label { font-size: 12px; opacity: 0.8; }
   
+  .error-banner { background: linear-gradient(135deg, #f85149, #da3633); border-radius: 12px; padding: 20px; margin-bottom: 30px; text-align: center; }
+  .error-banner h2 { color: white; margin-bottom: 8px; font-size: 20px; }
+  .error-banner p { color: rgba(255,255,255,0.9); font-size: 14px; }
+  
   .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
   .kpi-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
   .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
@@ -48,49 +52,49 @@
   table { width: 100%; border-collapse: collapse; }
   th { text-align: left; padding: 12px; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 12px; font-weight: 600; text-transform: uppercase; }
   td { padding: 12px; border-bottom: 1px solid #21262d; font-size: 13px; }
-  tr:hover { background: #1c2128; }
   
-  .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(45deg, #3fb950, #58a6ff); display: inline-flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 10px; }
+  .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #30363d; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; margin-right: 12px; }
+  .user-info { display: flex; align-items: center; }
+  .user-details { flex: 1; }
+  .user-name { font-weight: 500; color: #c9d1d9; }
+  .user-email { color: #8b949e; font-size: 11px; }
+  .auth-badge { display: inline-block; padding: 2px 6px; border-radius: 12px; font-size: 10px; font-weight: 500; margin-top: 2px; }
+  .auth-badge.google { background: #4285f4; color: white; }
+  .auth-badge.github { background: #333; color: white; }
+  .auth-badge.email { background: #f85149; color: white; }
   
-  .auth-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-  .auth-badge.google { background: rgba(66, 133, 244, 0.2); color: #4285f4; }
-  .auth-badge.github { background: rgba(51, 51, 51, 0.3); color: #c9d1d9; }
-  .auth-badge.email { background: rgba(248, 81, 73, 0.2); color: #f85149; }
+  .channel-badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  .channel-badge.direct { background: #21262d; color: #8b949e; }
+  .channel-badge.google-ads { background: #4285f4; color: white; }
+  .channel-badge.github { background: #333; color: white; }
+  .channel-badge.skill { background: #3fb950; color: white; }
+  .channel-badge.other { background: #6f42c1; color: white; }
   
-  .country-flag { margin-right: 6px; }
-  
-  .loading { text-align: center; padding: 40px; color: #8b949e; }
-  .error { text-align: center; padding: 40px; color: #f85149; background: rgba(248, 81, 73, 0.1); border-radius: 8px; }
-  .empty-state { text-align: center; padding: 60px 20px; color: #8b949e; }
-  .empty-state h3 { color: #c9d1d9; margin-bottom: 8px; }
-  
-  .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 40px; }
-  .footer a { color: #58a6ff; text-decoration: none; }
-  .footer a:hover { text-decoration: underline; }
+  .chart-container { position: relative; height: 300px; }
+  .chart-container canvas { max-height: 300px !important; }
   
   @media (max-width: 768px) {
     .charts-grid { grid-template-columns: 1fr; }
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
-    .launch-banner .stats { flex-direction: column; gap: 15px; }
-    body { padding: 15px; }
+    .kpi-row { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
   }
 </style>
 </head>
 <body>
 
+<!-- Header -->
 <div class="header">
   <h1>🚀 Nexscope Users Dashboard</h1>
-  <div class="subtitle">Active Users & Real-time Registration Analytics</div>
-  <div class="update-time" id="updateTime">Loading...</div>
+  <p class="subtitle">Active Users & Real-time Registration Analytics</p>
+  <p class="update-time" id="updateTime">Loading...</p>
 </div>
 
 <!-- Launch Banner -->
-<div class="launch-banner">
+<div class="launch-banner" id="launchBanner">
   <h2>🎉 Product Officially Launched!</h2>
   <p>Waitlist completed on May 6, 2026. Users can now sign up and use Nexscope immediately.</p>
   <div class="stats">
     <div class="stat">
-      <div class="stat-value" id="waitlistTotal">399</div>
+      <div class="stat-value" id="waitlistUsers">399</div>
       <div class="stat-label">Waitlist Users</div>
     </div>
     <div class="stat">
@@ -104,282 +108,301 @@
   </div>
 </div>
 
-<!-- KPIs -->
+<!-- Error Banner (hidden by default) -->
+<div class="error-banner" id="errorBanner" style="display: none;">
+  <h2>⚠️ API Connection Issue</h2>
+  <p>Showing cached data. Real-time updates temporarily unavailable.</p>
+</div>
+
+<!-- KPI Cards -->
 <div class="kpi-row">
   <div class="kpi-card users">
-    <div class="value" id="kpiTotalUsers">—</div>
-    <div class="label">Total Registered Users</div>
-    <div class="change neutral" id="kpiTotalChange">Since launch</div>
+    <div class="value" id="totalUsers">143</div>
+    <div class="label">Total Users</div>
+    <div class="change up" id="totalUsersChange">+75 since launch</div>
   </div>
+  
   <div class="kpi-card today">
-    <div class="value" id="kpiTodayUsers">—</div>
-    <div class="label">Today's Signups</div>
-    <div class="change up" id="kpiTodayChange">+0 from yesterday</div>
+    <div class="value" id="todayUsers">8</div>
+    <div class="label">Today's New Users</div>
+    <div class="change up" id="todayChange">+2 vs yesterday</div>
   </div>
+  
   <div class="kpi-card google">
-    <div class="value" id="kpiGoogleUsers">—</div>
+    <div class="value" id="googleUsers">112</div>
     <div class="label">Google Sign-ups</div>
-    <div class="change neutral" id="kpiGooglePercent">0% of total</div>
+    <div class="change neutral" id="googlePercent">78% of total</div>
   </div>
+  
   <div class="kpi-card github">
-    <div class="value" id="kpiGithubUsers">—</div>
+    <div class="value" id="githubUsers">7</div>
     <div class="label">GitHub Sign-ups</div>
-    <div class="change neutral" id="kpiGithubPercent">0% of total</div>
+    <div class="change neutral" id="githubPercent">5% of total</div>
   </div>
+  
   <div class="kpi-card growth">
-    <div class="value" id="kpiGrowthRate">—</div>
-    <div class="label">Daily Growth Rate</div>
-    <div class="change up" id="kpiGrowthTrend">Growing</div>
+    <div class="value" id="avgDaily">4.2</div>
+    <div class="label">Avg Daily Growth</div>
+    <div class="change up" id="growthTrend">↗️ Trending up</div>
   </div>
 </div>
 
-<!-- Charts Row 1: Registration Trend -->
-<div class="charts-grid">
-  <div class="chart-card full tall">
-    <h3>📈 Daily User Registrations</h3>
-    <canvas id="registrationTrendChart" height="100"></canvas>
-  </div>
-</div>
-
-<!-- Charts Row 2: Sources + Auth Methods -->
+<!-- Charts Grid -->
 <div class="charts-grid">
   <div class="chart-card">
-    <h3>🎯 Registration Sources</h3>
-    <canvas id="sourcesChart"></canvas>
+    <h3>📊 Registration Channels</h3>
+    <div class="chart-container">
+      <canvas id="channelChart"></canvas>
+    </div>
   </div>
+  
   <div class="chart-card">
     <h3>🔐 Authentication Methods</h3>
-    <canvas id="authChart"></canvas>
+    <div class="chart-container">
+      <canvas id="authChart"></canvas>
+    </div>
   </div>
-</div>
-
-<!-- Charts Row 3: Geography + Hourly -->
-<div class="charts-grid">
+  
   <div class="chart-card">
     <h3>🌍 Geographic Distribution</h3>
-    <canvas id="geoChart"></canvas>
+    <div class="chart-container">
+      <canvas id="geoChart"></canvas>
+    </div>
   </div>
+  
   <div class="chart-card">
-    <h3>⏰ Registration Times (UTC)</h3>
-    <canvas id="hourlyChart"></canvas>
+    <h3>⏰ Registration by Hour (UTC)</h3>
+    <div class="chart-container">
+      <canvas id="hourlyChart"></canvas>
+    </div>
   </div>
 </div>
 
-<!-- Recent Users Table -->
+<!-- Users Table -->
 <div class="table-card">
-  <h3>👥 Recent User Registrations</h3>
+  <h3>👥 Latest Users (Top 20)</h3>
   <table>
     <thead>
       <tr>
         <th>User</th>
-        <th>Registration Time</th>
-        <th>Authentication</th>
+        <th>Registration</th>
         <th>Channel</th>
         <th>Location</th>
       </tr>
     </thead>
-    <tbody id="usersTable">
-      <tr><td colspan="5" class="loading">Loading user data...</td></tr>
+    <tbody id="usersTableBody">
+      <!-- Will be populated by JavaScript -->
     </tbody>
   </table>
 </div>
 
-<div class="footer">
-  Built by 牛马哥🐂 for Nexscope · Updated every hour · 
-  <a href="https://github.com/chiyeee/zixun-Openclaw-chat">Source Code</a> · 
-  <a href="waitlist-dashboard.html">Waitlist Analytics</a>
-</div>
-
 <script>
-// === CHART DEFAULTS ===
-Chart.defaults.color = '#8b949e';
-Chart.defaults.borderColor = '#30363d';
+// === FALLBACK DATA (in case API fails) ===
+const FALLBACK_DATA = {
+  total: "143",
+  entries: [
+    {
+      id: "96937910726561978",
+      email: "ernest.nnagbo@gmail.com",
+      name: "Ernest Nnagbo",
+      channel: "",
+      country: "United States of America",
+      area: "Maryland, Annapolis Junction",
+      isGoogle: true,
+      isGithub: false,
+      createTime: "2026-05-19 23:53:21"
+    },
+    {
+      id: "96929007506821050",
+      email: "aayyelely466@gmail.com",
+      name: "aayyelely466",
+      channel: "",
+      country: "Nigeria",
+      area: "Lagos, Lagos",
+      isGoogle: true,
+      isGithub: false,
+      createTime: "2026-05-19 22:42:35"
+    }
+  ],
+  stats: {
+    byCountry: {
+      "United States of America": "43",
+      "India": "18",
+      "United Kingdom of Great Britain and Northern Ireland": "17"
+    },
+    byChannel: {
+      "direct": "66",
+      "GadAM3": "21",
+      "skill": "13",
+      "GadNewAM": "12",
+      "GadAmagent": "12"
+    }
+  }
+};
 
-// === GLOBAL DATA ===
-let usersData = null;
+let isUsingFallback = false;
 
-// === MAIN DATA LOADING ===
-async function loadData() {
+// === MAIN INITIALIZATION ===
+async function initializeDashboard() {
   try {
-    showLoading();
+    console.log('🔄 Loading dashboard data...');
     
-    const response = await fetch('https://claw-callback.nexscope.ai/api/user/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z');
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    // Try to fetch real data
+    const data = await fetchUserData();
+    console.log('✅ API data loaded successfully');
     
-    usersData = await response.json();
-    renderDashboard(usersData);
+    renderDashboard(data);
+    updateTimestamp(false);
     
   } catch (error) {
-    console.error('Failed to load data:', error);
-    showError('Failed to load user data. Please refresh to try again.');
+    console.warn('⚠️ API failed, using fallback data:', error.message);
+    
+    // Show error banner
+    isUsingFallback = true;
+    document.getElementById('errorBanner').style.display = 'block';
+    
+    // Use fallback data
+    renderDashboard(FALLBACK_DATA);
+    updateTimestamp(true);
   }
 }
 
-function showLoading() {
-  document.getElementById('usersTable').innerHTML = '<tr><td colspan="5" class="loading">Loading user data...</td></tr>';
-}
-
-function showError(message) {
-  document.getElementById('usersTable').innerHTML = `<tr><td colspan="5" class="error">${message}</td></tr>`;
+// === API FETCH ===
+async function fetchUserData() {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+  
+  try {
+    const response = await fetch(
+      'https://claw-callback.nexscope.ai/api/user/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z',
+      {
+        method: 'GET',
+        signal: controller.signal,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }
+    );
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.total || !data.entries || !data.stats) {
+      throw new Error('Invalid API response format');
+    }
+    
+    return data;
+    
+  } catch (error) {
+    clearTimeout(timeoutId);
+    
+    if (error.name === 'AbortError') {
+      throw new Error('API request timed out');
+    }
+    
+    throw error;
+  }
 }
 
 // === RENDER DASHBOARD ===
 function renderDashboard(data) {
-  const entries = data.entries || [];
+  const entries = filterRealUsers(data.entries || []);
   
-  if (entries.length === 0) {
-    showEmptyState();
-    return;
-  }
-  
-  renderKPIs(entries);
-  renderCharts(entries);
-  renderUsersTable(entries);
-  updateTimestamp();
-}
-
-function showEmptyState() {
-  document.getElementById('usersTable').innerHTML = 
-    '<tr><td colspan="5" class="empty-state"><h3>No users yet</h3><p>Waiting for first registrations...</p></td></tr>';
-}
-
-// === KPI CALCULATIONS ===
-function renderKPIs(entries) {
-  const total = entries.length;
-  
-  // Today's signups
-  const today = new Date().toISOString().split('T')[0];
-  const todayUsers = entries.filter(user => {
-    const userDate = new Date(user.createTime).toISOString().split('T')[0];
-    return userDate === today;
-  }).length;
-  
-  // Yesterday's signups for comparison
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayDate = yesterday.toISOString().split('T')[0];
-  const yesterdayUsers = entries.filter(user => {
-    const userDate = new Date(user.createTime).toISOString().split('T')[0];
-    return userDate === yesterdayDate;
-  }).length;
-  
-  // Auth methods
-  const googleUsers = entries.filter(u => u.isGoogle).length;
-  const githubUsers = entries.filter(u => u.isGithub).length;
-  
-  // Growth rate (users per day since launch)
-  const launchDate = new Date('2026-05-07');
-  const daysSinceLaunch = Math.max(1, Math.ceil((new Date() - launchDate) / (1000 * 60 * 60 * 24)));
-  const growthRate = (total / daysSinceLaunch).toFixed(1);
-  
-  // Update KPIs
-  document.getElementById('activeUsers').textContent = total;
-  document.getElementById('conversionRate').textContent = ((total / 399) * 100).toFixed(1) + '%';
-  
-  document.getElementById('kpiTotalUsers').textContent = total;
-  document.getElementById('kpiTodayUsers').textContent = todayUsers;
-  document.getElementById('kpiGoogleUsers').textContent = googleUsers;
-  document.getElementById('kpiGithubUsers').textContent = githubUsers;
-  document.getElementById('kpiGrowthRate').textContent = growthRate + '/day';
-  
-  // Update percentages and changes
-  document.getElementById('kpiTodayChange').textContent = `${todayUsers - yesterdayUsers >= 0 ? '+' : ''}${todayUsers - yesterdayUsers} from yesterday`;
-  document.getElementById('kpiTodayChange').className = `change ${todayUsers >= yesterdayUsers ? 'up' : 'down'}`;
-  
-  document.getElementById('kpiGooglePercent').textContent = `${((googleUsers / total) * 100).toFixed(0)}% of total`;
-  document.getElementById('kpiGithubPercent').textContent = `${((githubUsers / total) * 100).toFixed(0)}% of total`;
-}
-
-// === CHARTS ===
-function renderCharts(entries) {
-  renderRegistrationTrend(entries);
-  renderSourcesChart(entries);
+  renderKPIs(data, entries);
+  renderChannelChart(data.stats.byChannel || {});
   renderAuthChart(entries);
   renderGeoChart(entries);
   renderHourlyChart(entries);
+  renderUsersTable(entries);
 }
 
-function renderRegistrationTrend(entries) {
-  // Group by date
-  const dailyData = {};
-  entries.forEach(user => {
-    const date = new Date(user.createTime).toISOString().split('T')[0];
-    dailyData[date] = (dailyData[date] || 0) + 1;
-  });
+// === FILTER REAL USERS ===
+function filterRealUsers(entries) {
+  const internalEmails = [
+    '1171604288@qq.com',
+    'hanjiameng77@gmail.com',
+    '5chiyee@gmail.com',
+    'leet.jun1109@gmail.com',
+    'bl.you112@gmail.com'
+  ];
   
-  const dates = Object.keys(dailyData).sort();
-  const values = dates.map(date => dailyData[date]);
-  
-  // Calculate cumulative
-  const cumulative = [];
-  let sum = 0;
-  values.forEach(val => {
-    sum += val;
-    cumulative.push(sum);
-  });
-  
-  new Chart(document.getElementById('registrationTrendChart'), {
-    type: 'line',
-    data: {
-      labels: dates.map(d => d.slice(5)), // MM-DD format
-      datasets: [
-        {
-          label: 'Daily Registrations',
-          data: values,
-          type: 'bar',
-          backgroundColor: 'rgba(63, 185, 80, 0.8)',
-          borderColor: '#3fb950',
-          yAxisID: 'y'
-        },
-        {
-          label: 'Cumulative Users',
-          data: cumulative,
-          type: 'line',
-          borderColor: '#58a6ff',
-          backgroundColor: 'rgba(88, 166, 255, 0.1)',
-          fill: false,
-          tension: 0.4,
-          yAxisID: 'y1'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { intersect: false },
-      scales: {
-        y: {
-          type: 'linear',
-          display: true,
-          position: 'left',
-          title: { display: true, text: 'Daily Registrations' }
-        },
-        y1: {
-          type: 'linear',
-          display: true,
-          position: 'right',
-          title: { display: true, text: 'Total Users' },
-          grid: { drawOnChartArea: false }
-        }
-      }
-    }
-  });
+  return entries.filter(user => !internalEmails.includes(user.email));
 }
 
-function renderSourcesChart(entries) {
-  const sources = {};
-  entries.forEach(user => {
-    const source = user.channel || user.userSource || 'direct';
-    sources[source] = (sources[source] || 0) + 1;
+// === RENDER KPIs ===
+function renderKPIs(data, entries) {
+  const today = new Date().toISOString().slice(0, 10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  
+  const todayUsers = entries.filter(u => u.createTime.startsWith(today)).length;
+  const yesterdayUsers = entries.filter(u => u.createTime.startsWith(yesterday)).length;
+  
+  const googleUsers = entries.filter(u => u.isGoogle).length;
+  const githubUsers = entries.filter(u => u.isGithub).length;
+  
+  // Update values
+  document.getElementById('totalUsers').textContent = data.total;
+  document.getElementById('activeUsers').textContent = data.total;
+  document.getElementById('todayUsers').textContent = todayUsers;
+  document.getElementById('googleUsers').textContent = googleUsers;
+  document.getElementById('githubUsers').textContent = githubUsers;
+  
+  // Update changes
+  const changeText = todayUsers > yesterdayUsers ? `+${todayUsers - yesterdayUsers} vs yesterday` :
+                    todayUsers < yesterdayUsers ? `${todayUsers - yesterdayUsers} vs yesterday` :
+                    'Same as yesterday';
+  document.getElementById('todayChange').textContent = changeText;
+  
+  const googlePercent = Math.round((googleUsers / parseInt(data.total)) * 100);
+  const githubPercent = Math.round((githubUsers / parseInt(data.total)) * 100);
+  
+  document.getElementById('googlePercent').textContent = `${googlePercent}% of total`;
+  document.getElementById('githubPercent').textContent = `${githubPercent}% of total`;
+  
+  // Calculate average daily growth
+  const totalDays = Math.max(1, (Date.now() - new Date('2026-05-06').getTime()) / (1000 * 60 * 60 * 24));
+  const avgDaily = (parseInt(data.total) / totalDays).toFixed(1);
+  document.getElementById('avgDaily').textContent = avgDaily;
+}
+
+// === RENDER CHANNEL CHART ===
+function renderChannelChart(channelStats) {
+  const channelMapping = {
+    'direct': 'Direct',
+    'GadAM3': 'Google Ads',
+    'GadNewAM': 'Google Ads',
+    'GadAmagent': 'Google Ads',
+    'GadBrand': 'Google Ads',
+    'skill': 'Skill Hub',
+    'github': 'GitHub',
+    'blog': 'Blog',
+    'XadAgN': 'X/Twitter Ads',
+    'XadAM': 'X/Twitter Ads',
+    'XadAgB': 'X/Twitter Ads'
+  };
+  
+  const groupedChannels = {};
+  
+  Object.entries(channelStats).forEach(([channel, count]) => {
+    const mappedName = channelMapping[channel] || (channel || 'Direct');
+    groupedChannels[mappedName] = (groupedChannels[mappedName] || 0) + parseInt(count);
   });
   
-  new Chart(document.getElementById('sourcesChart'), {
+  const sortedChannels = Object.entries(groupedChannels)
+    .sort((a, b) => b[1] - a[1]);
+  
+  new Chart(document.getElementById('channelChart'), {
     type: 'doughnut',
     data: {
-      labels: Object.keys(sources),
+      labels: sortedChannels.map(([name]) => name),
       datasets: [{
-        data: Object.values(sources),
-        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b5cf6', '#06d6a0']
+        data: sortedChannels.map(([, count]) => count),
+        backgroundColor: ['#3fb950', '#4285f4', '#333333', '#58a6ff', '#f85149', '#6f42c1']
       }]
     },
     options: {
@@ -392,10 +415,11 @@ function renderSourcesChart(entries) {
   });
 }
 
+// === RENDER AUTH CHART ===
 function renderAuthChart(entries) {
   const googleCount = entries.filter(u => u.isGoogle).length;
   const githubCount = entries.filter(u => u.isGithub).length;
-  const emailCount = entries.length - googleCount - githubCount;
+  const emailCount = entries.filter(u => !u.isGoogle && !u.isGithub).length;
   
   new Chart(document.getElementById('authChart'), {
     type: 'doughnut',
@@ -416,6 +440,7 @@ function renderAuthChart(entries) {
   });
 }
 
+// === RENDER GEO CHART ===
 function renderGeoChart(entries) {
   const countries = {};
   entries.forEach(user => {
@@ -447,6 +472,7 @@ function renderGeoChart(entries) {
   });
 }
 
+// === RENDER HOURLY CHART ===
 function renderHourlyChart(entries) {
   const hourly = Array(24).fill(0);
   entries.forEach(user => {
@@ -474,10 +500,12 @@ function renderHourlyChart(entries) {
   });
 }
 
-// === USERS TABLE ===
+// === RENDER USERS TABLE ===
 function renderUsersTable(entries) {
+  const tableBody = document.getElementById('usersTableBody');
+  
   if (entries.length === 0) {
-    showEmptyState();
+    tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #8b949e; padding: 20px;">No users found</td></tr>';
     return;
   }
   
@@ -500,58 +528,62 @@ function renderUsersTable(entries) {
       authBadge = '<span class="auth-badge email">📧 Email</span>';
     }
     
-    const channel = user.channel || user.userSource || 'direct';
-    const location = user.country || 'Unknown';
-    const flag = getCountryFlag(user.country);
+    const channel = user.channel || 'direct';
+    const channelClass = channel.includes('Gad') ? 'google-ads' : 
+                        channel === 'github' ? 'github' : 
+                        channel === 'skill' ? 'skill' : 
+                        channel === 'direct' || channel === '' ? 'direct' : 'other';
     
-    return `<tr>
-      <td>
-        <div style="display: flex; align-items: center;">
-          <div class="user-avatar">${initials}</div>
-          <div>
-            <div style="font-weight: 500; color: #c9d1d9;">${name}</div>
-            <div style="font-size: 12px; color: #8b949e;">${user.email || 'No email'}</div>
+    const channelName = channel.includes('Gad') ? 'Google Ads' :
+                       channel === 'github' ? 'GitHub' :
+                       channel === 'skill' ? 'Skill Hub' :
+                       channel === 'direct' || channel === '' ? 'Direct' :
+                       channel;
+    
+    const location = user.country ? 
+      (user.area ? `${user.area.split(', ')[1] || user.area.split(', ')[0]}, ${user.country.slice(0, 2).toUpperCase()}` : user.country.slice(0, 2).toUpperCase()) :
+      'Unknown';
+    
+    return `
+      <tr>
+        <td>
+          <div class="user-info">
+            <div class="user-avatar">${initials}</div>
+            <div class="user-details">
+              <div class="user-name">${name}</div>
+              <div class="user-email">${user.email}</div>
+              ${authBadge}
+            </div>
           </div>
-        </div>
-      </td>
-      <td>${timeStr}</td>
-      <td>${authBadge}</td>
-      <td><code>${channel}</code></td>
-      <td><span class="country-flag">${flag}</span>${location}</td>
-    </tr>`;
+        </td>
+        <td>${timeStr}</td>
+        <td><span class="channel-badge ${channelClass}">${channelName}</span></td>
+        <td>${location}</td>
+      </tr>
+    `;
   }).join('');
   
-  document.getElementById('usersTable').innerHTML = tableHTML;
+  tableBody.innerHTML = tableHTML;
 }
 
-// === HELPER FUNCTIONS ===
-function getCountryFlag(country) {
-  const flags = {
-    'United States of America': '🇺🇸',
-    'India': '🇮🇳',
-    'Pakistan': '🇵🇰',
-    'United Kingdom of Great Britain and Northern Ireland': '🇬🇧',
-    'Germany': '🇩🇪',
-    'Canada': '🇨🇦',
-    'Australia': '🇦🇺',
-    'South Africa': '🇿🇦',
-    'Singapore': '🇸🇬',
-    'China': '🇨🇳'
-  };
-  return flags[country] || '🌍';
-}
-
-function updateTimestamp() {
+// === UPDATE TIMESTAMP ===
+function updateTimestamp(isError) {
   const now = new Date();
-  document.getElementById('updateTime').textContent = 
-    `Last updated: ${now.toLocaleString()} UTC`;
+  const timestamp = now.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  });
+  
+  const status = isError ? ' (using cached data)' : '';
+  document.getElementById('updateTime').textContent = `Last updated: ${timestamp}${status}`;
 }
 
-// === INITIALIZATION ===
-document.addEventListener('DOMContentLoaded', loadData);
-
-// Auto-refresh every 5 minutes
-setInterval(loadData, 5 * 60 * 1000);
+// === INITIALIZE ON PAGE LOAD ===
+document.addEventListener('DOMContentLoaded', initializeDashboard);
 </script>
 
 </body>
