@@ -3,545 +3,555 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexscope Users Dashboard - 20 Real Users</title>
+<title>Nexscope Users Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
-  * { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e1e4e8; padding: 20px; }
+  .header { text-align: center; margin-bottom: 30px; }
+  .header h1 { font-size: 28px; color: #fff; margin-bottom: 5px; }
+  .header .subtitle { color: #8b949e; font-size: 14px; }
+  .header .update-time { color: #58a6ff; font-size: 12px; margin-top: 5px; }
   
-  html, body { 
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-    background: #0f1117; 
-    color: #e1e4e8; 
-  }
+  .launch-banner { background: linear-gradient(135deg, #3fb950, #58a6ff); border-radius: 12px; padding: 20px; margin-bottom: 30px; text-align: center; }
+  .launch-banner h2 { color: white; margin-bottom: 8px; font-size: 24px; }
+  .launch-banner p { color: rgba(255,255,255,0.9); font-size: 16px; margin-bottom: 12px; }
+  .launch-banner .stats { display: flex; justify-content: center; gap: 30px; margin-top: 15px; }
+  .launch-banner .stat { color: white; }
+  .launch-banner .stat-value { font-size: 20px; font-weight: bold; }
+  .launch-banner .stat-label { font-size: 12px; opacity: 0.8; }
   
-  body {
-    padding: 20px;
-    max-width: calc(100vw - 40px);
-    width: calc(100vw - 40px);
-  }
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .kpi-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .kpi-card.users::before { background: #3fb950; }
+  .kpi-card.today::before { background: #58a6ff; }
+  .kpi-card.google::before { background: #4285f4; }
+  .kpi-card.github::before { background: #333; }
+  .kpi-card.growth::before { background: #f85149; }
   
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    overflow: hidden;
-  }
+  .kpi-card .value { font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .kpi-card .label { font-size: 13px; color: #8b949e; margin-bottom: 8px; }
+  .kpi-card .change { font-size: 14px; }
+  .kpi-card .change.up { color: #3fb950; }
+  .kpi-card .change.down { color: #f85149; }
+  .kpi-card .change.neutral { color: #8b949e; }
   
-  .header { 
-    text-align: center; 
-    margin-bottom: 30px; 
-  }
-  .header h1 { 
-    font-size: 28px; 
-    color: #fff; 
-    margin-bottom: 5px; 
-  }
-  .header .subtitle { 
-    color: #8b949e; 
-    font-size: 14px; 
-  }
-  .header .update-time { 
-    color: #58a6ff; 
-    font-size: 12px; 
-    margin-top: 5px; 
-  }
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .chart-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; min-height: 350px; }
+  .chart-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-card.tall { min-height: 500px; }
   
-  .kpi-row { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap: 16px; 
-    margin-bottom: 24px; 
-  }
+  .table-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .table-card h3 { font-size: 15px; color: #c9d1d9; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 12px; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+  td { padding: 12px; border-bottom: 1px solid #21262d; font-size: 13px; }
+  tr:hover { background: #1c2128; }
   
-  .kpi-card { 
-    background: #161b22; 
-    border: 1px solid #30363d; 
-    border-radius: 12px; 
-    padding: 20px; 
-    text-align: center; 
-  }
-  .kpi-card .value { 
-    font-size: 36px; 
-    font-weight: 700; 
-    color: #58a6ff; 
-  }
-  .kpi-card .label { 
-    font-size: 13px; 
-    color: #8b949e; 
-    margin-top: 4px; 
-  }
-  .kpi-card .change { 
-    font-size: 14px; 
-    margin-top: 4px; 
-  }
-  .kpi-card .change.up { 
-    color: #3fb950; 
-  }
+  .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(45deg, #3fb950, #58a6ff); display: inline-flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 10px; }
   
-  .charts-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 20px; 
-    margin-bottom: 24px; 
-    width: 100%;
-    max-width: 100%;
-  }
+  .auth-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .auth-badge.google { background: rgba(66, 133, 244, 0.2); color: #4285f4; }
+  .auth-badge.github { background: rgba(51, 51, 51, 0.3); color: #c9d1d9; }
+  .auth-badge.email { background: rgba(248, 81, 73, 0.2); color: #f85149; }
   
-  .chart-card { 
-    background: #161b22; 
-    border: 1px solid #30363d; 
-    border-radius: 12px; 
-    padding: 20px; 
-    height: 350px;
-    width: 100%;
-    overflow: hidden !important;
-    position: relative;
-  }
+  .country-flag { margin-right: 6px; }
   
-  .chart-card.full { 
-    grid-column: 1 / -1; 
-    height: 400px;
-  }
+  .loading { text-align: center; padding: 40px; color: #8b949e; }
+  .error { text-align: center; padding: 40px; color: #f85149; background: rgba(248, 81, 73, 0.1); border-radius: 8px; }
+  .empty-state { text-align: center; padding: 60px 20px; color: #8b949e; }
+  .empty-state h3 { color: #c9d1d9; margin-bottom: 8px; }
   
-  .chart-card h3 { 
-    font-size: 15px; 
-    color: #c9d1d9; 
-    margin-bottom: 12px; 
-    height: 20px;
-    line-height: 20px;
-  }
-  
-  .chart-wrapper {
-    width: 100%;
-    height: calc(100% - 32px);
-    position: relative;
-    overflow: hidden !important;
-  }
-  
-  .chart-wrapper canvas {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-    display: block !important;
-  }
-  
-  .table-card { 
-    background: #161b22; 
-    border: 1px solid #30363d; 
-    border-radius: 12px; 
-    padding: 20px; 
-    margin-bottom: 24px;
-    height: 500px;
-    overflow: hidden;
-  }
-  
-  .table-card h3 { 
-    font-size: 15px; 
-    color: #c9d1d9; 
-    margin-bottom: 12px; 
-  }
-  
-  .table-container {
-    height: calc(100% - 32px);
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  
-  table { 
-    width: 100%; 
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-  
-  th, td { 
-    padding: 8px 12px; 
-    border-bottom: 1px solid #21262d; 
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  th { 
-    border-bottom: 1px solid #30363d; 
-    color: #8b949e; 
-    font-size: 12px; 
-    font-weight: 600; 
-    text-transform: uppercase;
-    position: sticky;
-    top: 0;
-    background: #161b22;
-    z-index: 10;
-  }
-  
-  tr:hover { 
-    background: #1c2128; 
-  }
-  
-  .badge { 
-    display: inline-block; 
-    padding: 2px 6px; 
-    border-radius: 8px; 
-    font-size: 10px; 
-    font-weight: 600;
-  }
-  .badge-google { background: #1d2d44; color: #4285f4; }
-  .badge-github { background: #2d2d2d; color: #c9d1d9; }
-  .badge-email { background: #3d1f1f; color: #f85149; }
-  .badge-direct { background: #1d2d44; color: #58a6ff; }
-  .badge-ads { background: #1f3d1f; color: #3fb950; }
-  .badge-skill { background: #3d1f1f; color: #f85149; }
-  
-  .footer { 
-    text-align: center; 
-    color: #484f58; 
-    font-size: 12px; 
-    margin-top: 30px; 
-  }
+  .footer { text-align: center; color: #484f58; font-size: 12px; margin-top: 40px; }
+  .footer a { color: #58a6ff; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
   
   @media (max-width: 768px) {
-    .charts-grid { 
-      grid-template-columns: 1fr; 
-    }
-    .kpi-row { 
-      grid-template-columns: repeat(2, 1fr); 
-    }
-    .chart-card { 
-      height: 300px; 
-    }
-    .chart-card.full { 
-      height: 350px; 
-    }
+    .charts-grid { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .launch-banner .stats { flex-direction: column; gap: 15px; }
+    body { padding: 15px; }
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <h1>👥 Nexscope Users Dashboard</h1>
-    <div class="subtitle">Real external user analytics (excluding internal team) - 20 Active Users</div>
-    <div class="update-time" id="updateTime"></div>
-  </div>
+<div class="header">
+  <h1>🚀 Nexscope Users Dashboard</h1>
+  <div class="subtitle">Active Users & Real-time Registration Analytics</div>
+  <div class="update-time" id="updateTime">Loading...</div>
+</div>
 
-  <!-- KPIs - 20个真实外部用户数据 -->
-  <div class="kpi-row">
-    <div class="kpi-card">
-      <div class="value">20</div>
-      <div class="label">Real Users</div>
+<!-- Launch Banner -->
+<div class="launch-banner">
+  <h2>🎉 Product Officially Launched!</h2>
+  <p>Waitlist completed on May 6, 2026. Users can now sign up and use Nexscope immediately.</p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value" id="waitlistTotal">399</div>
+      <div class="stat-label">Waitlist Users</div>
     </div>
-    <div class="kpi-card">
-      <div class="value">2</div>
-      <div class="label">Today</div>
-      <div class="change up">New registrations</div>
+    <div class="stat">
+      <div class="stat-value" id="activeUsers">—</div>
+      <div class="stat-label">Active Users</div>
     </div>
-    <div class="kpi-card">
-      <div class="value">10.0</div>
-      <div class="label">Daily Average</div>
-    </div>
-    <div class="kpi-card">
-      <div class="value">65%</div>
-      <div class="label">Google Login</div>
-    </div>
-    <div class="kpi-card">
-      <div class="value">5.0%</div>
-      <div class="label">Waitlist Convert</div>
+    <div class="stat">
+      <div class="stat-value" id="conversionRate">—</div>
+      <div class="stat-label">Conversion</div>
     </div>
   </div>
+</div>
 
-  <!-- Charts Row 1: 用户增长趋势 -->
-  <div class="charts-grid">
-    <div class="chart-card full">
-      <h3>📈 Real User Registrations & Growth (Excluding Internal Team)</h3>
-      <div class="chart-wrapper">
-        <canvas id="trendChart"></canvas>
-      </div>
-    </div>
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi-card users">
+    <div class="value" id="kpiTotalUsers">—</div>
+    <div class="label">Total Registered Users</div>
+    <div class="change neutral" id="kpiTotalChange">Since launch</div>
   </div>
+  <div class="kpi-card today">
+    <div class="value" id="kpiTodayUsers">—</div>
+    <div class="label">Today's Signups</div>
+    <div class="change up" id="kpiTodayChange">+0 from yesterday</div>
+  </div>
+  <div class="kpi-card google">
+    <div class="value" id="kpiGoogleUsers">—</div>
+    <div class="label">Google Sign-ups</div>
+    <div class="change neutral" id="kpiGooglePercent">0% of total</div>
+  </div>
+  <div class="kpi-card github">
+    <div class="value" id="kpiGithubUsers">—</div>
+    <div class="label">GitHub Sign-ups</div>
+    <div class="change neutral" id="kpiGithubPercent">0% of total</div>
+  </div>
+  <div class="kpi-card growth">
+    <div class="value" id="kpiGrowthRate">—</div>
+    <div class="label">Daily Growth Rate</div>
+    <div class="change up" id="kpiGrowthTrend">Growing</div>
+  </div>
+</div>
 
-  <!-- Charts Row 2: 登录方式 + 注册渠道 -->
-  <div class="charts-grid">
-    <div class="chart-card">
-      <h3>🔐 Login Methods</h3>
-      <div class="chart-wrapper">
-        <canvas id="authChart"></canvas>
-      </div>
-    </div>
-    <div class="chart-card">
-      <h3>🎯 Registration Channels</h3>
-      <div class="chart-wrapper">
-        <canvas id="channelChart"></canvas>
-      </div>
-    </div>
+<!-- Charts Row 1: Registration Trend -->
+<div class="charts-grid">
+  <div class="chart-card full tall">
+    <h3>📈 Daily User Registrations</h3>
+    <canvas id="registrationTrendChart" height="100"></canvas>
   </div>
+</div>
 
-  <!-- Charts Row 3: 地理分布 + 时间分布 -->
-  <div class="charts-grid">
-    <div class="chart-card">
-      <h3>🌍 Top Countries</h3>
-      <div class="chart-wrapper">
-        <canvas id="countryChart"></canvas>
-      </div>
-    </div>
-    <div class="chart-card">
-      <h3>⏰ Hourly Registrations (UTC)</h3>
-      <div class="chart-wrapper">
-        <canvas id="hourlyChart"></canvas>
-      </div>
-    </div>
+<!-- Charts Row 2: Sources + Auth Methods -->
+<div class="charts-grid">
+  <div class="chart-card">
+    <h3>🎯 Registration Sources</h3>
+    <canvas id="sourcesChart"></canvas>
   </div>
+  <div class="chart-card">
+    <h3>🔐 Authentication Methods</h3>
+    <canvas id="authChart"></canvas>
+  </div>
+</div>
 
-  <!-- Users Table - 只显示20个真实外部用户 -->
-  <div class="table-card">
-    <h3>👥 All 20 Real User Registrations (Internal Team Excluded)</h3>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 15%">Time</th>
-            <th style="width: 20%">Name</th>
-            <th style="width: 25%">Email</th>
-            <th style="width: 15%">Login</th>
-            <th style="width: 15%">Channel</th>
-            <th style="width: 10%">Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>05-08 21:12</td><td>hongnan_zhang</td><td>hongnan@fzzixun.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-skill">TY</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-08 20:30</td><td>youbl</td><td>youbl@126.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-08 18:31</td><td>Jason Sher</td><td>jason@functionsharp.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-github">GitHub</span></td><td>🇿🇦 ZA</td></tr>
-          <tr><td>05-08 16:26</td><td>Mussab Tahir</td><td>m.tahir@spctek.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇵🇰 PK</td></tr>
-          <tr><td>05-08 16:13</td><td>Frankie B</td><td>fsb7210@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-ads">GadAgent</span></td><td>🇺🇸 US</td></tr>
-          <tr><td>05-08 12:30</td><td>Edata India</td><td>edata@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇮🇳 IN</td></tr>
-          <tr><td>05-08 08:33</td><td>Modern M</td><td>modern@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-ads">GadAgent</span></td><td>🇩🇿 DZ</td></tr>
-          <tr><td>05-08 02:01</td><td>Roberto S</td><td>amz@sachper.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-skill">Blog</span></td><td>🇪🇸 ES</td></tr>
-          <tr><td>05-08 01:18</td><td>L Xiang</td><td>lx0923@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇺🇸 US</td></tr>
-          <tr><td>05-08 01:14</td><td>Gokul An</td><td>gokul155@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-ads">GadAgent</span></td><td>🇮🇳 IN</td></tr>
-          <tr><td>05-08 00:21</td><td>Jeffor Shao</td><td>shaojs@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇺🇸 US</td></tr>
-          <tr><td>05-07 23:43</td><td>崔翔</td><td>flyicc@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-skill">Skill</span></td><td>🇨🇳 CN</td></tr>
-          <tr><td>05-07 23:40</td><td>kkk402373</td><td>402373@qq.com</td><td><span class="badge badge-github">GitHub</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-07 21:52</td><td>Marquis J</td><td>marquis@atten.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-skill">Skill</span></td><td>🇺🇸 US</td></tr>
-          <tr><td>05-07 20:24</td><td>jun_chen</td><td>jun@fzzixun.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-07 16:33</td><td>tegev73269</td><td>tegev@webxum.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-ads">GadAgent</span></td><td>🇮🇳 IN</td></tr>
-          <tr><td>05-07 13:28</td><td>志恒徐</td><td>mr.xu@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-skill">Skill</span></td><td>🇺🇸 US</td></tr>
-          <tr><td>05-07 13:07</td><td>78706273</td><td>78706273@qq.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇭🇰 HK</td></tr>
-          <tr><td>05-07 02:39</td><td>Test Daniel</td><td>test@gmail.com</td><td><span class="badge badge-email">Email</span></td><td><span class="badge badge-direct">Direct</span></td><td>🇺🇦 UA</td></tr>
-          <tr><td>05-06 18:17</td><td>K Beat</td><td>khoakhanh@gmail.com</td><td><span class="badge badge-google">Google</span></td><td><span class="badge badge-github">GitHub</span></td><td>🇻🇳 VN</td></tr>
-        </tbody>
-      </table>
-    </div>
+<!-- Charts Row 3: Geography + Hourly -->
+<div class="charts-grid">
+  <div class="chart-card">
+    <h3>🌍 Geographic Distribution</h3>
+    <canvas id="geoChart"></canvas>
   </div>
+  <div class="chart-card">
+    <h3>⏰ Registration Times (UTC)</h3>
+    <canvas id="hourlyChart"></canvas>
+  </div>
+</div>
+
+<!-- Recent Users Table -->
+<div class="table-card">
+  <h3>👥 Recent User Registrations</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Registration Time</th>
+        <th>Authentication</th>
+        <th>Channel</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody id="usersTable">
+      <tr><td colspan="5" class="loading">Loading user data...</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <div class="footer">
-  Built by 牛马哥🐂 for Nexscope · Real external users only · <a href="https://github.com/chiyeee/zixun-Openclaw-chat" style="color: #58a6ff;">Source</a>
+  Built by 牛马哥🐂 for Nexscope · Updated every hour · 
+  <a href="https://github.com/chiyeee/zixun-Openclaw-chat">Source Code</a> · 
+  <a href="waitlist-dashboard.html">Waitlist Analytics</a>
 </div>
 
 <script>
-// === 20个真实外部用户数据 (排除内部团队) ===
-const REAL_USER_STATS = {
-  total: 20,
-  google: 13,  // Google登录
-  github: 1,   // GitHub登录  
-  email: 6,    // Email登录
-  countries: {
-    "Hong Kong": 5,      // 减去内部4个HK用户
-    "United States of America": 5, 
-    "India": 3,
-    "South Africa": 1,
-    "Pakistan": 1,
-    "Algeria": 1,
-    "Spain": 1,
-    "China": 1,
-    "Ukraine": 1,
-    "Viet Nam": 1
-  },
-  channels: {
-    "direct": 10,        // 减去内部直接注册
-    "GadAmagent": 4,
-    "skill": 3,
-    "github": 2,         // 减去内部GitHub注册
-    "thankyou": 1
-  }
-};
-
-const CHART_OPTIONS = {
-  responsive: true,
-  maintainAspectRatio: false,
-  interaction: { intersect: false },
-  layout: { padding: 0 },
-  plugins: {
-    legend: { 
-      display: true,
-      position: 'bottom',
-      labels: {
-        boxWidth: 12,
-        font: { size: 10 },
-        padding: 8
-      }
-    }
-  }
-};
-
+// === CHART DEFAULTS ===
 Chart.defaults.color = '#8b949e';
 Chart.defaults.borderColor = '#30363d';
 
-function renderCharts() {
-  const trendCanvas = document.getElementById('trendChart');
-  const authCanvas = document.getElementById('authChart');
-  const channelCanvas = document.getElementById('channelChart');
-  const countryCanvas = document.getElementById('countryChart');
-  const hourlyCanvas = document.getElementById('hourlyChart');
+// === GLOBAL DATA ===
+let usersData = null;
 
-  if (!trendCanvas || !authCanvas || !channelCanvas || !countryCanvas || !hourlyCanvas) {
-    console.error('Canvas elements not found');
+// === MAIN DATA LOADING ===
+async function loadData() {
+  try {
+    showLoading();
+    
+    const response = await fetch('https://claw-callback.nexscope.ai/api/user/summary?token=zhiyi-nexscope.ai-jiameng&since=2026-01-01T00:00:00Z');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    
+    usersData = await response.json();
+    renderDashboard(usersData);
+    
+  } catch (error) {
+    console.error('Failed to load data:', error);
+    showError('Failed to load user data. Please refresh to try again.');
+  }
+}
+
+function showLoading() {
+  document.getElementById('usersTable').innerHTML = '<tr><td colspan="5" class="loading">Loading user data...</td></tr>';
+}
+
+function showError(message) {
+  document.getElementById('usersTable').innerHTML = `<tr><td colspan="5" class="error">${message}</td></tr>`;
+}
+
+// === RENDER DASHBOARD ===
+function renderDashboard(data) {
+  const entries = data.entries || [];
+  
+  if (entries.length === 0) {
+    showEmptyState();
     return;
   }
+  
+  renderKPIs(entries);
+  renderCharts(entries);
+  renderUsersTable(entries);
+  updateTimestamp();
+}
 
-  // === 真实用户增长趋势图 (排除内部用户) ===
-  new Chart(trendCanvas, {
+function showEmptyState() {
+  document.getElementById('usersTable').innerHTML = 
+    '<tr><td colspan="5" class="empty-state"><h3>No users yet</h3><p>Waiting for first registrations...</p></td></tr>';
+}
+
+// === KPI CALCULATIONS ===
+function renderKPIs(entries) {
+  const total = entries.length;
+  
+  // Today's signups
+  const today = new Date().toISOString().split('T')[0];
+  const todayUsers = entries.filter(user => {
+    const userDate = new Date(user.createTime).toISOString().split('T')[0];
+    return userDate === today;
+  }).length;
+  
+  // Yesterday's signups for comparison
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayDate = yesterday.toISOString().split('T')[0];
+  const yesterdayUsers = entries.filter(user => {
+    const userDate = new Date(user.createTime).toISOString().split('T')[0];
+    return userDate === yesterdayDate;
+  }).length;
+  
+  // Auth methods
+  const googleUsers = entries.filter(u => u.isGoogle).length;
+  const githubUsers = entries.filter(u => u.isGithub).length;
+  
+  // Growth rate (users per day since launch)
+  const launchDate = new Date('2026-05-07');
+  const daysSinceLaunch = Math.max(1, Math.ceil((new Date() - launchDate) / (1000 * 60 * 60 * 24)));
+  const growthRate = (total / daysSinceLaunch).toFixed(1);
+  
+  // Update KPIs
+  document.getElementById('activeUsers').textContent = total;
+  document.getElementById('conversionRate').textContent = ((total / 399) * 100).toFixed(1) + '%';
+  
+  document.getElementById('kpiTotalUsers').textContent = total;
+  document.getElementById('kpiTodayUsers').textContent = todayUsers;
+  document.getElementById('kpiGoogleUsers').textContent = googleUsers;
+  document.getElementById('kpiGithubUsers').textContent = githubUsers;
+  document.getElementById('kpiGrowthRate').textContent = growthRate + '/day';
+  
+  // Update percentages and changes
+  document.getElementById('kpiTodayChange').textContent = `${todayUsers - yesterdayUsers >= 0 ? '+' : ''}${todayUsers - yesterdayUsers} from yesterday`;
+  document.getElementById('kpiTodayChange').className = `change ${todayUsers >= yesterdayUsers ? 'up' : 'down'}`;
+  
+  document.getElementById('kpiGooglePercent').textContent = `${((googleUsers / total) * 100).toFixed(0)}% of total`;
+  document.getElementById('kpiGithubPercent').textContent = `${((githubUsers / total) * 100).toFixed(0)}% of total`;
+}
+
+// === CHARTS ===
+function renderCharts(entries) {
+  renderRegistrationTrend(entries);
+  renderSourcesChart(entries);
+  renderAuthChart(entries);
+  renderGeoChart(entries);
+  renderHourlyChart(entries);
+}
+
+function renderRegistrationTrend(entries) {
+  // Group by date
+  const dailyData = {};
+  entries.forEach(user => {
+    const date = new Date(user.createTime).toISOString().split('T')[0];
+    dailyData[date] = (dailyData[date] || 0) + 1;
+  });
+  
+  const dates = Object.keys(dailyData).sort();
+  const values = dates.map(date => dailyData[date]);
+  
+  // Calculate cumulative
+  const cumulative = [];
+  let sum = 0;
+  values.forEach(val => {
+    sum += val;
+    cumulative.push(sum);
+  });
+  
+  new Chart(document.getElementById('registrationTrendChart'), {
     type: 'line',
     data: {
-      labels: ['May 6', 'May 7', 'May 8'],
+      labels: dates.map(d => d.slice(5)), // MM-DD format
       datasets: [
         {
-          label: 'Daily New Users',
-          data: [1, 10, 9], // 排除4月内部用户后的真实增长
+          label: 'Daily Registrations',
+          data: values,
           type: 'bar',
           backgroundColor: 'rgba(63, 185, 80, 0.8)',
+          borderColor: '#3fb950',
           yAxisID: 'y'
         },
         {
-          label: 'Total Real Users',
-          data: [1, 11, 20], // 真实累积用户数
+          label: 'Cumulative Users',
+          data: cumulative,
+          type: 'line',
           borderColor: '#58a6ff',
           backgroundColor: 'rgba(88, 166, 255, 0.1)',
-          fill: true,
+          fill: false,
           tension: 0.4,
           yAxisID: 'y1'
         }
       ]
     },
     options: {
-      ...CHART_OPTIONS,
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false },
       scales: {
         y: {
           type: 'linear',
           display: true,
           position: 'left',
-          title: { display: true, text: 'Daily New' },
-          beginAtZero: true,
-          max: 12,
-          grid: { color: '#21262d' }
+          title: { display: true, text: 'Daily Registrations' }
         },
         y1: {
           type: 'linear',
           display: true,
           position: 'right',
-          title: { display: true, text: 'Total Real' },
-          grid: { drawOnChartArea: false },
-          beginAtZero: true,
-          max: 25
+          title: { display: true, text: 'Total Users' },
+          grid: { drawOnChartArea: false }
         }
-      }
-    }
-  });
-
-  // === 登录方式图表 - 真实用户数据 ===
-  new Chart(authCanvas, {
-    type: 'doughnut',
-    data: {
-      labels: ['Google', 'Email', 'GitHub'],
-      datasets: [{
-        data: [REAL_USER_STATS.google, REAL_USER_STATS.email, REAL_USER_STATS.github],
-        backgroundColor: ['#4285f4', '#f85149', '#333333'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      ...CHART_OPTIONS,
-      cutout: '50%'
-    }
-  });
-
-  // === 注册渠道图表 - 真实用户数据 ===
-  new Chart(channelCanvas, {
-    type: 'doughnut',
-    data: {
-      labels: ['Direct', 'GadAgent', 'Skill', 'GitHub', 'TY'],
-      datasets: [{
-        data: [10, 4, 3, 2, 1],
-        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b5cf6'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      ...CHART_OPTIONS,
-      cutout: '50%'
-    }
-  });
-
-  // === 地理分布图表 - 真实用户数据 ===
-  new Chart(countryCanvas, {
-    type: 'bar',
-    data: {
-      labels: ['Hong Kong', 'USA', 'India', 'Others'],
-      datasets: [{
-        data: [5, 5, 3, 7],
-        backgroundColor: '#58a6ff',
-        borderRadius: 4
-      }]
-    },
-    options: {
-      ...CHART_OPTIONS,
-      plugins: { legend: { display: false } },
-      scales: { 
-        y: { beginAtZero: true, max: 8 },
-        x: { grid: { display: false } }
-      }
-    }
-  });
-
-  // === 时间分布图表 ===
-  new Chart(hourlyCanvas, {
-    type: 'bar',
-    data: {
-      labels: ['0-4h', '4-8h', '8-12h', '12-16h', '16-20h', '20-24h'],
-      datasets: [{
-        data: [2, 2, 5, 4, 5, 2],
-        backgroundColor: '#3fb950',
-        borderRadius: 2
-      }]
-    },
-    options: {
-      ...CHART_OPTIONS,
-      plugins: { legend: { display: false } },
-      scales: { 
-        y: { beginAtZero: true, max: 6 },
-        x: { grid: { display: false } }
       }
     }
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('updateTime').textContent = 'Last updated: ' + new Date().toLocaleString() + ' UTC (Internal team excluded)';
+function renderSourcesChart(entries) {
+  const sources = {};
+  entries.forEach(user => {
+    const source = user.channel || user.userSource || 'direct';
+    sources[source] = (sources[source] || 0) + 1;
+  });
   
-  setTimeout(() => {
-    renderCharts();
-  }, 300);
-});
+  new Chart(document.getElementById('sourcesChart'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(sources),
+      datasets: [{
+        data: Object.values(sources),
+        backgroundColor: ['#58a6ff', '#3fb950', '#f85149', '#d29922', '#8b5cf6', '#06d6a0']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+}
+
+function renderAuthChart(entries) {
+  const googleCount = entries.filter(u => u.isGoogle).length;
+  const githubCount = entries.filter(u => u.isGithub).length;
+  const emailCount = entries.length - googleCount - githubCount;
+  
+  new Chart(document.getElementById('authChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Google', 'GitHub', 'Email'],
+      datasets: [{
+        data: [googleCount, githubCount, emailCount],
+        backgroundColor: ['#4285f4', '#333333', '#f85149']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+}
+
+function renderGeoChart(entries) {
+  const countries = {};
+  entries.forEach(user => {
+    const country = user.country || 'Unknown';
+    countries[country] = (countries[country] || 0) + 1;
+  });
+  
+  const sortedCountries = Object.entries(countries)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+  
+  new Chart(document.getElementById('geoChart'), {
+    type: 'bar',
+    data: {
+      labels: sortedCountries.map(([country]) => country.length > 15 ? country.slice(0, 15) + '...' : country),
+      datasets: [{
+        data: sortedCountries.map(([, count]) => count),
+        backgroundColor: '#58a6ff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+function renderHourlyChart(entries) {
+  const hourly = Array(24).fill(0);
+  entries.forEach(user => {
+    const hour = new Date(user.createTime).getUTCHours();
+    hourly[hour]++;
+  });
+  
+  new Chart(document.getElementById('hourlyChart'), {
+    type: 'bar',
+    data: {
+      labels: Array.from({length: 24}, (_, i) => i + ':00'),
+      datasets: [{
+        data: hourly,
+        backgroundColor: '#3fb950'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+// === USERS TABLE ===
+function renderUsersTable(entries) {
+  if (entries.length === 0) {
+    showEmptyState();
+    return;
+  }
+  
+  const tableHTML = entries.slice(0, 20).map(user => {
+    const date = new Date(user.createTime);
+    const timeStr = date.toLocaleDateString('en-US', { 
+      month: '2-digit', day: '2-digit', 
+      hour: '2-digit', minute: '2-digit' 
+    });
+    
+    const name = user.name || 'Anonymous User';
+    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    
+    let authBadge = '';
+    if (user.isGoogle) {
+      authBadge = '<span class="auth-badge google">🔵 Google</span>';
+    } else if (user.isGithub) {
+      authBadge = '<span class="auth-badge github">⚫ GitHub</span>';
+    } else {
+      authBadge = '<span class="auth-badge email">📧 Email</span>';
+    }
+    
+    const channel = user.channel || user.userSource || 'direct';
+    const location = user.country || 'Unknown';
+    const flag = getCountryFlag(user.country);
+    
+    return `<tr>
+      <td>
+        <div style="display: flex; align-items: center;">
+          <div class="user-avatar">${initials}</div>
+          <div>
+            <div style="font-weight: 500; color: #c9d1d9;">${name}</div>
+            <div style="font-size: 12px; color: #8b949e;">${user.email || 'No email'}</div>
+          </div>
+        </div>
+      </td>
+      <td>${timeStr}</td>
+      <td>${authBadge}</td>
+      <td><code>${channel}</code></td>
+      <td><span class="country-flag">${flag}</span>${location}</td>
+    </tr>`;
+  }).join('');
+  
+  document.getElementById('usersTable').innerHTML = tableHTML;
+}
+
+// === HELPER FUNCTIONS ===
+function getCountryFlag(country) {
+  const flags = {
+    'United States of America': '🇺🇸',
+    'India': '🇮🇳',
+    'Pakistan': '🇵🇰',
+    'United Kingdom of Great Britain and Northern Ireland': '🇬🇧',
+    'Germany': '🇩🇪',
+    'Canada': '🇨🇦',
+    'Australia': '🇦🇺',
+    'South Africa': '🇿🇦',
+    'Singapore': '🇸🇬',
+    'China': '🇨🇳'
+  };
+  return flags[country] || '🌍';
+}
+
+function updateTimestamp() {
+  const now = new Date();
+  document.getElementById('updateTime').textContent = 
+    `Last updated: ${now.toLocaleString()} UTC`;
+}
+
+// === INITIALIZATION ===
+document.addEventListener('DOMContentLoaded', loadData);
+
+// Auto-refresh every 5 minutes
+setInterval(loadData, 5 * 60 * 1000);
 </script>
 
 </body>
